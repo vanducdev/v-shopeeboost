@@ -1,0 +1,1910 @@
+<style>
+  .create-profile-page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    animation: create-enter 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes create-enter {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Header Bar ── */
+  .create-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 12px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .create-header-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .btn-back-clean {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 34px;
+    padding: 0 14px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-back-clean:hover {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.3);
+    transform: translateY(-1px);
+  }
+
+  .create-header-titles {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .create-page-title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .create-page-subtitle {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--text-muted);
+  }
+
+  .create-header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.22);
+    color: #10b981;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .create-header-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+  }
+
+  /* ── Main Layout (Grid 1fr + 340px) ── */
+  .create-profile-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 16px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  /* ── Left Config Side ── */
+  .create-config-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    height: 100%;
+    min-height: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  }
+
+  /* Segmented Pill Tabs Navigation */
+  .profile-tabs-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    background: var(--bg-deep);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .profile-tabs {
+    display: inline-flex;
+    align-items: center;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 11px;
+    padding: 4px;
+    gap: 3px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+  }
+
+  .profile-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+    outline: none;
+    white-space: nowrap;
+  }
+
+  .profile-tab:hover {
+    color: var(--text-primary);
+    background: var(--bg-hover);
+  }
+
+  .profile-tab.active {
+    background: var(--accent) !important;
+    color: #ffffff !important;
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.32);
+  }
+
+  .profile-tab.active svg {
+    stroke: #ffffff !important;
+    color: #ffffff !important;
+  }
+
+  .btn-quick-shuffle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 32px;
+    padding: 0 12px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.25);
+    border-radius: 8px;
+    color: var(--accent);
+    font-size: 11.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+
+  .btn-quick-shuffle:hover {
+    background: rgba(99, 102, 241, 0.15);
+    border-color: rgba(99, 102, 241, 0.45);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.18);
+  }
+
+  /* Scrollable Tab Contents */
+  .create-tab-scroll {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scrollbar-gutter: stable;
+  }
+
+  .profile-tab-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    animation: tab-content-in 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes tab-content-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Form Section Groups ── */
+  .form-section-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.01);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .form-section-card:hover {
+    border-color: rgba(99, 102, 241, 0.25);
+  }
+
+  .section-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-card-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-card-icon {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.18);
+    color: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .section-card-title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 750;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+  }
+
+  .section-card-subtitle {
+    margin: 1px 0 0;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  /* ── Form Rows & Inputs ── */
+  .grid-2-col {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .form-group-clean {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .form-label-clean {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+  }
+
+  .form-label-clean .required {
+    color: var(--red);
+  }
+
+  .input-with-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .input-icon-left {
+    position: absolute;
+    left: 12px;
+    color: var(--text-muted);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-input-styled {
+    width: 100%;
+    height: 38px;
+    padding: 0 12px 0 36px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 12.5px;
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.18s ease;
+  }
+
+  .form-input-styled:focus {
+    border-color: var(--accent);
+    background: var(--bg-card);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+
+  /* Color Picker Compact Swatch */
+  .color-picker-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    height: 38px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 9px;
+    padding: 0 10px;
+    width: fit-content;
+  }
+
+  .color-dot {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+  }
+
+  .color-dot:hover {
+    transform: scale(1.2);
+  }
+
+  .color-dot.active {
+    border-color: #ffffff;
+    box-shadow: 0 0 0 2px var(--accent), 0 2px 6px rgba(0,0,0,0.25);
+    transform: scale(1.15);
+  }
+
+  /* OS Cards Grid */
+  .os-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .os-card {
+    position: relative;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: var(--bg-deep);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .os-card:hover {
+    border-color: rgba(99, 102, 241, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .os-card.active {
+    border-color: var(--accent) !important;
+    background: rgba(99, 102, 241, 0.06) !important;
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.12);
+  }
+
+  .os-card-icon {
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+  }
+
+  .os-card-texts strong {
+    display: block;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .os-card-texts small {
+    display: block;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+  }
+
+  .os-card.active .checkmark-badge {
+    display: flex !important;
+  }
+
+  .checkmark-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #ffffff;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.4);
+  }
+
+  /* Browser Option Cards */
+  .browser-cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .browser-option-card {
+    border: 1.5px solid var(--border);
+    background: var(--bg-deep);
+    padding: 11px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    position: relative;
+  }
+
+  .browser-option-card:hover {
+    border-color: rgba(99, 102, 241, 0.35) !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  }
+
+  .browser-option-card.active {
+    border-color: var(--accent) !important;
+    background: rgba(99, 102, 241, 0.06) !important;
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.12) !important;
+  }
+
+  .browser-card-info strong {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .browser-card-info small {
+    display: block;
+    font-size: 10.5px;
+    color: var(--text-muted);
+    margin-top: 1px;
+  }
+
+  /* Fingerprint Field Rows */
+  .fingerprint-field-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .fingerprint-field-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .fingerprint-field-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .fingerprint-field-icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 7px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    flex-shrink: 0;
+  }
+
+  .fingerprint-field-title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    overflow: hidden;
+  }
+
+  .fingerprint-field-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .fingerprint-field-desc {
+    font-size: 10.5px;
+    color: var(--text-muted);
+  }
+
+  .fingerprint-field-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .btn-dice-random {
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 7px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .btn-dice-random:hover {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.35);
+    transform: rotate(15deg);
+  }
+
+  /* Segmented Controls */
+  .segmented-control {
+    display: flex;
+    background: var(--bg-deep);
+    padding: 3px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    gap: 2px;
+  }
+
+  .segmented-control .segment-btn {
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    flex: 1;
+    text-align: center;
+  }
+
+  .segmented-control .segment-btn.active {
+    background: var(--bg-card) !important;
+    color: var(--accent) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  /* iOS Switch */
+  .switch-ios {
+    position: relative;
+    display: inline-block;
+    width: 38px;
+    height: 22px;
+    flex-shrink: 0;
+  }
+
+  .switch-ios input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .switch-ios .switch-slider {
+    position: absolute;
+    cursor: pointer;
+    inset: 0;
+    background-color: var(--border);
+    transition: .2s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 999px;
+  }
+
+  .switch-ios .switch-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .2s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 50%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+  }
+
+  .switch-ios input:checked + .switch-slider {
+    background-color: #10b981;
+  }
+
+  .switch-ios input:checked + .switch-slider:before {
+    transform: translateX(16px);
+  }
+
+  /* Checkbox Tiles */
+  .mask-tiles-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  .mask-tile-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 12px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-primary);
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.15s ease;
+  }
+
+  .mask-tile-label:hover {
+    border-color: rgba(99, 102, 241, 0.3);
+    background: rgba(99, 102, 241, 0.04);
+  }
+
+  /* ── Right Summary Inspector Side ── */
+  .create-summary-side {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  /* Quality Score Card */
+  .score-gauge-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  }
+
+  .score-gauge-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(99, 102, 241, 0.06) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
+
+  .score-gauge-number {
+    font-size: 20px;
+    font-weight: 850;
+    color: var(--text-primary);
+    font-family: var(--font-mono);
+    line-height: 1.1;
+  }
+
+  .badge-low-risk {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 8px;
+    background: rgba(16, 185, 129, 0.12);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.25);
+    border-radius: 999px;
+    font-size: 10.5px;
+    font-weight: 800;
+  }
+
+  .score-vectors-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+  }
+
+  .score-vector-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 7px;
+    background: var(--bg-deep);
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  .score-vector-check {
+    color: #10b981;
+    font-weight: 800;
+  }
+
+  /* Summary Spec Card */
+  .spec-summary-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  }
+
+  .spec-summary-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 750;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .spec-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 11px;
+    padding: 3px 0;
+  }
+
+  .spec-label {
+    color: var(--text-muted);
+  }
+
+  .spec-val {
+    font-weight: 700;
+    color: var(--text-primary);
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  /* Action Buttons Card */
+  .create-action-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  }
+
+  .btn-save-primary {
+    height: 40px;
+    background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    color: #ffffff;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 750;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    box-shadow: 0 3px 12px rgba(59, 130, 246, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .btn-save-primary:hover {
+    background: linear-gradient(135deg, #4338ca 0%, #2563eb 100%);
+    transform: translateY(-1.5px);
+    box-shadow: 0 5px 16px rgba(59, 130, 246, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+
+  .btn-save-primary:active {
+    transform: translateY(0);
+  }
+
+  .btn-cancel-surface {
+    height: 34px;
+    background: var(--bg-deep);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-family: inherit;
+    font-size: 11.5px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+  }
+
+  .btn-cancel-surface:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  /* ── Responsive Adaptations for Create Profile ── */
+  @media screen and (max-width: 1200px) {
+    .create-profile-page {
+      padding: 12px 16px 16px;
+      gap: 10px;
+    }
+    .create-profile-layout {
+      grid-template-columns: minmax(0, 1fr) 280px;
+      gap: 12px;
+    }
+    .score-gauge-card, .summary-spec-card {
+      padding: 12px;
+    }
+  }
+
+  @media screen and (max-width: 980px) {
+    .create-profile-page {
+      overflow-y: auto !important;
+      height: 100% !important;
+      display: block !important;
+    }
+    .create-profile-layout {
+      display: flex !important;
+      flex-direction: column !important;
+      overflow: visible !important;
+      height: auto !important;
+      gap: 16px !important;
+    }
+    .create-config-card {
+      height: auto !important;
+      min-height: 520px !important;
+      overflow: visible !important;
+    }
+    .create-tab-scroll {
+      overflow: visible !important;
+      height: auto !important;
+      max-height: none !important;
+    }
+    .create-summary-side {
+      height: auto !important;
+      min-height: auto !important;
+      overflow: visible !important;
+      margin-bottom: 24px;
+    }
+  }
+
+  @media screen and (max-height: 740px) {
+    .create-profile-page {
+      padding: 10px 14px 12px;
+      gap: 8px;
+    }
+    .create-page-header {
+      padding: 0 0 6px;
+    }
+    .profile-tabs-header {
+      padding: 6px 10px;
+    }
+    .profile-tab {
+      height: 28px;
+      padding: 0 10px;
+      font-size: 11.5px;
+    }
+    .create-tab-scroll {
+      padding: 10px 14px;
+      gap: 10px;
+    }
+    .score-gauge-card, .summary-spec-card {
+      padding: 10px 12px;
+      gap: 8px;
+    }
+  }
+</style>
+
+<div class="create-profile-page">
+  <!-- Top Header Bar -->
+  <header class="create-page-header">
+    <div class="create-header-left">
+      <button class="btn-back-clean" id="btnBackToProfiles" type="button">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        <span>Quay lại</span>
+      </button>
+      <div class="create-header-titles">
+        <h1 class="create-page-title" id="createProfileTitle">Tạo Hồ Sơ Mới</h1>
+        <p class="create-page-subtitle">Cấu hình vân tay chống phát hiện và proxy chi tiết cho hồ sơ</p>
+      </div>
+    </div>
+    <div class="create-header-badge">Anti-Detect Chromium v141</div>
+  </header>
+
+  <!-- 2-Column Main Container -->
+  <div class="create-profile-layout">
+    
+    <!-- Left Column: Form & Tabs -->
+    <main class="create-config-card">
+      <!-- Tabs Navigation Bar -->
+      <nav class="profile-tabs-header">
+        <div class="profile-tabs" role="tablist">
+          <button class="profile-tab active" data-tab="basic" type="button" role="tab" aria-selected="true">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <span>Thông tin cơ bản</span>
+          </button>
+          <button class="profile-tab" data-tab="proxy" type="button" role="tab" aria-selected="false">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
+            <span>Cấu hình Proxy</span>
+          </button>
+          <button class="profile-tab" data-tab="fingerprint" type="button" role="tab" aria-selected="false">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Cấu hình vân tay</span>
+          </button>
+        </div>
+        <button class="btn-quick-shuffle" id="btnRandomFingerprint" type="button" title="Tạo ngẫu nhiên lại toàn bộ thông số vân tay">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>
+          <span>Ngẫu nhiên toàn bộ</span>
+        </button>
+      </nav>
+
+      <!-- Scrollable Tab Form -->
+      <div class="create-tab-scroll">
+        <input type="hidden" id="editProfileName">
+
+        <!-- ── TAB 1: THÔNG TIN CƠ BẢN ── -->
+        <section class="profile-tab-content active" id="tab-basic" role="tabpanel">
+          <!-- Card 1: Định danh hồ sơ -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Định danh Hồ Sơ</h3>
+                  <p class="section-card-subtitle">Đặt tên, màu sắc nhận diện và phân loại nhóm</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 1: Tên hồ sơ (65%) & Màu sắc (35%) -->
+            <div style="display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 14px; align-items: flex-end;">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileName">Tên Hồ Sơ <span class="required">*</span></label>
+                <div class="input-with-icon">
+                  <span class="input-icon-left">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                  </span>
+                  <input type="text" class="form-input-styled" id="profileName" placeholder="Ví dụ: profile_01">
+                </div>
+              </div>
+
+              <div class="form-group-clean">
+                <label class="form-label-clean">Màu nhận diện</label>
+                <div class="color-picker-wrap">
+                  <div class="color-dot active" data-color="" title="Không màu" style="background:#cbd5e1">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#475569" stroke-width="3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                  </div>
+                  <div class="color-dot" data-color="#6366f1" title="Tím Indigo" style="background:#6366f1"></div>
+                  <div class="color-dot" data-color="#10b981" title="Xanh lục Emerald" style="background:#10b981"></div>
+                  <div class="color-dot" data-color="#f59e0b" title="Hổ phách Amber" style="background:#f59e0b"></div>
+                  <div class="color-dot" data-color="#ef4444" title="Đỏ Rose" style="background:#ef4444"></div>
+                  <div class="color-dot" data-color="#06b6d4" title="Xanh Cyan" style="background:#06b6d4"></div>
+                  <div class="color-dot" data-color="#f97316" title="Cam Orange" style="background:#f97316"></div>
+                  <div class="color-dot" data-color="#ec4899" title="Hồng Pink" style="background:#ec4899"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Phân nhóm & Tags -->
+            <div class="grid-2-col">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileGroup">Phân nhóm</label>
+                <div class="input-with-icon">
+                  <span class="input-icon-left">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                  </span>
+                  <select class="form-select" id="profileGroup" style="height: 38px; border-radius: 9px; padding-left: 36px; width: 100%;">
+                    <option value="Mặc định">Mặc định</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileTags">Tags (phân cách bằng dấu phẩy)</label>
+                <div class="input-with-icon">
+                  <span class="input-icon-left">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                  </span>
+                  <input type="text" class="form-input-styled" id="profileTags" placeholder="facebook, ads, nuôi acc...">
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 3: Ghi chú -->
+            <div class="form-group-clean">
+              <label class="form-label-clean" for="profileNotes">Ghi chú tài khoản</label>
+              <textarea class="form-textarea" id="profileNotes" placeholder="Nhập ghi chú tài khoản, mật khẩu 2FA hoặc thông tin quan trọng..." style="min-height: 52px; height: 52px; border-radius: 9px; resize: vertical; padding: 8px 12px; font-size: 12px;"></textarea>
+            </div>
+          </article>
+
+          <!-- Card 2: Môi trường giả lập (Hệ điều hành & Trình duyệt) -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Môi Trường Hoạt Động (OS & Trình Duyệt)</h3>
+                  <p class="section-card-subtitle">Lựa chọn hệ điều hành và nhân Chromium khởi chạy</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Block 1: OS Selector Cards -->
+            <div class="form-group-clean">
+              <label class="form-label-clean">Hệ điều hành giả lập (Operating System)</label>
+              <div class="os-selector-grid">
+                <div class="os-card active" data-os="Win32">
+                  <div class="os-card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: #0078d7;"><path d="M0 3.449L9.75 2.1v9.45H0V3.449zM0 12.45h9.75v9.45L0 20.551v-8.101zM10.95 1.95L24 0v11.55H10.95V1.95zM10.95 12.45H24v11.55l-13.05-1.95v-9.6z"/></svg>
+                  </div>
+                  <div class="os-card-texts">
+                    <strong>Windows</strong>
+                    <small>Win32 • Chrome 141</small>
+                  </div>
+                  <div class="checkmark-badge">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+
+                <div class="os-card" data-os="MacIntel">
+                  <div class="os-card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" style="color: #8e8e93;"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 4.17c.66-.81 1.11-1.93.99-3.06-1 .04-2.22.67-2.94 1.5-.62.71-1.16 1.85-1.02 2.96 1.12.09 2.27-.57 2.97-1.4z"/></svg>
+                  </div>
+                  <div class="os-card-texts">
+                    <strong>macOS</strong>
+                    <small>MacIntel • Apple Silicon</small>
+                  </div>
+                  <div class="checkmark-badge">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+
+                <div class="os-card" data-os="Linux x86_64">
+                  <div class="os-card-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #f59e0b;"><path d="M4 17l6-6-6-6M12 19h8"/></svg>
+                  </div>
+                  <div class="os-card-texts">
+                    <strong>Linux</strong>
+                    <small>x86_64 • Ubuntu / Debian</small>
+                  </div>
+                  <div class="checkmark-badge">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" id="profilePlatform" value="Win32">
+            </div>
+
+            <!-- Block 2: Browser Engine Cards -->
+            <div class="form-group-clean">
+              <label class="form-label-clean">Nhân trình duyệt (Browser Engine)</label>
+              <div class="browser-cards-grid">
+                <div class="browser-option-card active" data-browser="system">
+                  <img src="./image/chrom.png" alt="Chrome" width="28" height="28" style="object-fit: contain;">
+                  <div class="browser-card-info">
+                    <strong>Chrome Hệ Thống</strong>
+                    <small>Dùng trình duyệt Chrome mặc định trên máy</small>
+                  </div>
+                </div>
+                <div class="browser-option-card" data-browser="custom">
+                  <img src="./image/chromium.png" alt="Chromium" width="28" height="28" style="object-fit: contain;">
+                  <div class="browser-card-info">
+                    <strong>Chromium Anti-Detect</strong>
+                    <small>Nhân Chromium v141 tích hợp sẵn tối ưu chống vết</small>
+                  </div>
+                </div>
+              </div>
+              <input type="hidden" id="profileBrowserType" value="system">
+            </div>
+          </article>
+        </section>
+
+        <!-- ── TAB 2: CẤU HÌNH PROXY ── -->
+        <section class="profile-tab-content" id="tab-proxy" role="tabpanel" style="display: none;">
+          <!-- Card: Proxy Connection & Protocol -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Địa Chỉ Kết Nối Proxy</h3>
+                  <p class="section-card-subtitle">Hỗ trợ IP:Port hoặc IP:Port:User:Pass</p>
+                </div>
+              </div>
+              <div class="segmented-control" id="proxyProtocolControl">
+                <button type="button" class="segment-btn active" data-value="http">HTTP</button>
+                <button type="button" class="segment-btn" data-value="https">HTTPS</button>
+                <button type="button" class="segment-btn" data-value="socks4">SOCKS4</button>
+                <button type="button" class="segment-btn" data-value="socks5">SOCKS5</button>
+              </div>
+              <input type="hidden" id="profileProxyType" value="http">
+            </div>
+
+            <div class="input-with-icon">
+              <span class="input-icon-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input type="text" class="form-input-styled" id="profileProxy" placeholder="Nhập hoặc dán: IP:PORT hoặc IP:PORT:USER:PASS hoặc SOCKS5://IP:PORT..." style="font-family: var(--font-mono); font-size: 13px; height: 40px;">
+            </div>
+
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+              <button type="button" class="btn-secondary" id="btnPasteProxy" title="Dán từ Clipboard" style="height: 32px; padding: 0 12px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                <span>Dán (Paste)</span>
+              </button>
+              <button type="button" class="btn-secondary" id="btnClearProxy" title="Xóa trắng địa chỉ" style="height: 32px; padding: 0 12px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                <span>Xóa trắng</span>
+              </button>
+              <button type="button" class="btn-secondary" id="btnImportProxyModal" title="Nhập danh sách từ File TXT / CSV" style="height: 32px; padding: 0 12px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Nhập File</span>
+              </button>
+              <button type="button" class="btn-primary" id="btnCheckProxyInline" title="Kiểm tra kết nối Proxy" style="height: 32px; padding: 0 16px; font-size: 11.5px; font-weight: 700; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px; margin-left: auto; background: var(--accent-grad); border: none;">
+                <span class="btn-spinner" id="chkSpinner" style="display: none; width: 12px; height: 12px; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite;"></span>
+                <svg id="chkIcon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                <span>Kiểm tra Proxy</span>
+              </button>
+            </div>
+          </article>
+
+          <!-- Row: Auto Check Toggle & Advanced Settings -->
+          <div class="grid-2-col">
+            <article class="form-section-card" style="flex-direction: row; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="section-card-icon" style="color: #10b981; background: rgba(16, 185, 129, 0.08); border-color: rgba(16, 185, 129, 0.2);">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <div>
+                  <h4 style="margin: 0; font-size: 12.5px; font-weight: 700; color: var(--text-primary);">Kiểm tra trước khi mở</h4>
+                  <p style="margin: 2px 0 0; font-size: 10.5px; color: var(--text-muted);">Tự động test Proxy trước khi khởi động</p>
+                </div>
+              </div>
+              <label class="switch-ios">
+                <input type="checkbox" id="profileProxyCheckToggle" checked>
+                <span class="switch-slider"></span>
+              </label>
+              <input type="hidden" id="profileProxyCheck" value="full">
+            </article>
+
+            <article class="form-section-card" id="btnToggleAdvancedProxy" style="flex-direction: row; align-items: center; justify-content: space-between; cursor: pointer; user-select: none;">
+              <div style="display: flex; align-items: center; gap: 12px;">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                </div>
+                <div>
+                  <h4 style="margin: 0; font-size: 12.5px; font-weight: 700; color: var(--text-primary);">Cấu hình nâng cao</h4>
+                  <p style="margin: 2px 0 0; font-size: 10.5px; color: var(--text-muted);">User, Password, Bypass List, Custom DNS</p>
+                </div>
+              </div>
+              <svg id="arrowAdvancedProxy" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color: var(--text-muted); transition: transform 0.2s;"><polyline points="6 9 12 15 18 9"/></svg>
+            </article>
+          </div>
+
+          <!-- Collapsible: Advanced Proxy Settings -->
+          <article class="form-section-card" id="sectionAdvancedProxy" style="display: none;">
+            <div class="grid-2-col">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="proxyUsername">Username (Tài khoản Proxy)</label>
+                <input type="text" class="form-input" id="proxyUsername" placeholder="Không bắt buộc" style="height: 36px; border-radius: 8px;">
+              </div>
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="proxyPassword">Password (Mật khẩu Proxy)</label>
+                <input type="password" class="form-input" id="proxyPassword" placeholder="Không bắt buộc" style="height: 36px; border-radius: 8px;">
+              </div>
+            </div>
+            <div class="grid-2-col">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="proxyBypass">Bypass List (Bỏ qua Proxy)</label>
+                <input type="text" class="form-input" id="proxyBypass" placeholder="localhost, 127.0.0.1, *.internal" style="height: 36px; border-radius: 8px;">
+              </div>
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="proxyDNS">Custom DNS Server</label>
+                <input type="text" class="form-input" id="proxyDNS" placeholder="1.1.1.1, 8.8.8.8" style="height: 36px; border-radius: 8px;">
+              </div>
+            </div>
+          </article>
+
+          <!-- Card: Proxy Test Result -->
+          <article class="form-section-card" id="proxyResultWrapper" style="min-height: 150px; justify-content: center; align-items: center;">
+            <!-- Empty State -->
+            <div id="proxyEmptyState" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 12px 0;">
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--bg-deep); border: 1px solid var(--border); display: grid; place-items: center; color: var(--text-muted);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+              </div>
+              <div>
+                <h4 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--text-primary);">Chưa kiểm tra Proxy</h4>
+                <p style="margin: 3px 0 0; font-size: 11px; color: var(--text-muted);">Nhập địa chỉ Proxy phía trên và nhấn <strong>Kiểm tra Proxy</strong> để đo tốc độ và vị trí.</p>
+              </div>
+            </div>
+
+            <!-- Loading State -->
+            <div id="proxyLoadingState" style="display: none; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; padding: 12px 0;">
+              <div class="premium-spinner" style="width: 28px; height: 28px; border: 3px solid rgba(99, 102, 241, 0.15); border-top-color: var(--accent); border-radius: 50%; animation: spin 0.8s linear infinite;"></div>
+              <div>
+                <h4 style="margin: 0; font-size: 12.5px; font-weight: 700; color: var(--text-primary);">Đang kiểm tra kết nối Proxy...</h4>
+                <p style="margin: 2px 0 0; font-size: 10.5px; color: var(--text-muted);">Hệ thống đang đo tốc độ và định vị máy chủ.</p>
+              </div>
+            </div>
+
+            <!-- Success State -->
+            <div id="proxySuccessState" style="display: none; width: 100%; flex-direction: column; gap: 12px;">
+              <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span style="width: 8px; height: 8px; border-radius: 50%; background: #10b981; box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);"></span>
+                  <strong style="font-size: 13px; color: var(--text-primary);">Proxy Hoạt Động Tốt (Live)</strong>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px;">
+                  <span id="proxyResCountryBadge" style="font-size: 11px; font-weight: 700; color: #10b981; background: rgba(16, 185, 129, 0.1); padding: 3px 10px; border-radius: 6px;">Vietnam</span>
+                  <span id="proxyResLatencyBadge" class="badge-status latency-green" style="font-size: 10.5px; font-weight: 700; padding: 3px 8px; border-radius: 6px;">24ms</span>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; font-size: 11.5px;">
+                <div style="background: var(--bg-deep); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                  <div style="color: var(--text-muted); font-size: 10px;">IP Kết Nối</div>
+                  <strong id="proxyResIP" style="color: var(--text-primary); font-family: var(--font-mono); font-size: 11.5px;">—</strong>
+                </div>
+                <div style="background: var(--bg-deep); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                  <div style="color: var(--text-muted); font-size: 10px;">Thành Phố / Khu Vực</div>
+                  <strong id="proxyResCity" style="color: var(--text-primary); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block;">—</strong>
+                </div>
+                <div style="background: var(--bg-deep); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                  <div style="color: var(--text-muted); font-size: 10px;">Múi Giờ Hệ Thống</div>
+                  <strong id="proxyResTimezone" style="color: var(--text-primary); font-size: 11.5px;">—</strong>
+                </div>
+                <div style="background: var(--bg-deep); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                  <div style="color: var(--text-muted); font-size: 10px;">Nhà Mạng (ISP)</div>
+                  <strong id="proxyResISP" style="color: var(--text-primary); font-size: 11.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block;">—</strong>
+                </div>
+                <div style="background: var(--bg-deep); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                  <div style="color: var(--text-muted); font-size: 10px;">Mã ASN Mạng</div>
+                  <strong id="proxyResASN" style="color: var(--text-primary); font-size: 11.5px;">—</strong>
+                </div>
+                <div style="background: var(--bg-deep); padding: 8px 10px; border-radius: 8px; border: 1px solid var(--border);">
+                  <div style="color: var(--text-muted); font-size: 10px;">Rò Rỉ DNS / WebRTC</div>
+                  <strong style="color: #10b981; font-size: 11.5px;">Safe & Protected</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Error State -->
+            <div id="proxyErrorState" style="display: none; width: 100%; flex-direction: column; gap: 8px; text-align: center; align-items: center; padding: 12px 0;">
+              <div style="width: 36px; height: 36px; background: rgba(239, 68, 68, 0.1); border-radius: 50%; display: grid; place-items: center; color: var(--red);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+              </div>
+              <div>
+                <h4 style="margin: 0; font-size: 13px; font-weight: 700; color: var(--red);" id="proxyErrorTitle">Lỗi kết nối Proxy</h4>
+                <p style="margin: 3px 0 0; font-size: 11px; color: var(--text-muted);" id="proxyErrorMsg">Không thể kết nối tới Proxy hoặc sai tài khoản/mật khẩu.</p>
+              </div>
+            </div>
+          </article>
+        </section>
+
+        <!-- ── TAB 3: CẤU HÌNH VÂN TAY (FINGERPRINTS) ── -->
+        <section class="profile-tab-content" id="tab-fingerprint" role="tabpanel" style="display: none;">
+          <!-- Card: User Agent String -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Chuỗi Định Danh User Agent</h3>
+                  <p class="section-card-subtitle">Định danh trình duyệt gửi tới website</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group-clean">
+              <div style="display: flex; gap: 8px;">
+                <input type="text" class="form-input" id="profileUA" placeholder="Để trống = Tự động sinh User Agent theo OS" style="flex: 1; height: 38px; border-radius: 9px; font-family: var(--font-mono); font-size: 12px;">
+                <button type="button" class="btn-secondary" id="btnRandomUA" style="height: 38px; padding: 0 14px; border-radius: 9px; font-size: 11.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px;">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  <span>Random UA</span>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card: Phần cứng (Hardware) -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Thông Số Phần Cứng (Hardware Specs)</h3>
+                  <p class="section-card-subtitle">Giả lập CPU, RAM, Card đồ họa và màn hình</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- CPU -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Số Luồng CPU (Hardware Concurrency)</span>
+                  <span class="fingerprint-field-desc">Giả lập số nhân/luồng xử lý phần cứng</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileCPU" style="width: 150px; height: 32px; border-radius: 7px;">
+                  <option value="random">Ngẫu nhiên</option>
+                  <option value="2">2 Cores</option>
+                  <option value="4">4 Cores</option>
+                  <option value="6">6 Cores</option>
+                  <option value="8">8 Cores</option>
+                  <option value="12">12 Cores</option>
+                  <option value="16">16 Cores</option>
+                </select>
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileCPU', ['4', '6', '8', '12'], 'CPU Cores')" title="Đổi ngẫu nhiên">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- RAM -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Bộ Nhớ RAM (Device Memory)</span>
+                  <span class="fingerprint-field-desc">Giả lập dung lượng RAM thiết bị</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileRAM" style="width: 150px; height: 32px; border-radius: 7px;">
+                  <option value="random">Ngẫu nhiên</option>
+                  <option value="4">4 GB</option>
+                  <option value="8">8 GB</option>
+                  <option value="16">16 GB</option>
+                  <option value="32">32 GB</option>
+                </select>
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileRAM', ['4', '8', '16', '32'], 'RAM GB')" title="Đổi ngẫu nhiên">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- GPU -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M6 17v2M18 17v2M10 7v3M14 7v3"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Card Đồ Họa (GPU Renderer)</span>
+                  <span class="fingerprint-field-desc">Nhà sản xuất và chip đồ họa WebGL</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileGPU" style="width: 180px; height: 32px; border-radius: 7px;">
+                  <option value="random">Ngẫu nhiên</option>
+                  <option value="intel">Intel HD Graphics</option>
+                  <option value="nvidia">NVIDIA GeForce RTX</option>
+                  <option value="amd">AMD Radeon Graphics</option>
+                  <option value="apple">Apple M1/M2/M3 GPU</option>
+                </select>
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileGPU', ['intel', 'nvidia', 'amd', 'apple'], 'GPU Model')" title="Đổi ngẫu nhiên">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Screen Resolution -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Độ Phân Giải Màn Hình</span>
+                  <span class="fingerprint-field-desc">Kích thước vùng hiển thị Screen Width x Height</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileScreen" style="width: 180px; height: 32px; border-radius: 7px;">
+                  <option value="random">Ngẫu nhiên</option>
+                  <option value="1920,1080">1920 x 1080 (FHD)</option>
+                  <option value="1536,864">1536 x 864</option>
+                  <option value="1440,900">1440 x 900</option>
+                  <option value="1366,768">1366 x 768</option>
+                  <option value="2560,1440">2560 x 1440 (2K)</option>
+                  <option value="3840,2160">3840 x 2160 (4K)</option>
+                </select>
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileScreen', ['1920,1080', '1536,864', '1440,900', '1366,768'], 'Màn hình')" title="Đổi ngẫu nhiên">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- DPR & Touch in 2 cols -->
+            <div class="grid-2-col" style="padding-top: 4px;">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileDPR">Device Pixel Ratio (DPR)</label>
+                <select class="form-select" id="profileDPR" style="height: 34px; border-radius: 7px;">
+                  <option value="1">1.0 (Tiêu chuẩn)</option>
+                  <option value="1.25">1.25</option>
+                  <option value="1.5">1.5</option>
+                  <option value="2">2.0 (Retina)</option>
+                </select>
+              </div>
+
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileTouch">Cảm Ứng (Touch Support)</label>
+                <select class="form-select" id="profileTouch" style="height: 34px; border-radius: 7px;">
+                  <option value="disable">Không hỗ trợ (Desktop)</option>
+                  <option value="enable">Hỗ trợ cảm ứng (Max 10 điểm)</option>
+                </select>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card: Định vị & Ngôn ngữ (Localization) -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 4 10 15 15 0 0 1-4 10 15 15 0 0 1-4-10 15 15 0 0 1 4-10z"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Định Vị & Ngôn Ngữ (Localization)</h3>
+                  <p class="section-card-subtitle">Đồng bộ vị trí địa lý, múi giờ và ngôn ngữ trình duyệt</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Timezone -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Múi Giờ (Timezone)</span>
+                  <span class="fingerprint-field-desc">Khuyên dùng: Tự động theo IP Proxy</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileTimezone" style="width: 200px; height: 32px; border-radius: 7px;">
+                  <option value="auto">Tự động (Theo IP Proxy)</option>
+                  <option value="Asia/Ho_Chi_Minh">Việt Nam (GMT+7)</option>
+                  <option value="Asia/Bangkok">Thái Lan (GMT+7)</option>
+                  <option value="Asia/Singapore">Singapore (GMT+8)</option>
+                  <option value="Asia/Tokyo">Nhật Bản (GMT+9)</option>
+                  <option value="America/New_York">Mỹ - New York (GMT-5)</option>
+                  <option value="America/Los_Angeles">Mỹ - LA (GMT-8)</option>
+                  <option value="Europe/London">Anh - London (GMT+0)</option>
+                  <option value="Europe/Paris">Pháp - Paris (GMT+1)</option>
+                </select>
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileTimezone', ['Asia/Ho_Chi_Minh', 'Asia/Singapore', 'Asia/Tokyo', 'America/New_York'], 'Múi giờ')" title="Đổi múi giờ">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Language -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 8h14M4 4L9 19M19 4l-5 15M5 12h14"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Ngôn Ngữ (Accept-Language)</span>
+                  <span class="fingerprint-field-desc">Danh sách mã ngôn ngữ ưu tiên</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <input type="text" class="form-input" id="profileLanguage" placeholder="vi-VN, en-US" value="vi-VN, en-US" style="width: 200px; height: 32px; border-radius: 7px; font-size: 11.5px;">
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileLanguage', ['vi-VN, en-US', 'en-US, en', 'ja-JP, en-US', 'ko-KR, en-US'], 'Ngôn ngữ')" title="Đổi ngôn ngữ">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Geolocation -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Vị Trí GPS (Geolocation)</span>
+                  <span class="fingerprint-field-desc">Tọa độ kinh độ / vĩ độ giả lập</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileGeolocation" style="width: 200px; height: 32px; border-radius: 7px;">
+                  <option value="auto">Tự động (Theo IP Proxy)</option>
+                  <option value="ask">Hỏi người dùng (Prompt)</option>
+                  <option value="block">Chặn truy cập GPS</option>
+                </select>
+                <button type="button" class="btn-dice-random" onclick="randomizeField('profileGeolocation', ['auto', 'ask', 'block'], 'Địa lý')" title="Đổi định vị">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                </button>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card: Bảo vệ vân tay nâng cao (Protection APIs) -->
+          <article class="form-section-card">
+            <div class="section-card-header">
+              <div class="section-card-title-wrap">
+                <div class="section-card-icon">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                </div>
+                <div>
+                  <h3 class="section-card-title">Cơ Chế Bảo Vệ Ẩn Danh (Fingerprint Cloaking)</h3>
+                  <p class="section-card-subtitle">Thêm nhiễu ngẫu nhiên vào các hàm API đồ họa, âm thanh và mạng</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">Canvas Fingerprint</span>
+                  <span class="fingerprint-field-desc">Chống theo dõi bản vẽ hình ảnh 2D Canvas</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileCanvas" style="width: 190px; height: 32px; border-radius: 7px;">
+                  <option value="noise">Thêm Noise (Khuyên dùng)</option>
+                  <option value="block">Chặn hoàn toàn</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- WebGL -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">WebGL Fingerprint</span>
+                  <span class="fingerprint-field-desc">Thêm nhiễu đồ họa 3D che giấu card đồ họa</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileWebGL" style="width: 190px; height: 32px; border-radius: 7px;">
+                  <option value="noise">Thêm Noise (Khuyên dùng)</option>
+                  <option value="block">Chặn hoàn toàn</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- AudioContext -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">AudioContext Fingerprint</span>
+                  <span class="fingerprint-field-desc">Bảo vệ vân tay xử lý âm thanh kỹ thuật số</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileAudio" style="width: 190px; height: 32px; border-radius: 7px;">
+                  <option value="noise">Thêm Noise (Khuyên dùng)</option>
+                  <option value="block">Chặn API Audio</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- ClientRects -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">ClientRects Fingerprint</span>
+                  <span class="fingerprint-field-desc">Che giấu thông số đo đạc viền font chữ HTML</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileClientRects" style="width: 190px; height: 32px; border-radius: 7px;">
+                  <option value="noise">Thêm Noise (Khuyên dùng)</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- WebRTC -->
+            <div class="fingerprint-field-row">
+              <div class="fingerprint-field-left">
+                <div class="fingerprint-field-icon">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7l-7 5 7 5V7z"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
+                </div>
+                <div class="fingerprint-field-title-group">
+                  <span class="fingerprint-field-title">WebRTC IP Handling</span>
+                  <span class="fingerprint-field-desc">Chống rò rỉ địa chỉ IP nội bộ (Local IP)</span>
+                </div>
+              </div>
+              <div class="fingerprint-field-ctrl">
+                <select class="form-select" id="profileWebRTC" style="width: 190px; height: 32px; border-radius: 7px;">
+                  <option value="mask">Che giấu Local IP (Khuyên dùng)</option>
+                  <option value="disable">Vô hiệu hóa WebRTC</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Media Devices & Fonts in 2 cols -->
+            <div class="grid-2-col" style="padding-top: 4px;">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileMediaDevices">Media Devices (Mic/Cam)</label>
+                <select class="form-select" id="profileMediaDevices" style="height: 34px; border-radius: 7px;">
+                  <option value="noise">Giả lập danh sách ngẫu nhiên</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileFonts">Danh Sách Phông Chữ (Fonts)</label>
+                <select class="form-select" id="profileFonts" style="height: 34px; border-radius: 7px;">
+                  <option value="random">Danh sách ngẫu nhiên</option>
+                  <option value="block">Chặn nhận diện Fonts</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Battery, Permissions, Speech, Sensors in 2 cols -->
+            <div class="grid-2-col">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileBattery">Battery API (Trạng thái pin)</label>
+                <select class="form-select" id="profileBattery" style="height: 34px; border-radius: 7px;">
+                  <option value="noise">Giả lập ngẫu nhiên</option>
+                  <option value="allow">Theo pin thật</option>
+                </select>
+              </div>
+
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profilePermissions">Permissions API (Quyền)</label>
+                <select class="form-select" id="profilePermissions" style="height: 34px; border-radius: 7px;">
+                  <option value="noise">Che giấu mặc định</option>
+                  <option value="allow">Mặc định Chrome</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="grid-2-col">
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileSpeech">Speech Voices (Giọng nói)</label>
+                <select class="form-select" id="profileSpeech" style="height: 34px; border-radius: 7px;">
+                  <option value="noise">Giả lập ngẫu nhiên</option>
+                  <option value="allow">Mặc định thiết bị</option>
+                </select>
+              </div>
+
+              <div class="form-group-clean">
+                <label class="form-label-clean" for="profileSensors">Sensor API (Cảm biến)</label>
+                <select class="form-select" id="profileSensors" style="height: 34px; border-radius: 7px;">
+                  <option value="disable">Vô hiệu hoá</option>
+                  <option value="allow">Cho phép thật</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Navigator Masking Tiles -->
+            <div class="form-group-clean" style="padding-top: 4px;">
+              <label class="form-label-clean">Bảo Vệ Thuộc Tính Trình Duyệt (Navigator Masking)</label>
+              <div class="mask-tiles-grid">
+                <label class="mask-tile-label">
+                  <input type="checkbox" id="maskBuildID" checked style="width: 14px; height: 14px; accent-color: var(--accent);">
+                  <span>Spoof Build ID</span>
+                </label>
+                <label class="mask-tile-label">
+                  <input type="checkbox" id="maskHardware" checked style="width: 14px; height: 14px; accent-color: var(--accent);">
+                  <span>Spoof Hardware Info</span>
+                </label>
+                <label class="mask-tile-label">
+                  <input type="checkbox" id="maskVendor" checked style="width: 14px; height: 14px; accent-color: var(--accent);">
+                  <span>Spoof Vendor Properties</span>
+                </label>
+                <label class="mask-tile-label">
+                  <input type="checkbox" id="maskConnection" checked style="width: 14px; height: 14px; accent-color: var(--accent);">
+                  <span>Spoof Network Connection</span>
+                </label>
+              </div>
+            </div>
+          </article>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Right Column: Live Inspector & Sticky Actions -->
+    <aside class="create-summary-side">
+      <!-- Quality Health Score Card -->
+      <div class="score-gauge-card">
+        <div class="score-gauge-banner">
+          <div>
+            <div style="font-size: 10.5px; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">Điểm Ẩn Danh</div>
+            <div class="score-gauge-number" id="sumFingerprint">95/100</div>
+          </div>
+          <div class="badge-low-risk">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            <span>Độ Rủi Ro Thấp</span>
+          </div>
+        </div>
+
+        <div class="score-vectors-grid">
+          <div class="score-vector-item"><span class="score-vector-check">✓</span> Canvas</div>
+          <div class="score-vector-item"><span class="score-vector-check">✓</span> WebGL</div>
+          <div class="score-vector-item"><span class="score-vector-check">✓</span> Timezone</div>
+          <div class="score-vector-item"><span class="score-vector-check">✓</span> Language</div>
+          <div class="score-vector-item"><span class="score-vector-check">✓</span> Fonts</div>
+          <div class="score-vector-item"><span class="score-vector-check">✓</span> WebRTC</div>
+        </div>
+      </div>
+
+      <!-- Specs Summary Card -->
+      <div class="spec-summary-card">
+        <h3 class="spec-summary-title">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="9" y1="9" x2="15" y2="9"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="11" y2="17"/></svg>
+          <span>Tóm tắt cấu hình hồ sơ</span>
+        </h3>
+
+        <div class="spec-row">
+          <span class="spec-label">Tên Profile:</span>
+          <span class="spec-val" id="sumName">Chưa đặt tên</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Nhân Browser:</span>
+          <span class="spec-val" id="sumBrowser">Chrome hệ thống</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Nền tảng OS:</span>
+          <span class="spec-val" id="sumPlatform">Windows</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Số Core CPU:</span>
+          <span class="spec-val" id="sumCPU">Ngẫu nhiên</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Bộ nhớ RAM:</span>
+          <span class="spec-val" id="sumRAM">Ngẫu nhiên</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Card Đồ Họa:</span>
+          <span class="spec-val" id="sumGPU">Ngẫu nhiên</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Múi Giờ:</span>
+          <span class="spec-val" id="sumTimezone">Tự động</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Ngôn Ngữ:</span>
+          <span class="spec-val" id="sumLanguage">Tự động</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Màn Hình:</span>
+          <span class="spec-val" id="sumScreen">Ngẫu nhiên</span>
+        </div>
+        <div class="spec-row">
+          <span class="spec-label">Trạng Thái Proxy:</span>
+          <span class="spec-val" id="sumProxyStatus" style="color: var(--text-muted);">Chưa check</span>
+        </div>
+        <div class="spec-row" style="border-top: 1px dashed var(--border); padding-top: 6px; margin-top: 2px;">
+          <span class="spec-label">Trạng Thái:</span>
+          <span class="spec-val" id="sumReady" style="color: var(--accent); font-weight: 800;">Sẵn sàng</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons Card -->
+      <div class="create-action-card">
+        <div id="createProfileMsg" style="font-size: 11.5px; color: var(--red); font-weight: 600; text-align: center; min-height: 16px;"></div>
+        <button class="btn-save-primary" id="btnSaveNewProfile" type="button">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          <span>Lưu Hồ Sơ</span>
+        </button>
+        <button class="btn-cancel-surface" id="btnCancelCreateProfile" type="button">
+          <span>Huỷ bỏ</span>
+        </button>
+      </div>
+    </aside>
+
+  </div>
+
+  <!-- Modal: Nhập Proxy hàng loạt -->
+  <div class="modal" id="importProxyModal" style="display: none; z-index: 100000; position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(8px); align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease;">
+    <div style="width: 480px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; box-shadow: 0 12px 36px rgba(0,0,0,0.2); display: flex; flex-direction: column; gap: 14px; transform: scale(0.95); transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border); padding-bottom: 10px;">
+        <h3 style="font-size: 14px; font-weight: 750; color: var(--text-primary); margin: 0;">Nhập Proxy Hàng Loạt</h3>
+        <button type="button" id="btnCloseImportProxy" style="background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 4px; display: grid; place-items: center;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      
+      <div class="form-group-clean">
+        <label class="form-label-clean" style="font-size: 11px;">Dán danh sách Proxy hoặc tải tệp lên (mỗi dòng 1 Proxy)</label>
+        <textarea id="importProxyTextarea" placeholder="Ví dụ:&#10;192.168.1.1:8080&#10;192.168.1.1:8080:username:password" style="width: 100%; height: 140px; background: var(--bg-deep); border: 1px solid var(--border); border-radius: 9px; padding: 10px; font-family: var(--font-mono); font-size: 12px; color: var(--text-primary); resize: none; outline: none; line-height: 1.5;"></textarea>
+      </div>
+      
+      <div style="display: flex; gap: 8px; justify-content: space-between; align-items: center;">
+        <div style="display: flex; gap: 6px;">
+          <button type="button" class="btn-secondary" id="btnUploadTxt" style="height: 32px; font-size: 11px; padding: 0 10px; font-weight: 600;">Import TXT</button>
+          <button type="button" class="btn-secondary" id="btnUploadCsv" style="height: 32px; font-size: 11px; padding: 0 10px; font-weight: 600;">Import CSV</button>
+          <button type="button" class="btn-secondary" id="btnPasteFromClipboard" style="height: 32px; font-size: 11px; padding: 0 10px; font-weight: 600;">Clipboard</button>
+          <input type="file" id="fileImportProxy" accept=".txt,.csv" style="display: none;">
+        </div>
+        <button type="button" class="btn-primary" id="btnConfirmImportProxy" style="height: 34px; padding: 0 18px; font-size: 12px; font-weight: 750; border: none; border-radius: 8px; background: var(--accent-grad);">Áp dụng</button>
+      </div>
+    </div>
+  </div>
+</div>

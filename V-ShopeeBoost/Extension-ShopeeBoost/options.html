@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Options — V-ShopeeBoost</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root {
+      --bg: #f9fafb; --surface: #ffffff; --surface2: #f3f4f6; --surface3: #e5e7eb;
+      --border: #e5e7eb; --border2: #d1d5db;
+      --text: #111827; --text-muted: #4b5563; --text-dim: #6b7280;
+      --orange: #111827; --orange-soft: #374151; --orange-glow: rgba(0,0,0,0.05); --orange-bg: #f3f4f6;
+      --blue: #4b5563; --blue-bg: rgba(0,0,0,0.05);
+      --green: #16a34a; --green-bg: rgba(22,163,74,0.10);
+      --red: #dc2626; --red-bg: rgba(220,38,38,0.10);
+      --grad: #111827;
+      --radius: 8px; --radius-sm: 6px;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:'Inter',-apple-system,sans-serif; font-size:14px; color:var(--text); background:var(--bg); min-height:100vh; -webkit-font-smoothing:antialiased; }
+    .container { max-width:760px; margin:0 auto; padding:32px 20px; }
+
+    /* HEADER */
+    .page-header {
+      display:flex; align-items:center; gap:14px; margin-bottom:32px;
+      padding-bottom:20px; border-bottom:1px solid var(--border);
+    }
+    .logo { width:44px; height:44px; border-radius:12px; box-shadow:0 0 16px var(--orange-glow); }
+    .page-title { font-size:22px; font-weight:700; background:var(--grad); -webkit-background-clip:text;  background-clip:text; }
+    .page-subtitle { font-size:13px; color:var(--text-muted); margin-top:3px; }
+
+    /* SECTIONS */
+    .section { margin-bottom:28px; }
+    .section-title { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.9px; color:var(--text-muted); margin-bottom:10px; }
+    .settings-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+    .settings-row {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 18px; border-bottom:1px solid var(--border); gap:16px;
+    }
+    .settings-row:last-child { border-bottom:none; }
+    .settings-row-left { flex:1; }
+    .settings-label { font-size:14px; font-weight:500; color:var(--text); }
+    .settings-desc { font-size:12px; color:var(--text-muted); margin-top:3px; }
+
+    /* Form Elements */
+    .form-input {
+      height:36px; padding:0 12px;
+      background:var(--surface2); border:1px solid var(--border2);
+      border-radius:var(--radius-sm); color:var(--text); font-size:13px; font-family:inherit;
+      outline:none; transition:border-color 0.2s;
+    }
+    .form-input:focus { border-color:var(--orange-soft); box-shadow:0 0 0 3px var(--orange-bg); }
+    select.form-input { cursor:pointer; min-width:160px; }
+
+    /* Toggle */
+    .toggle { position:relative; width:42px; height:24px; flex-shrink:0; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle-slider { position:absolute; inset:0; background:var(--surface3); border-radius:99px; border:1px solid var(--border2); cursor:pointer; transition:all 0.25s; }
+    .toggle-slider::before { content:''; position:absolute; width:17px; height:17px; left:3px; top:3px; background:#fff; border-radius:50%; transition:transform 0.25s; box-shadow:0 1px 4px rgba(0,0,0,0.3); }
+    .toggle input:checked + .toggle-slider { background:var(--orange-soft); border-color:var(--orange-soft); box-shadow:0 0 10px var(--orange-glow); }
+    .toggle input:checked + .toggle-slider::before { transform:translateX(18px); }
+
+    /* Buttons */
+    .btn { height:36px; padding:0 16px; border-radius:var(--radius-sm); border:1px solid var(--border2); background:var(--surface2); color:var(--text-dim); font-size:13px; font-weight:500; cursor:pointer; display:inline-flex; align-items:center; gap:6px; transition:all 0.15s; font-family:inherit; }
+    .btn:hover { background:var(--surface3); color:var(--text); }
+    .btn-primary { background:linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 100%); color:#fff; border:none; box-shadow:0 2px 10px var(--orange-glow); }
+    .btn-primary:hover { opacity:0.9; }
+    .btn-danger { background:var(--red-bg); color:var(--red); border-color:rgba(239,68,68,0.25); }
+
+    /* Stats */
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin-bottom:24px; }
+    .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:16px; text-align:center; }
+    .stat-value { font-size:28px; font-weight:700; color:var(--text); }
+    .stat-label { font-size:11px; color:var(--text-muted); margin-top:4px; }
+
+    /* Toast */
+    .toast-container { position:fixed; bottom:20px; right:20px; z-index:1000; display:flex; flex-direction:column; gap:8px; }
+    .toast { background:var(--surface2); border:1px solid var(--border2); color:var(--text); padding:10px 16px; border-radius:var(--radius-sm); font-size:13px; display:flex; align-items:center; gap:8px; animation:toastIn 0.2s ease both; }
+    @keyframes toastIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+    .toast.success { border-left:3px solid var(--green); }
+    .toast.error { border-left:3px solid var(--red); }
+
+    /* Info box */
+    .info-box { background:var(--blue-bg); border:1px solid rgba(59,130,246,0.2); border-radius:var(--radius-sm); padding:12px 14px; font-size:13px; color:#93c5fd; margin-bottom:16px; display:flex; gap:8px; align-items:flex-start; line-height:1.5; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <div class="page-header">
+    <img src="icons/icon48.png" alt="Logo" class="logo">
+    <div>
+      <div class="page-title">V-ShopeeBoost Options</div>
+      <div class="page-subtitle">Cài đặt nâng cao · Phiên bản <span id="versionDisplay">4.0.0</span></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-value" id="oStatShops">0</div>
+      <div class="stat-label">Shops đã lưu</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="oStatLogins">0</div>
+      <div class="stat-label">Lần đăng nhập</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="oStatHistory">0</div>
+      <div class="stat-label">Lịch sử</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="oStatSize">—</div>
+      <div class="stat-label">Dung lượng</div>
+    </div>
+  </div>
+
+  <!-- GENERAL -->
+  <div class="section">
+    <div class="section-title">Tổng quan</div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Domain Shopee mặc định</div>
+          <div class="settings-desc">Market mặc định khi mở popup</div>
+        </div>
+        <select class="form-input" id="optDefaultDomain">
+          <option value="shopee.vn">shopee.vn</option>
+          <option value="shopee.sg">shopee.sg</option>
+          <option value="shopee.my">shopee.my</option>
+          <option value="shopee.co.id">shopee.co.id</option>
+          <option value="shopee.ph">shopee.ph</option>
+          <option value="shopee.tw">shopee.tw</option>
+          <option value="shopee.co.th">shopee.co.th</option>
+        </select>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Tự động mở tab Shopee sau đăng nhập</div>
+          <div class="settings-desc">Mở tab mới sau khi set cookie thành công</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="optAutoOpenTab" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS -->
+  <div class="section">
+    <div class="section-title">Thông báo</div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Thông báo trên trang Shopee</div>
+          <div class="settings-desc">Hiện toast notification sau khi áp dụng cookie</div>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="optShowNotifications" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- DATA MANAGEMENT -->
+  <div class="section">
+    <div class="section-title">Quản lý dữ liệu</div>
+    <div class="info-box">
+      Dữ liệu được lưu trữ cục bộ trong trình duyệt của bạn, không gửi lên bất kỳ server nào.
+    </div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Sao lưu toàn bộ dữ liệu</div>
+          <div class="settings-desc">Xuất file JSON chứa shops, lịch sử, thống kê</div>
+        </div>
+        <button class="btn btn-primary" id="optBackup">Sao lưu ngay</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Khôi phục từ backup</div>
+          <div class="settings-desc">Import file JSON backup đã xuất trước đó</div>
+        </div>
+        <button class="btn" id="optRestore">Chọn file</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Xóa lịch sử đăng nhập</div>
+          <div class="settings-desc">Xóa toàn bộ log lịch sử (không ảnh hưởng danh sách shop)</div>
+        </div>
+        <button class="btn btn-danger" id="optClearHistory">Xóa lịch sử</button>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">Xóa tất cả dữ liệu</div>
+          <div class="settings-desc">Xóa hoàn toàn — không thể hoàn tác!</div>
+        </div>
+        <button class="btn btn-danger" id="optClearAll">Xóa tất cả</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PERMISSIONS INFO -->
+  <div class="section">
+    <div class="section-title">Quyền truy cập được sử dụng</div>
+    <div class="settings-card">
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">cookies</div>
+          <div class="settings-desc">Đọc/ghi cookie Shopee để đăng nhập tài khoản</div>
+        </div>
+        <span style="color:var(--green);font-size:12px;">✓ Cần thiết</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">tabs</div>
+          <div class="settings-desc">Mở tab Shopee mới, lấy URL tab đang active</div>
+        </div>
+        <span style="color:var(--green);font-size:12px;">✓ Cần thiết</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">storage</div>
+          <div class="settings-desc">Lưu trữ danh sách shop và cài đặt cục bộ</div>
+        </div>
+        <span style="color:var(--green);font-size:12px;">✓ Cần thiết</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">activeTab</div>
+          <div class="settings-desc">Đọc URL tab hiện tại để tự động lấy cookie</div>
+        </div>
+        <span style="color:var(--green);font-size:12px;">✓ Cần thiết</span>
+      </div>
+      <div class="settings-row">
+        <div class="settings-row-left">
+          <div class="settings-label">scripting</div>
+          <div class="settings-desc">Inject content script vào trang Shopee để hiển thị thông báo</div>
+        </div>
+        <span style="color:var(--green);font-size:12px;">✓ Cần thiết</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVE -->
+  <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+    <button class="btn" onclick="chrome.runtime.openOptionsPage ? chrome.runtime.openOptionsPage() : window.close()">Đóng</button>
+    <button class="btn btn-primary" id="btnSaveAll">✓ Lưu cài đặt</button>
+  </div>
+
+</div>
+
+<input type="file" id="restoreFile" accept=".json" style="display:none">
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+const APP_VERSION = '4.0.0';
+
+document.addEventListener('DOMContentLoaded', async () => {
+  const manifest = chrome.runtime.getManifest();
+  document.getElementById('versionDisplay').textContent = manifest.version || APP_VERSION;
+  await loadSettings();
+  await loadStats();
+});
+
+async function loadSettings() {
+  const settings = (await getStorage('settings')) || {};
+  const el = (id) => document.getElementById(id);
+  el('optDefaultDomain').value = settings.defaultDomain || 'shopee.vn';
+  el('optAutoOpenTab').checked = settings.autoOpenTab !== false;
+  el('optShowNotifications').checked = settings.showNotifications !== false;
+}
+
+async function loadStats() {
+  const [accounts, loginStats, loginHistory] = await Promise.all([
+    getStorage('accounts'), getStorage('loginStats'), getStorage('loginHistory')
+  ]);
+  const accs = accounts || [];
+  const stats = loginStats || {};
+  const hist = loginHistory || [];
+  document.getElementById('oStatShops').textContent = accs.length;
+  document.getElementById('oStatLogins').textContent = stats.totalLogins || 0;
+  document.getElementById('oStatHistory').textContent = hist.length;
+
+  // Estimate storage size
+  chrome.storage.local.getBytesInUse(null, bytes => {
+    const kb = (bytes / 1024).toFixed(1);
+    document.getElementById('oStatSize').textContent = kb + ' KB';
+  });
+}
+
+document.getElementById('btnSaveAll').addEventListener('click', async () => {
+  await setStorage({
+    settings: {
+      defaultDomain: document.getElementById('optDefaultDomain').value,
+      autoOpenTab: document.getElementById('optAutoOpenTab').checked,
+      showNotifications: document.getElementById('optShowNotifications').checked
+    }
+  });
+  showToast('Đã lưu cài đặt!', 'success');
+});
+
+document.getElementById('optBackup').addEventListener('click', async () => {
+  const all = await new Promise(r => chrome.storage.local.get(null, r));
+  const blob = new Blob([JSON.stringify({ version: APP_VERSION, createdAt: new Date().toISOString(), data: all }, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `vshopeeboost-backup-${Date.now()}.json`; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  showToast('Sao lưu thành công!', 'success');
+});
+
+document.getElementById('optRestore').addEventListener('click', () => document.getElementById('restoreFile').click());
+document.getElementById('restoreFile').addEventListener('change', async (e) => {
+  const file = e.target.files[0]; if (!file) return;
+  try {
+    const parsed = JSON.parse(await file.text());
+    if (!parsed.data) throw new Error('File không đúng định dạng');
+    if (!confirm('Sẽ ghi đè dữ liệu hiện tại. Tiếp tục?')) return;
+    await setStorage(parsed.data);
+    await loadStats();
+    showToast('Khôi phục thành công!', 'success');
+  } catch (err) { showToast('Lỗi: ' + err.message, 'error'); }
+  e.target.value = '';
+});
+
+document.getElementById('optClearHistory').addEventListener('click', async () => {
+  if (!confirm('Xóa toàn bộ lịch sử đăng nhập?')) return;
+  await setStorage({ loginHistory: [] });
+  await loadStats();
+  showToast('Đã xóa lịch sử', 'success');
+});
+
+document.getElementById('optClearAll').addEventListener('click', async () => {
+  if (!confirm('XÓA TOÀN BỘ dữ liệu? Không thể hoàn tác!')) return;
+  if (!confirm('Bạn chắc chắn muốn xóa tất cả?')) return;
+  await new Promise(r => chrome.storage.local.clear(r));
+  await loadStats();
+  showToast('Đã xóa tất cả dữ liệu', 'success');
+});
+
+function getStorage(key) {
+  return new Promise(r => chrome.storage.local.get(key, result => r(typeof key === 'string' ? result[key] : result)));
+}
+function setStorage(items) { return new Promise(r => chrome.storage.local.set(items, r)); }
+
+function showToast(msg, type = 'success') {
+  const c = document.getElementById('toastContainer');
+  const t = document.createElement('div');
+  t.className = `toast ${type}`;
+  t.textContent = msg;
+  c.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity 0.3s'; setTimeout(() => t.remove(), 350); }, 3000);
+}
+</script>
+</body>
+</html>

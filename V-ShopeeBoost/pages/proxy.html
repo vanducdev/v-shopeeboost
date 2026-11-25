@@ -1,0 +1,1413 @@
+<style>
+  /* 
+   * PROXY MANAGER ULTRA-MODERN 2026 DESIGN SYSTEM
+   * Cohesive with VMAX Browser Pro / SaaS Standards
+   */
+  :root {
+    --pm-bg: var(--bg-base);
+    --pm-bg-card: var(--bg-card);
+    --pm-bg-card2: var(--bg-card2);
+    --pm-border: var(--border);
+    --pm-border-md: var(--border-md);
+    --pm-text-primary: var(--text-primary);
+    --pm-text-secondary: var(--text-secondary);
+    --pm-text-muted: var(--text-muted);
+    --pm-accent: var(--accent);
+    --pm-accent-grad: var(--accent-grad);
+    --pm-shadow-sm: var(--shadow-sm);
+    --pm-shadow-md: var(--shadow-card);
+    --pm-shadow-lg: var(--shadow-elevated);
+    --pm-radius: 16px;
+    --pm-radius-sm: 10px;
+    --pm-font: var(--font);
+    --pm-font-mono: var(--font-mono);
+  }
+
+  .pm-wrapper {
+    font-family: var(--pm-font);
+    background-color: var(--pm-bg);
+    color: var(--pm-text-primary);
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 24px 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* ── HEADER & SEGMENTED TABS ── */
+  .pm-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 4px;
+    flex-shrink: 0;
+  }
+  .pm-header-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: var(--pm-text-primary);
+    margin: 0;
+  }
+  .pm-header-subtitle {
+    font-size: 12.5px;
+    color: var(--pm-text-muted);
+    margin: 3px 0 0 0;
+  }
+
+  .pm-segmented {
+    display: inline-flex;
+    background: var(--pm-bg-card2);
+    border: 1px solid var(--pm-border);
+    padding: 4px;
+    border-radius: 12px;
+    gap: 4px;
+  }
+  .pm-tab-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    font-size: 12.5px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--pm-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+  }
+  .pm-tab-btn:hover {
+    color: var(--pm-text-primary);
+  }
+  .pm-tab-btn.active {
+    background: var(--pm-bg-card);
+    color: var(--pm-accent);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  /* ── CARDS & PANELS ── */
+  .pm-card {
+    background: var(--pm-bg-card);
+    border: 1px solid var(--pm-border);
+    border-radius: var(--pm-radius);
+    box-shadow: var(--pm-shadow-sm);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .pm-card:hover {
+    border-color: var(--border-hi);
+  }
+
+  /* ── BUTTONS ── */
+  .pm-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--pm-radius-sm);
+    border: 1px solid var(--pm-border);
+    background: var(--pm-bg-card);
+    color: var(--pm-text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    white-space: nowrap;
+  }
+  .pm-btn:hover {
+    background: var(--bg-hover);
+    color: var(--pm-text-primary);
+    border-color: var(--pm-accent);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  }
+  .pm-btn:active {
+    transform: translateY(0);
+  }
+  .pm-btn-primary {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: #ffffff !important;
+    border: none;
+    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+  }
+  .pm-btn-primary:hover {
+    filter: brightness(1.08);
+    box-shadow: 0 5px 16px rgba(99, 102, 241, 0.45);
+    transform: translateY(-1px);
+  }
+  .pm-btn-danger {
+    background: rgba(239, 68, 68, 0.06);
+    border-color: rgba(239, 68, 68, 0.25);
+    color: #ef4444;
+  }
+  .pm-btn-danger:hover {
+    background: rgba(239, 68, 68, 0.14);
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+
+  /* ── FORMS & INPUTS ── */
+  .pm-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--pm-text-secondary);
+    letter-spacing: 0.6px;
+    margin-bottom: 7px;
+    display: block;
+  }
+  .pm-input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  .pm-input-icon {
+    position: absolute;
+    left: 12px;
+    color: var(--pm-text-muted);
+    display: flex;
+    align-items: center;
+    pointer-events: none;
+  }
+  .pm-input {
+    width: 100%;
+    height: 38px;
+    background: var(--pm-bg-card2);
+    border: 1px solid var(--pm-border);
+    border-radius: var(--pm-radius-sm);
+    padding: 0 12px 0 36px;
+    font-size: 13px;
+    color: var(--pm-text-primary);
+    transition: all 0.2s;
+    outline: none;
+    box-sizing: border-box;
+    font-family: inherit;
+  }
+  .pm-input:focus {
+    border-color: var(--pm-accent);
+    background: var(--pm-bg-card);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+  .pm-input-noicon {
+    padding-left: 12px;
+  }
+  .pm-textarea {
+    width: 100%;
+    background: var(--pm-bg-card2);
+    border: 1px solid var(--pm-border);
+    border-radius: var(--pm-radius-sm);
+    padding: 12px;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 12px;
+    color: var(--pm-text-primary);
+    transition: all 0.2s;
+    outline: none;
+    resize: none;
+    box-sizing: border-box;
+    line-height: 1.5;
+  }
+  .pm-textarea:focus {
+    border-color: var(--pm-accent);
+    background: var(--pm-bg-card);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+
+  /* ── TAB 1: CHECK PROXY LAYOUT ── */
+  .pm-checker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 1040px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .pm-checker-card {
+    padding: 24px;
+  }
+  .pm-textarea-container {
+    position: relative;
+    margin-bottom: 16px;
+  }
+  .pm-textarea-actions {
+    position: absolute;
+    top: -2px;
+    right: 0;
+    display: flex;
+    gap: 6px;
+  }
+  .pm-textarea-btn {
+    padding: 4px 10px;
+    font-size: 11.5px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  /* Telemetry Grid */
+  .pm-result-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid var(--pm-border);
+  }
+  .pm-result-cell {
+    background: var(--pm-bg-card2);
+    border: 1px solid var(--pm-border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    transition: all 0.15s ease;
+  }
+  .pm-result-cell:hover {
+    border-color: var(--border-hi);
+    background: var(--bg-hover);
+  }
+  .pm-result-cell-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--pm-text-secondary);
+    font-weight: 500;
+  }
+  .pm-result-cell-left svg {
+    color: var(--pm-text-muted);
+    flex-shrink: 0;
+  }
+  .pm-result-cell-value {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--pm-text-primary);
+    text-align: right;
+  }
+
+  /* ── TABLES ── */
+  .pm-table-container {
+    overflow-x: auto;
+    border: 1px solid var(--pm-border);
+    border-radius: 12px;
+    background: var(--pm-bg-card);
+  }
+  .pm-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+    text-align: left;
+  }
+  .pm-table th {
+    background: var(--pm-bg-card2);
+    color: var(--pm-text-secondary);
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--pm-border);
+    white-space: nowrap;
+  }
+  .pm-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--pm-border);
+    color: var(--pm-text-primary);
+    vertical-align: middle;
+  }
+  .pm-table tr:last-child td {
+    border-bottom: none;
+  }
+  .pm-table tbody tr {
+    transition: background-color 0.15s ease;
+  }
+  .pm-table tbody tr:hover {
+    background-color: var(--bg-hover);
+  }
+
+  /* ── BADGES & STATUS ── */
+  .pm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 3px 9px;
+    border-radius: 99px;
+    font-size: 11px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .pm-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .pm-badge-online {
+    background: rgba(16, 185, 129, 0.08);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+  }
+  .pm-badge-online::before {
+    background: #10b981;
+    box-shadow: 0 0 6px rgba(16, 185, 129, 0.6);
+  }
+  .pm-badge-offline {
+    background: rgba(239, 68, 68, 0.08);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+  }
+  .pm-badge-offline::before {
+    background: #ef4444;
+  }
+  .pm-badge-timeout {
+    background: rgba(245, 158, 11, 0.08);
+    color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+  .pm-badge-timeout::before {
+    background: #f59e0b;
+  }
+  .pm-badge-unknown {
+    background: var(--bg-hover);
+    color: var(--pm-text-muted);
+    border: 1px solid var(--pm-border);
+  }
+  .pm-badge-unknown::before {
+    background: var(--pm-text-muted);
+  }
+
+  /* ── TAB 2: ROTATE PROXY ── */
+  .pm-rotate-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .pm-rotate-card {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pm-provider-select-wrapper {
+    position: relative;
+    width: 100%;
+  }
+  .pm-provider-logo {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--pm-accent);
+    font-size: 10px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .pm-select {
+    width: 100%;
+    height: 38px;
+    background: var(--pm-bg-card2);
+    border: 1px solid var(--pm-border);
+    border-radius: var(--pm-radius-sm);
+    padding: 0 12px;
+    font-size: 12.5px;
+    color: var(--pm-text-primary);
+    font-family: inherit;
+    font-weight: 500;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .pm-select:focus {
+    border-color: var(--pm-accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+  .pm-countdown-container {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(99, 102, 241, 0.08);
+    color: var(--pm-accent);
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .pm-countdown-timer {
+    font-weight: 800;
+    font-family: var(--pm-font-mono);
+  }
+
+  /* ── TAB 3: MANAGE PROXY (DATABASE) ── */
+  .pm-db-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+    align-items: start;
+  }
+  .pm-db-sidebar {
+    position: sticky;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .pm-checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--pm-text-secondary);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .pm-checkbox-label input {
+    width: 15px;
+    height: 15px;
+    border-radius: 4px;
+    accent-color: var(--pm-accent);
+    cursor: pointer;
+  }
+  .pm-db-import-methods {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .pm-db-import-btn {
+    padding: 10px 4px;
+    font-size: 11px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    height: 58px;
+  }
+
+  /* Stats row */
+  .pm-stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .pm-stat-card {
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .pm-stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .pm-stat-label {
+    font-size: 11.5px;
+    color: var(--pm-text-muted);
+    font-weight: 600;
+  }
+  .pm-stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--pm-text-primary);
+    letter-spacing: -0.5px;
+  }
+  .pm-stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .pm-stat-icon.blue { background: rgba(99, 102, 241, 0.1); color: #6366f1; }
+  .pm-stat-icon.green { background: rgba(16, 185, 129, 0.1); color: #10b981; }
+  .pm-stat-icon.red { background: rgba(239, 68, 68, 0.1); color: #ef4444; }
+  .pm-stat-icon.purple { background: rgba(168, 85, 247, 0.1); color: #a855f7; }
+
+  /* Toolbar */
+  .pm-db-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    background: var(--pm-bg-card);
+    border: 1px solid var(--pm-border);
+    padding: 10px 14px;
+    border-radius: 12px;
+    box-shadow: var(--pm-shadow-sm);
+  }
+  .pm-db-toolbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    max-width: 540px;
+  }
+  .pm-db-toolbar-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Progress micro-bar */
+  .pm-progress-bar {
+    width: 50px;
+    height: 5px;
+    background: var(--pm-border);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .pm-progress-fill {
+    height: 100%;
+    background: #10b981;
+    border-radius: 99px;
+  }
+  .pm-progress-fill.warn { background: #f59e0b; }
+  .pm-progress-fill.danger { background: #ef4444; }
+
+  /* Empty state */
+  .pm-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+  }
+  .pm-empty-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: var(--bg-hover);
+    color: var(--pm-text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .pm-empty-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--pm-text-primary);
+    margin: 0 0 6px 0;
+  }
+  .pm-empty-desc {
+    font-size: 12.5px;
+    color: var(--pm-text-muted);
+    max-width: 320px;
+    margin: 0 0 16px 0;
+    line-height: 1.5;
+  }
+
+  /* ── MODAL ── */
+  .pm-modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.45);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+  }
+  .pm-modal {
+    background: var(--pm-bg-card);
+    border: 1px solid var(--pm-border);
+    border-radius: 16px;
+    width: 480px;
+    max-width: 90vw;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: pmModalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @keyframes pmModalFadeIn {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+  .pm-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--pm-border);
+  }
+  .pm-modal-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--pm-text-primary);
+    margin: 0;
+  }
+  .pm-modal-close {
+    background: transparent;
+    border: none;
+    color: var(--pm-text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .pm-modal-close:hover {
+    color: var(--pm-text-primary);
+    background: var(--bg-hover);
+  }
+  .pm-modal-body {
+    padding: 20px;
+  }
+  .pm-dropzone {
+    border: 2px dashed var(--pm-border);
+    border-radius: 12px;
+    padding: 28px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--pm-bg-card2);
+  }
+  .pm-dropzone:hover, .pm-dropzone.dragover {
+    border-color: var(--pm-accent);
+    background: rgba(99, 102, 241, 0.03);
+  }
+  .pm-dropzone-icon {
+    color: var(--pm-accent);
+    margin-bottom: 8px;
+  }
+  .pm-dropzone-text {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pm-text-primary);
+  }
+  .pm-dropzone-sub {
+    font-size: 11.5px;
+    color: var(--pm-text-muted);
+    margin-top: 4px;
+  }
+  .pm-import-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .pm-import-stat-box {
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--pm-border);
+    font-size: 12px;
+  }
+  .pm-import-stat-box.success {
+    background: rgba(16, 185, 129, 0.06);
+    border-color: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+  }
+  .pm-import-stat-box.error {
+    background: rgba(239, 68, 68, 0.06);
+    border-color: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+  }
+  .pm-progress-container {
+    margin-top: 14px;
+  }
+  .pm-progress-label-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11.5px;
+    color: var(--pm-text-secondary);
+    margin-bottom: 5px;
+    font-weight: 600;
+  }
+  .pm-progress-line {
+    width: 100%;
+    height: 6px;
+    background: var(--pm-border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .pm-progress-line-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--pm-accent-grad);
+    border-radius: 3px;
+    transition: width 150ms ease;
+  }
+
+  /* Skeleton animation */
+  .pm-skeleton {
+    animation: pmSkeletonLoading 1.5s infinite ease-in-out;
+    background: linear-gradient(90deg, var(--pm-border) 25%, rgba(255,255,255,0.08) 37%, var(--pm-border) 63%);
+    background-size: 400% 100%;
+  }
+  /* Responsive Adaptations for Proxy Manager */
+  @media screen and (max-width: 1150px) {
+    .pm-wrapper {
+      padding: 14px 18px 24px;
+      gap: 14px;
+    }
+    .pm-rotate-grid {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .pm-db-layout {
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+    .pm-db-sidebar {
+      position: static;
+    }
+    .pm-stats-row {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .pm-db-toolbar {
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+
+  @media screen and (max-width: 768px) {
+    .pm-stats-row {
+      grid-template-columns: 1fr;
+    }
+    .pm-table {
+      min-width: 780px;
+    }
+    .pm-table-card {
+      overflow-x: auto;
+    }
+  }
+
+  @media screen and (max-height: 740px) {
+    .pm-wrapper {
+      padding: 12px 16px 20px;
+      gap: 12px;
+    }
+    .pm-header {
+      padding-bottom: 0;
+    }
+    .pm-card {
+      padding: 16px;
+    }
+  }
+</style>
+
+<div class="pm-wrapper">
+  <!-- HEADER -->
+  <div class="pm-header">
+    <div class="pm-header-left">
+      <h1 class="pm-header-title">Proxy Manager</h1>
+      <p class="pm-header-subtitle">Quản lý kho proxy, kiểm tra độ ẩn danh và xoay IP tự động</p>
+    </div>
+    <div class="pm-header-right">
+      <div class="pm-segmented">
+        <button class="pm-tab-btn active" id="tabCheckProxy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6v7z"/><path d="m9 12 2 2 4-4"/></svg>
+          <span>Kiểm tra Proxy</span>
+        </button>
+        <button class="pm-tab-btn" id="tabRotateProxy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+          <span>Proxy API</span>
+        </button>
+        <button class="pm-tab-btn" id="tabManageProxy">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+          <span>Danh sách Proxy</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 1: CHECK PROXY -->
+  <div id="sectionCheckProxy" class="pm-section">
+    <div class="pm-checker-container">
+      <div class="pm-card pm-checker-card">
+        <div style="display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px;">
+          <div class="pm-stat-icon blue" style="width: 44px; height: 44px; border-radius: 12px; flex-shrink:0;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6v7z"/><path d="m9 12 2 2 4-4"/></svg>
+          </div>
+          <div>
+            <h3 style="font-size: 16px; font-weight: 700; color: var(--pm-text-primary); margin: 0;">Kiểm tra Độ Sống & Ẩn Danh của Proxy</h3>
+            <p style="font-size: 12.5px; color: var(--pm-text-muted); margin: 4px 0 0 0;">Phân tích tốc độ ping, IP xuất hiện thực tế, vị trí địa lý, nhà mạng (ISP) và kiểm tra rò rỉ WebRTC / DNS.</p>
+          </div>
+        </div>
+
+        <div class="pm-textarea-container">
+          <label class="pm-label">Địa chỉ Proxy</label>
+          <div class="pm-textarea-actions">
+            <button class="pm-btn pm-textarea-btn" id="btnPasteClipboardCheck" title="Dán nội dung từ bộ nhớ tạm">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/></svg>
+              <span>Dán Clipboard</span>
+            </button>
+            <button class="pm-btn pm-textarea-btn pm-btn-danger" id="btnClearCheckInput" title="Xóa dữ liệu nhập">
+              <span>Xóa</span>
+            </button>
+          </div>
+          <textarea class="pm-textarea" id="proxyCheckInput" rows="4" placeholder="Nhập địa chỉ proxy để kiểm tra, hỗ trợ đầy đủ các định dạng:&#10;• IP:PORT (Ví dụ: 192.168.1.1:8080)&#10;• IP:PORT:USER:PASS (Ví dụ: 192.168.1.1:8080:user:pass)&#10;• SOCKS5://IP:PORT:USER:PASS hoặc HTTP://IP:PORT"></textarea>
+        </div>
+
+        <button class="pm-btn pm-btn-primary" id="btnCheckProxy" style="width: 100%; height: 42px; font-size: 13.5px; border-radius: 10px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          <span>Kiểm Tra Proxy Ngay</span>
+        </button>
+
+        <!-- Dynamic Results Card -->
+        <div id="proxyCheckResultCard" style="display: none;">
+          <div class="pm-result-grid">
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+                <span>IP kết nối:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkIp" style="font-family: var(--pm-font-mono);">—</span>
+            </div>
+            
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Quốc gia:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkCountry" style="display: flex; align-items: center; gap: 6px;">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                <span>Thành phố:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkCity">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                <span>Nhà mạng (ISP):</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkIsp" style="max-width: 170px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/></svg>
+                <span>Mã ASN:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkAsn">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                <span>Múi giờ:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkTimezone">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><circle cx="12" cy="20" r="1"/></svg>
+                <span>Tốc độ (Ping):</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkPing" style="color: #10b981; font-family: var(--pm-font-mono);">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                <span>Độ trễ:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkLatency">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6v7z"/></svg>
+                <span>Hỗ trợ HTTPS:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkHttps" style="color: #10b981;">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6v7z"/></svg>
+                <span>Hỗ trợ SOCKS:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkSocks">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Ẩn danh:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkAnonymous" style="color: #10b981;">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>Elite Proxy:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkElite">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>WebRTC:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkWebRTC" style="color: #10b981;">—</span>
+            </div>
+
+            <div class="pm-result-cell">
+              <div class="pm-result-cell-left">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                <span>DNS Leak:</span>
+              </div>
+              <span class="pm-result-cell-value" id="chkDnsLeak" style="color: #10b981;">—</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Checked History List -->
+      <div class="pm-card" style="padding: 22px;">
+        <h3 style="font-size: 14.5px; font-weight: 700; color: var(--pm-text-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--pm-accent);"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Lịch sử kiểm tra gần đây (Tối đa 10 proxy)</span>
+        </h3>
+        <div class="pm-table-container">
+          <table class="pm-table" id="tblCheckHistory">
+            <thead>
+              <tr>
+                <th>Địa chỉ Proxy</th>
+                <th style="width: 100px;">Trạng thái</th>
+                <th style="width: 90px;">Latency</th>
+                <th style="width: 140px;">Quốc gia</th>
+                <th style="width: 140px;">Ngày kiểm tra</th>
+                <th style="width: 160px; text-align: center;">Hành động</th>
+              </tr>
+            </thead>
+            <tbody id="tblCheckHistoryBody">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 26px; color: var(--pm-text-muted);">Không có lịch sử kiểm tra proxy nào.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: ROTATE PROXY -->
+  <div id="sectionRotateProxy" class="pm-section" style="display: none;">
+    <div style="max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px;">
+      <div class="pm-rotate-grid">
+        <!-- Card 1: API Config -->
+        <div class="pm-card pm-rotate-card">
+          <h3 style="font-size: 14.5px; font-weight: 700; color: var(--pm-text-primary); margin: 0; display:flex; align-items:center; gap:8px;">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--pm-accent);"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span>Cấu hình API Key xoay IP</span>
+          </h3>
+          
+          <div class="form-group" style="margin: 0;">
+            <label class="pm-label">Nhà cung cấp Proxy</label>
+            <div class="pm-provider-select-wrapper">
+              <span class="pm-provider-logo" id="providerLogo">NP</span>
+              <select class="pm-select" id="rotateProvider" style="padding-left: 42px;">
+                <option value="kiotproxy">KiotProxy (kiotproxy.com)</option>
+                <option value="nestproxy">NestProxy (nestproxy.com)</option>
+                <option value="tmproxy">TMProxy (tmproxy.com)</option>
+                <option value="wwproxy">WWProxy (wwproxy.com)</option>
+                <option value="922proxy">922Proxy (922proxy.com)</option>
+                <option value="tinsoft">Tinsoft (tinsoftshare.com)</option>
+                <option value="proxyvn">ProxyVN (proxy.vn)</option>
+                <option value="mktproxy">MKTProxy (mktproxy.com)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin: 0;">
+            <label class="pm-label" id="lblRotateApiKey">API Key / License Key</label>
+            <div class="pm-input-wrapper">
+              <span class="pm-input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/><path d="m15.5 7.5 3 3L22 7l-3-3"/></svg>
+              </span>
+              <input type="password" class="pm-input" id="rotateApiKey" placeholder="Nhập API Key...">
+              <div style="position: absolute; right: 8px; display: flex; gap: 4px;">
+                <button class="pm-btn" id="btnToggleApiKeyMask" style="border:none; background:transparent; padding:4px; width:28px; height:28px;" title="Hiện/Ẩn API Key">
+                  <svg id="iconEyeOpen" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <svg id="iconEyeClosed" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24"/><path d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"/><path d="M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+                </button>
+                <button class="pm-btn" id="btnCopyApiKey" style="border:none; background:transparent; padding:4px; width:28px; height:28px;" title="Sao chép API Key">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group" id="groupProxyKey" style="margin: 0;">
+            <label class="pm-label">Proxy Key (chỉ dùng cho NestProxy)</label>
+            <div class="pm-input-wrapper">
+              <span class="pm-input-icon">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="7.5" cy="15.5" r="5.5"/><path d="m21 2-9.6 9.6"/></svg>
+              </span>
+              <input type="text" class="pm-input" id="rotateProxyKey" placeholder="Nhập Proxy Key...">
+            </div>
+          </div>
+
+          <button class="pm-btn pm-btn-primary" id="btnTestApi" style="height: 38px; font-size:12.5px; border-radius:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            <span>Kiểm tra kết nối API</span>
+          </button>
+        </div>
+
+        <!-- Card 2: Current Proxy Info -->
+        <div class="pm-card pm-rotate-card">
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+            <h3 style="font-size: 14.5px; font-weight: 700; color: var(--pm-text-primary); margin: 0; display:flex; align-items:center; gap:8px;">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: #10b981;"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+              <span>Thông tin Proxy Hiện Tại</span>
+            </h3>
+            <div class="pm-countdown-container" id="rotateCountdownWidget" style="display: none;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <span>Xoay sau:</span>
+              <span class="pm-countdown-timer" id="rotateCountdownValue">30s</span>
+            </div>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px; flex: 1;">
+            <div class="pm-result-cell" style="padding:10px 14px;">
+              <span class="pm-result-cell-left">IP hiện tại:</span>
+              <strong id="rotateCurrentIp" style="font-family: var(--pm-font-mono); font-size:13px; color:var(--pm-text-primary);">—</strong>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="pm-result-cell" style="padding:8px 12px;">
+                <span class="pm-result-cell-left" style="font-size:11.5px;">Quốc gia:</span>
+                <span id="rotateCurrentCountry" style="font-weight:700; color:var(--pm-text-primary); font-size:12px;">—</span>
+              </div>
+              <div class="pm-result-cell" style="padding:8px 12px;">
+                <span class="pm-result-cell-left" style="font-size:11.5px;">ISP mạng:</span>
+                <span id="rotateCurrentIsp" style="font-weight:700; color:var(--pm-text-primary); max-width:90px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px;">—</span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+              <div class="pm-result-cell" style="padding:8px 12px;">
+                <span class="pm-result-cell-left" style="font-size:11.5px;">Hạn dùng:</span>
+                <span id="rotateCurrentExpiration" style="font-weight:700; color:var(--pm-text-primary); font-size:12px;">—</span>
+              </div>
+              <div class="pm-result-cell" style="padding:8px 12px;">
+                <span class="pm-result-cell-left" style="font-size:11.5px;">Đổi lần cuối:</span>
+                <span id="rotateCurrentLastRotated" style="font-weight:700; color:var(--pm-text-primary); font-size:12px;">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="proxy-rotate-result" id="proxyRotateResult" style="display: none; border-top: 1px solid var(--pm-border); padding-top:14px;">
+            <label class="pm-label">Địa chỉ IP mới nhận:</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="rotateResultValue" readonly class="pm-input pm-input-noicon" style="font-family: var(--pm-font-mono); font-size:13px; font-weight:700; color:#4F7CFF; height: 38px;" value="">
+              <button class="pm-btn pm-btn-primary" id="btnCopyRotateResult" style="height:38px; padding:0 14px; font-size:12px;">Sao chép</button>
+            </div>
+          </div>
+
+          <button class="pm-btn pm-btn-primary" id="btnRotateProxy" style="height: 40px; font-size: 13px; border-radius:10px; width:100%;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+            <span>Đổi IP Ngay</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Rotation History Table -->
+      <div class="pm-card" style="padding: 22px;">
+        <h3 style="font-size: 14.5px; font-weight: 700; color: var(--pm-text-primary); margin: 0 0 16px 0; display: flex; align-items: center; gap: 8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--pm-accent);"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M12 3v12"/><path d="M16 19h5M5 19H2"/></svg>
+          <span>Nhật ký đổi IP xoay (Tối đa 20 lần gần nhất)</span>
+        </h3>
+        <div class="pm-table-container">
+          <table class="pm-table" id="tblRotateHistory">
+            <thead>
+              <tr>
+                <th>IP cũ</th>
+                <th style="width: 40px; text-align: center;">→</th>
+                <th>IP mới</th>
+                <th style="width: 140px;">Nhà cung cấp</th>
+                <th style="width: 160px;">Thời gian</th>
+                <th style="width: 120px;">Trạng thái</th>
+              </tr>
+            </thead>
+            <tbody id="tblRotateHistoryBody">
+              <tr>
+                <td colspan="6" style="text-align: center; padding: 26px; color: var(--pm-text-muted);">Không có nhật ký xoay IP.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: MANAGE PROXY (DATABASE) -->
+  <div id="sectionManageProxy" class="pm-section" style="display: none;">
+    <div class="pm-db-layout">
+      <!-- Database Left Sidebar -->
+      <div class="pm-db-sidebar">
+        <div class="pm-card" style="padding: 18px;">
+          <h3 style="font-size: 14px; font-weight: 700; color: var(--pm-text-primary); margin: 0 0 14px 0; border-bottom: 1px solid var(--pm-border); padding-bottom: 10px; display:flex; align-items:center; gap:8px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--pm-accent);"><path d="M5 12h14M12 5v14"/></svg>
+            <span>Thêm Proxy Hàng Loạt</span>
+          </h3>
+          
+          <div class="form-group" style="margin-bottom: 12px;">
+            <label class="pm-label">Danh sách Proxy (1 dòng / proxy)</label>
+            <textarea id="manageProxyInput" class="pm-textarea" rows="7" placeholder="Nhập proxy hỗ trợ: HTTP, HTTPS, SOCKS4, SOCKS5&#10;Định dạng:&#10;IP:PORT&#10;IP:PORT:USER:PASS&#10;SOCKS5://IP:PORT:USER:PASS" style="height: 160px;"></textarea>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px;">
+            <label class="pm-checkbox-label">
+              <input type="checkbox" id="chkAutoCheck" checked>
+              <span>Tự động kiểm tra (Auto Check)</span>
+            </label>
+            <label class="pm-checkbox-label">
+              <input type="checkbox" id="chkAutoDetect" checked>
+              <span>Tự động nhận diện Protocol</span>
+            </label>
+            <label class="pm-checkbox-label">
+              <input type="checkbox" id="chkAutoGroup" checked>
+              <span>Tự động nhóm Proxy</span>
+            </label>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 14px;">
+            <label class="pm-label">Gán vào nhóm</label>
+            <div class="pm-provider-select-wrapper">
+              <span class="pm-provider-logo">📁</span>
+              <select class="pm-select" id="selectProxyGroup" style="padding-left:40px;">
+                <option value="default">Mặc định</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Quick File/Clipboard Import Options -->
+          <div class="pm-db-import-methods" style="margin-bottom: 14px;">
+            <button class="pm-btn pm-db-import-btn" id="btnImportTxt" title="Nhập từ file TXT">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+              <span>Import TXT</span>
+            </button>
+            <button class="pm-btn pm-db-import-btn" id="btnImportCsv" title="Nhập từ file CSV">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/></svg>
+              <span>Import CSV</span>
+            </button>
+            <button class="pm-btn pm-db-import-btn" id="btnImportClipboard" title="Dán nhanh từ Clipboard">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/></svg>
+              <span>Dán Proxy</span>
+            </button>
+          </div>
+
+          <button class="pm-btn pm-btn-primary" id="btnSaveManageProxy" style="width: 100%; height: 38px; font-size:13px; border-radius:10px;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg>
+            <span>Thêm Proxy Vào Kho</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Database Right Container -->
+      <div class="pm-db-content">
+        <!-- STATS SECTION -->
+        <div class="pm-stats-row">
+          <div class="pm-card pm-stat-card">
+            <div class="pm-stat-info">
+              <span class="pm-stat-label">Tổng Proxy</span>
+              <span class="pm-stat-value" id="statTotalCount">0</span>
+            </div>
+            <div class="pm-stat-icon blue">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/><path d="M3 12c0 1.66 4 3 9 3s9-1.34 9-3"/></svg>
+            </div>
+          </div>
+
+          <div class="pm-card pm-stat-card">
+            <div class="pm-stat-info">
+              <span class="pm-stat-label">Đang Hoạt Động</span>
+              <span class="pm-stat-value" id="statOnlineCount" style="color: #10b981;">0</span>
+            </div>
+            <div class="pm-stat-icon green">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><circle cx="12" cy="20" r="1"/></svg>
+            </div>
+          </div>
+
+          <div class="pm-card pm-stat-card">
+            <div class="pm-stat-info">
+              <span class="pm-stat-label">Không Hoạt Động</span>
+              <span class="pm-stat-value" id="statOfflineCount" style="color: #ef4444;">0</span>
+            </div>
+            <div class="pm-stat-icon red">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 13c0 5-3.5 7.5-7.66 9.7a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 .76-.97l8-2a1 1 0 0 1 .48 0l8 2A1 1 0 0 1 20 6v7z"/></svg>
+            </div>
+          </div>
+
+          <div class="pm-card pm-stat-card">
+            <div class="pm-stat-info">
+              <span class="pm-stat-label">Avg Ping</span>
+              <span class="pm-stat-value" id="statAvgPing" style="color: #a855f7;">0ms</span>
+            </div>
+            <div class="pm-stat-icon purple">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+          </div>
+        </div>
+
+        <!-- TOOLBAR -->
+        <div class="pm-db-toolbar">
+          <div class="pm-db-toolbar-left">
+            <div class="pm-input-wrapper">
+              <span class="pm-input-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </span>
+              <input type="text" class="pm-input" id="dbSearch" placeholder="Tìm kiếm IP, ISP, quốc gia, nhóm..." style="height: 36px; font-size:12.5px; border-radius:10px;">
+            </div>
+            <div style="width: 140px; flex-shrink: 0;">
+              <select class="pm-select" id="dbFilterStatus" style="height:36px; font-size:12px; border-radius:10px;">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="Online">Online / Live</option>
+                <option value="Offline">Offline / Die</option>
+                <option value="Timeout">Timeout</option>
+                <option value="Unknown">Chưa kiểm tra</option>
+              </select>
+            </div>
+            <div style="width: 135px; flex-shrink: 0;">
+              <select class="pm-select" id="dbSortOrder" style="height:36px; font-size:12px; border-radius:10px;">
+                <option value="newest">Mới thêm trước</option>
+                <option value="oldest">Cũ thêm trước</option>
+                <option value="latency-asc">Ping: Thấp nhất</option>
+                <option value="latency-desc">Ping: Cao nhất</option>
+                <option value="ip-asc">IP: A → Z</option>
+              </select>
+            </div>
+          </div>
+          <div class="pm-db-toolbar-right">
+            <button class="pm-btn" id="btnDbRefresh" style="height: 36px; width: 36px; padding:0; border-radius:10px;" title="Tải lại danh sách">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 16h5v5"/></svg>
+            </button>
+            <button class="pm-btn" id="btnDbExport" style="height: 36px; font-size:12px; padding:0 12px; border-radius:10px;" title="Xuất danh sách Proxy">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+              <span>Export</span>
+            </button>
+            <button class="pm-btn pm-btn-danger" id="btnClearAllManagedProxy" style="height: 36px; font-size:12px; padding:0 12px; border-radius:10px;" title="Xóa tất cả proxy trong danh sách">
+              <span>Xóa tất cả</span>
+            </button>
+            <button class="pm-btn pm-btn-primary" id="btnCheckAllDb" style="height: 36px; font-size:12px; padding:0 12px; border-radius:10px;" title="Kiểm tra toàn bộ proxy">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+              <span>Check All</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- DATABASE TABLE / EMPTY STATE -->
+        <div class="pm-card" style="padding: 0px; border-radius:14px; overflow:hidden;">
+          <div class="pm-table-container" style="border:none; border-radius:0;">
+            <table class="pm-table" id="tblProxyList">
+              <thead>
+                <tr>
+                  <th style="width: 34px; padding: 12px 14px;">
+                    <input type="checkbox" id="chkSelectAllRows" style="cursor:pointer; width:15px; height:15px; accent-color: var(--pm-accent);">
+                  </th>
+                  <th>Địa chỉ Proxy</th>
+                  <th style="width: 90px;">Protocol</th>
+                  <th style="width: 140px;">Quốc gia / TP</th>
+                  <th style="width: 150px;">Nhà mạng (ISP)</th>
+                  <th style="width: 90px;">Ping</th>
+                  <th style="width: 110px;">Trạng thái</th>
+                  <th style="width: 140px;">Profile sử dụng</th>
+                  <th style="width: 70px; text-align: center;">Hành động</th>
+                </tr>
+              </thead>
+              <tbody id="tblProxyBody">
+                <!-- Nạp động qua JS -->
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State Inside Panel -->
+          <div class="pm-empty-state" id="dbEmptyState" style="display: none;">
+            <div class="pm-empty-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/><ellipse cx="11" cy="11" rx="4" ry="2"/></svg>
+            </div>
+            <h4 class="pm-empty-title">Chưa có Proxy nào trong kho</h4>
+            <p class="pm-empty-desc">Nhập danh sách proxy ở bảng bên trái hoặc import từ file TXT/CSV để bắt đầu quản lý.</p>
+            <button class="pm-btn pm-btn-primary" onclick="document.getElementById('manageProxyInput').focus();" style="border-radius:10px; font-size:12.5px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5v14"/></svg>
+              <span>Thêm Proxy Ngay</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- IMPORT POPUP MODAL -->
+  <div class="pm-modal-overlay" id="importProxyModal">
+    <div class="pm-modal">
+      <div class="pm-modal-header">
+        <h3 class="pm-modal-title" id="importModalTitle">Import Proxy</h3>
+        <button class="pm-modal-close" onclick="closeModal('importProxyModal')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <div class="pm-modal-body">
+        <div class="pm-dropzone" id="importDropzone">
+          <div class="pm-dropzone-icon">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </div>
+          <div class="pm-dropzone-text" id="dropzoneText">Kéo thả tệp tin vào đây hoặc click để chọn</div>
+          <div class="pm-dropzone-sub">Hỗ trợ định dạng .TXT hoặc .CSV</div>
+          <input type="file" id="fileImportInput" style="display:none;" accept=".txt,.csv">
+        </div>
+
+        <!-- VALIDATION RESULTS -->
+        <div class="pm-import-stats" id="importStatsWrapper" style="display: none;">
+          <div class="pm-import-stat-box success">
+            <div style="font-size:11px; text-transform:uppercase; font-weight:700; opacity:0.8; margin-bottom:4px;">Hợp lệ</div>
+            <strong id="importCountValid" style="font-size:18px;">0</strong> proxy
+          </div>
+          <div class="pm-import-stat-box error">
+            <div style="font-size:11px; text-transform:uppercase; font-weight:700; opacity:0.8; margin-bottom:4px;">Không hợp lệ (Lỗi)</div>
+            <strong id="importCountError" style="font-size:18px;">0</strong> dòng
+          </div>
+        </div>
+
+        <!-- PROGRESS BAR -->
+        <div class="pm-progress-container" id="importProgressWrapper" style="display: none;">
+          <div class="pm-progress-label-row">
+            <span id="importProgressLabel">Đang import dữ liệu...</span>
+            <span id="importProgressPercent" style="font-weight:700;">0%</span>
+          </div>
+          <div class="pm-progress-line">
+            <div class="pm-progress-line-fill" id="importProgressPercentFill"></div>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; border-top:1px solid var(--pm-border); padding-top:16px;">
+          <button class="pm-btn" onclick="closeModal('importProxyModal')" style="height:36px; font-size:12.5px; border-radius:8px;">Hủy bỏ</button>
+          <button class="pm-btn pm-btn-primary" id="btnSubmitImport" style="height:36px; font-size:12.5px; border-radius:8px;" disabled>Xác nhận Import</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

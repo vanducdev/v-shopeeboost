@@ -1,0 +1,129 @@
+{
+  "name": "v-shopeeboost",
+  "version": "6.0.0",
+  "description": "V-ShopeeBoost - Phần Mềm Quản Lý Shopee",
+  "main": "main.js",
+  "author": "CTY Công Nghệ Số VMAX <vmaxtech.vn>",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "check": "node scripts/check-js.js && node scripts/check-google-script-ui.js && node scripts/check-locales.js",
+    "i18n:generate": "node scripts/generate-locales.js",
+    "test": "node --test tests/*.test.js",
+    "verify": "npm run check && npm test",
+    "build": "electron-builder --win --x64 --dir",
+    "build-exe": "electron-builder --win --x64",
+    "build-installer": "electron-builder --win --x64"
+  },
+  "build": {
+    "asar": true,
+    "compression": "maximum",
+    "appId": "com.vmaxtech.v-shopeeboost.pro",
+    "productName": "V-ShopeeBoost",
+    "copyright": "© 2025 Vmax Software | Hotline: 0886.335.455",
+    "directories": {
+      "output": "dist",
+      "buildResources": "build"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "app.js",
+      "i18n.js",
+      "index.html",
+      "style.css",
+      "splash.html",
+      "extension-services.js",
+      "security-utils.js",
+      "scripts/check-js.js",
+      "scripts/check-locales.js",
+      "!work-smoke-*{,/**/*}",
+      "!Microsoft{,/**/*}",
+      "!.electron-*-codex{,/**/*}",
+      "!.npm-cache-codex{,/**/*}",
+      "!dist{,-secure}{,/**/*}",
+      "!ChromeCore141{,/**/*}",
+      "en.json",
+      "vi.json",
+      "locales/**/*",
+      "flag/**/*",
+      "admin/**/*",
+      "build/**/*",
+      "image/**/*",
+      "pages/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "ChromeCore141",
+        "to": "ChromeCore141",
+        "filter": [
+          "**/*",
+          "!141.0.7390.125/Locales/*",
+          "141.0.7390.125/Locales/vi.pak",
+          "141.0.7390.125/Locales/en-US.pak",
+          "!141.0.7390.125/WidevineCdm/**/*",
+          "!141.0.7390.125/chrome_pwa_launcher.exe",
+          "!141.0.7390.125/notification_helper.exe",
+          "!141.0.7390.125/dxcompiler.dll",
+          "!141.0.7390.125/vk_swiftshader.dll",
+          "!141.0.7390.125/d3dcompiler_47.dll"
+        ]
+      },
+      {
+        "from": "Extension-ShopeeBoost",
+        "to": "Extension-ShopeeBoost",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "signtoolOptions": {
+        "publisherName": "Vmax Software"
+      }
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "allowElevation": true,
+      "installerIcon": "build/icon.ico",
+      "uninstallerIcon": "build/icon.ico",
+      "installerHeaderIcon": "build/icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "V-ShopeeBoost",
+      "guid": "com.vmaxtech.v-shopeeboost.pro",
+      "license": null,
+      "displayLanguageSelector": false,
+      "artifactName": "V-ShopeeBoost-Setup-${version}.${ext}"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
+  },
+  "devDependencies": {
+    "electron": "43.2.0",
+    "electron-builder": "26.15.3"
+  },
+  "dependencies": {
+    "adm-zip": "0.6.0"
+  },
+  "overrides": {
+    "brace-expansion": "5.0.8"
+  }
+}

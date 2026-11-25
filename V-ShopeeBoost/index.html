@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VMAX Anti-Detect Browser PRO</title>
+<script>
+  (() => {
+    const savedTheme = localStorage.getItem('app_theme') || 'light-clean';
+    document.documentElement.dataset.theme = savedTheme;
+    document.documentElement.classList.toggle('dark-theme', savedTheme.startsWith('dark'));
+  })();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<!-- TITLE BAR -->
+<div class="titlebar" id="titlebar">
+  <div class="titlebar-left">
+    <div class="app-icon">
+      <img src="./image/icon21.ico" alt="Logo" class="app-logo-img">
+    </div>
+    <span class="app-name">VMAX Browser <span class="app-pro">PRO</span></span>
+    <div class="version-badge">v6.0.0</div>
+  </div>
+  <div class="titlebar-center">
+    <div class="search-bar" id="globalSearch">
+      <svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Tìm kiếm profile, proxy..." id="globalSearchInput" data-i18n-placeholder="search_placeholder">
+      <kbd class="search-kbd">Ctrl+K</kbd>
+    </div>
+  </div>
+  <div class="titlebar-right">
+    <!-- Sleek Quick Action Pill -->
+    <div class="titlebar-quick-actions" style="margin-right: 8px;">
+      <!-- Theme Switcher -->
+      <button class="win-btn" id="btnThemeToggle" title="Đổi giao diện" data-i18n-title="title_theme_toggle">
+        <!-- Sun Icon (Default for light mode) -->
+        <svg class="theme-icon-sun" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: #ea580c;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <!-- Moon Icon -->
+        <svg class="theme-icon-moon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="display: none; color: #a5b4fc;"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      
+      <!-- Language Switcher -->
+      <div class="language-switcher-shell">
+        <button class="win-btn" id="btnLangToggle" title="Đổi ngôn ngữ" data-i18n-title="title_language"
+                aria-haspopup="true" aria-expanded="false">
+          <img id="langFlag" class="titlebar-language-flag" src="flag/languages/vn.svg" alt="" aria-hidden="true"
+               width="22" height="16">
+          <span id="langText" class="sr-only">Tiếng Việt</span>
+        </button>
+        <div class="language-menu" id="languageMenu" role="radiogroup" aria-label="Ngôn ngữ"></div>
+      </div>
+
+      <!-- Quick Settings -->
+      <button class="win-btn" id="btnSettingsTitlebar" title="Cài đặt hệ thống" data-i18n-title="title_settings">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83 0 2 2 0 010-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 010-2.83 2 2 0 012.83 0l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 0 2 2 0 010 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+      </button>
+    </div>
+
+    <!-- User Profile Pill in Header -->
+    <div class="user-pill-header" id="sidebarUserCard" style="display: none; align-items: center; gap: 8px; background: var(--bg-card2); border: 1px solid var(--border); border-radius: 99px; padding: 4px 12px 4px 4px; cursor: pointer; transition: all 0.2s; margin-right: 12px;">
+      <img id="sidebarUserAvatar" src="" alt="Avatar" style="width: 24px; height: 24px; border-radius: 50%; object-fit: cover;">
+      <span id="sidebarUserName" style="font-size: 12px; font-weight: 600; color: var(--text-primary);">Đang tải...</span>
+      <span id="sidebarUserEmail" style="display: none;"></span>
+    </div>
+
+    <button class="win-btn" id="winMin" title="Thu nhỏ" data-i18n-title="title_minimize">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14"/></svg>
+    </button>
+    <button class="win-btn" id="winMax" title="Phóng to" data-i18n-title="title_maximize">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+    </button>
+    <button class="win-btn close" id="winClose" title="Đóng" data-i18n-title="title_close">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="app-layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <img src="./image/logo-app-vmax45.png" alt="Logo" class="sidebar-logo-img">
+      </div>
+      <button class="btn-toggle-sidebar" id="btnToggleSidebar" title="Thu gọn / Mở rộng" aria-label="Thu gọn hoặc mở rộng thanh điều hướng">
+        <svg class="toggle-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <line x1="9" y1="3" x2="9" y2="21"/>
+          <path d="M16 15l-3-3 3-3"/>
+        </svg>
+      </button>
+    </div>
+    
+    <nav class="sidebar-nav">
+      <!-- QUẢN LÝ -->
+      <div class="nav-section">
+        <div class="nav-group-title">Quản lý</div>
+        
+        <button class="nav-item active" data-page="profiles">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.93a2 2 0 0 1-1.66-.9l-.82-1.2A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2z"/>
+              <path d="M2 10h20"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_profiles">Hồ Sơ</span>
+          <div class="nav-badge" id="profileCount">0</div>
+        </button>
+        
+        <button class="nav-item" data-page="groups">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_groups">Nhóm</span>
+        </button>
+        
+        <button class="nav-item" data-page="proxy">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <line x1="2" y1="12" x2="22" y2="12"/>
+              <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_proxy">Proxy</span>
+        </button>
+        
+        <button class="nav-item" data-page="backup">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="2" width="20" height="20" rx="2" ry="2"/>
+              <line x1="2" y1="14" x2="22" y2="14"/>
+              <line x1="6" y1="18" x2="6.01" y2="18"/>
+              <line x1="10" y1="18" x2="10.01" y2="18"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_backup">Backup</span>
+        </button>
+        
+        <button class="nav-item" data-page="extension-manager">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M19.439 10a2.99 2.99 0 0 1 2.561-2.986V5a2 2 0 0 0-2-2h-2.014a3 3 0 0 1-5.972 0H10a2 2 0 0 0-2 2v2.014a3 3 0 0 1 0 5.972V19a2 2 0 0 0 2 2h2.014a3 3 0 0 1 5.972 0H19a2 2 0 0 0 2-2v-2.014A2.99 2.99 0 0 1 19.439 10z"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_extensions">Extensions</span>
+        </button>
+
+        <button class="nav-item" data-page="trash">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+              <line x1="10" y1="11" x2="10" y2="17"/>
+              <line x1="14" y1="11" x2="14" y2="17"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_trash">Thùng Rác</span>
+        </button>
+      </div>
+      
+      <!-- HỆ THỐNG -->
+      <div class="nav-section" style="margin-top: 4px;">
+        <div class="nav-group-title">Hệ thống</div>
+        
+        <button class="nav-item" data-page="logs">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <path d="M16 13H8M16 17H8M10 9H9H8"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_logs">Nhật ký</span>
+          <div class="log-dot" id="logDot"></div>
+        </button>
+        
+        <button class="nav-item" data-page="settings">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+            </svg>
+          </div>
+          <span data-i18n="nav_settings">Cài đặt</span>
+        </button>
+        
+        <button class="nav-item" id="navAdminBtn" style="display: none;">
+          <div class="nav-icon-wrap">
+            <svg class="nav-icon" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <span>Admin Panel</span>
+        </button>
+      </div>
+    </nav>
+    
+    <div class="sidebar-footer">
+      <!-- Status Card -->
+      <div class="sidebar-status-card">
+        <div class="status-card-header">
+          <div class="status-card-label">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+            <span>Hệ thống</span>
+          </div>
+          <div class="status-beacon">
+            <span id="systemStatusDot" class="status-pulse-dot"></span>
+            <span id="systemStatusLabel" class="status-text">Online</span>
+          </div>
+        </div>
+        
+        <div class="status-card-divider"></div>
+        
+        <div class="status-row" onclick="showLicenseDetails()" title="Xem chi tiết bản quyền" style="cursor: pointer;">
+          <span class="status-key">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Hạn dùng
+          </span>
+          <span id="licenseExpiryVal" class="status-val-expiry">Đang tải...</span>
+        </div>
+        
+        <div class="status-row">
+          <span class="status-key">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            Đang chạy
+          </span>
+          <span id="runningCount" class="status-val-pill">0</span>
+        </div>
+        
+        <div class="status-row">
+          <span class="status-key">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            Phiên bản
+          </span>
+          <span id="appVersion" class="status-val-version">v6.0.0 Pro Max</span>
+        </div>
+      </div>
+      
+      <button class="btn-logout-sidebar" onclick="logoutUser()" title="Đăng xuất tài khoản" data-i18n-title="nav_logout">
+        <svg class="logout-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+          <polyline points="16 17 21 12 16 7"/>
+          <line x1="21" y1="12" x2="9" y2="12"/>
+        </svg>
+        <span data-i18n="nav_logout">Đăng xuất tài khoản</span>
+      </button>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <div id="page-content" style="flex:1; display:flex; flex-direction:column; min-height:0; min-width:0; overflow-y:auto; overflow-x:hidden;">
+      <!-- Dynamic Pages will load here -->
+    </div>
+
+  </main>
+</div>
+
+<!-- ═══════════════════════════ MODALS ═══════════════════════════ -->
+
+<!-- Create/Edit Profile Modal -->
+<div class="modal-overlay" id="createProfileModal">
+  <div class="modal modal-lg">
+    <div class="modal-header-row">
+      <h2 class="modal-title" id="profileModalTitle">Tạo Profile mới</h2>
+      <button class="modal-close" onclick="closeModal('createProfileModal')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="editProfileName">
+      
+      <!-- Tab Navigation -->
+      <div class="profile-tabs">
+        <button class="profile-tab active" data-tab="basic">Cơ bản</button>
+        <button class="profile-tab" data-tab="proxy">Proxy</button>
+        <button class="profile-tab" data-tab="fingerprint">Dấu vân tay</button>
+      </div>
+      
+      <!-- Tab: Basic -->
+      <div class="profile-tab-content active" id="tab-basic">
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Tên Profile <span class="required">*</span></label>
+            <input type="text" class="form-input" id="profileName" placeholder="profile_01">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Màu nhận diện</label>
+            <div class="color-picker">
+              <div class="color-dot active" data-color="" style="background:#d0d0d0">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/></svg>
+              </div>
+              <div class="color-dot" data-color="#6c63ff" style="background:#6c63ff"></div>
+              <div class="color-dot" data-color="#22c55e" style="background:#22c55e"></div>
+              <div class="color-dot" data-color="#f59e0b" style="background:#f59e0b"></div>
+              <div class="color-dot" data-color="#ef4444" style="background:#ef4444"></div>
+              <div class="color-dot" data-color="#06b6d4" style="background:#06b6d4"></div>
+              <div class="color-dot" data-color="#f97316" style="background:#f97316"></div>
+              <div class="color-dot" data-color="#ec4899" style="background:#ec4899"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Tags (cách nhau bằng dấu phẩy)</label>
+            <input type="text" class="form-input" id="profileTags" placeholder="work, fb, ads">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nhóm Profile</label>
+            <select class="form-select" id="profileGroup">
+              <option value="Mặc định">Mặc định</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row-2">
+          <div class="form-group" style="grid-column: span 2;">
+            <label class="form-label">Ghi chú</label>
+            <input type="text" class="form-input" id="profileNotes" placeholder="Ghi chú tuỳ ý...">
+          </div>
+        </div>
+        <div class="form-row-2" style="margin-top: 12px;">
+          <div class="form-group" style="grid-column: span 2;">
+            <label class="form-label">Trình duyệt khởi chạy</label>
+            <div class="browser-options-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
+              <div class="browser-option-card active" data-browser="system" style="border: 1px solid var(--accent); background: rgba(108,99,255,0.06); padding: 10px 12px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s;">
+                <img src="./image/chrom.png" alt="Chrome" style="width: 24px; height: 24px; object-fit: contain;">
+                <div>
+                  <div style="font-weight: 600; font-size: 12px; color: var(--text-primary);">Chrome thiết bị</div>
+                  <div style="font-size: 10.5px; color: var(--text-muted);">Trình duyệt hệ thống</div>
+                </div>
+              </div>
+              <div class="browser-option-card" data-browser="custom" style="border: 1px solid var(--border); background: var(--bg-card); padding: 10px 12px; border-radius: var(--radius-sm); cursor: pointer; display: flex; align-items: center; gap: 10px; transition: all 0.2s;">
+                <img src="./image/chromium.png" alt="Chromium" style="width: 24px; height: 24px; object-fit: contain;">
+                <div>
+                  <div style="font-weight: 600; font-size: 12px; color: var(--text-primary);">Chromium V-ShopeeBoost</div>
+                  <div style="font-size: 10.5px; color: var(--text-muted);">Trình duyệt đi kèm (chrom64bit)</div>
+                </div>
+              </div>
+            </div>
+            <input type="hidden" id="profileBrowserType" value="system">
+          </div>
+        </div>
+      </div>
+      
+      <!-- Tab: Proxy -->
+      <div class="profile-tab-content" id="tab-proxy">
+        <div class="form-group">
+          <label class="form-label">Proxy</label>
+          <div class="proxy-input-row">
+            <input type="text" class="form-input" id="profileProxy" placeholder="171.233.162.49:25696:joshua_rily:9HolDuVs8TXLEw3">
+            <button class="btn-secondary" id="btnCheckProxyInline" type="button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Check
+            </button>
+          </div>
+          <div class="form-hint">Hỗ trợ: ip:port hoặc ip:port:user:pass (HTTP/SOCKS5)</div>
+        </div>
+        <div id="proxyCheckResultInline" class="proxy-check-result-inline" style="display:none"></div>
+        
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Loại Proxy</label>
+            <select class="form-select" id="profileProxyType">
+              <option value="http">HTTP</option>
+              <option value="socks5">SOCKS5</option>
+              <option value="socks4">SOCKS4</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kiểm tra Proxy tự động</label>
+            <select class="form-select" id="profileProxyCheck">
+              <option value="none">Không kiểm tra</option>
+              <option value="quick">Kiểm tra nhanh (IP)</option>
+              <option value="full">Kiểm tra đầy đủ (IP + Speed)</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="proxy-presets">
+          <div class="proxy-preset-label">Nhanh:</div>
+          <button class="proxy-preset-btn" type="button" data-proxy="171.233.162.49:25696:joshua_rily:9HolDuVs8TXLEw3">Test Proxy</button>
+        </div>
+      </div>
+      
+      <!-- Tab: Fingerprint -->
+      <div class="profile-tab-content" id="tab-fingerprint">
+        <div class="fingerprint-randomize-row">
+          <button class="btn-secondary" id="btnRandomFingerprint" type="button">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+            Random tất cả
+          </button>
+          <span class="fingerprint-randomize-hint">Tạo dấu vân tay ngẫu nhiên để tránh bị phát hiện</span>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Timezone</label>
+          <select class="form-select" id="profileTimezone">
+            <option value="auto">Tự động (theo proxy)</option>
+            <option value="Asia/Ho_Chi_Minh">Việt Nam (GMT+7)</option>
+            <option value="Asia/Bangkok">Thái Lan (GMT+7)</option>
+            <option value="Asia/Singapore">Singapore (GMT+8)</option>
+            <option value="Asia/Tokyo">Nhật Bản (GMT+9)</option>
+            <option value="America/New_York">Mỹ - New York (GMT-5)</option>
+            <option value="America/Los_Angeles">Mỹ - LA (GMT-8)</option>
+            <option value="Europe/London">UK (GMT+0)</option>
+            <option value="Europe/Paris">Pháp (GMT+1)</option>
+            <option value="Australia/Sydney">Úc (GMT+10)</option>
+          </select>
+        </div>
+        
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Ngôn ngữ</label>
+            <input type="text" class="form-input" id="profileLanguage" placeholder="vi-VN, en-US" value="vi-VN, en-US">
+          </div>
+          <div class="form-group">
+            <label class="form-label">User Agent</label>
+            <div class="ua-input-row">
+              <input type="text" class="form-input" id="profileUA" placeholder="Auto (để trống = tự random)">
+              <button class="btn-secondary btn-sm" id="btnRandomUA" type="button">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+        
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">Màn hình</label>
+            <select class="form-select" id="profileScreen">
+              <option value="random">Ngẫu nhiên</option>
+              <option value="1920,1080">1920 x 1080</option>
+              <option value="1366,768">1366 x 768</option>
+              <option value="1536,864">1536 x 864</option>
+              <option value="1440,900">1440 x 900</option>
+              <option value="2560,1440">2560 x 1440</option>
+              <option value="3840,2160">3840 x 2160 (4K)</option>
+              <option value="1280,720">1280 x 720</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Canvas</label>
+            <select class="form-select" id="profileCanvas">
+              <option value="noise">Thêm noise (khuyến nghị)</option>
+              <option value="block">Chặn hoàn toàn</option>
+              <option value="allow">Cho phép thật</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">WebGL</label>
+            <select class="form-select" id="profileWebGL">
+              <option value="noise">Thêm noise</option>
+              <option value="block">Chặn</option>
+              <option value="allow">Cho phép thật</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Audio API</label>
+            <select class="form-select" id="profileAudio">
+              <option value="noise">Thêm noise</option>
+              <option value="block">Chặn</option>
+              <option value="allow">Cho phép thật</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-row-2">
+          <div class="form-group">
+            <label class="form-label">WebRTC</label>
+            <select class="form-select" id="profileWebRTC">
+              <option value="disable">Vô hiệu hóa</option>
+              <option value="mask">Mask IP (khuyến nghị)</option>
+              <option value="allow">Cho phép thật</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Fonts</label>
+            <select class="form-select" id="profileFonts">
+              <option value="random">Random font list</option>
+              <option value="block">Chặn</option>
+              <option value="allow">Cho phép thật</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Hardware Concurrency (CPU)</label>
+          <select class="form-select" id="profileCPU" style="width:200px">
+            <option value="random">Ngẫu nhiên</option>
+            <option value="2">2 cores</option>
+            <option value="4">4 cores</option>
+            <option value="6">6 cores</option>
+            <option value="8">8 cores</option>
+            <option value="12">12 cores</option>
+            <option value="16">16 cores</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-msg" id="profileMsg"></div>
+      <button class="btn-ghost" onclick="closeModal('createProfileModal')">Huỷ</button>
+      <button class="btn-primary" id="btnSaveProfile">Tạo Profile</button>
+    </div>
+  </div>
+</div>
+
+<!-- Import Modal -->
+<div class="modal-overlay" id="importModal">
+  <div class="modal modal-md">
+    <div class="modal-header-row">
+      <h2 class="modal-title">Import Profiles</h2>
+      <button class="modal-close" onclick="closeModal('importModal')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="import-format-info">
+        <div class="info-icon">ℹ️</div>
+        <div>
+          <strong>Định dạng:</strong> Mỗi dòng là một profile<br>
+          <code>tên_profile</code> hoặc <code>tên_profile|proxy</code> hoặc <code>tên,proxy</code>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Dán danh sách vào đây</label>
+        <textarea class="form-textarea" id="importText" rows="10" placeholder="profile_01&#10;profile_02|1.2.3.4:8080&#10;profile_03,socks5://5.6.7.8:1080"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-msg" id="importMsg"></div>
+      <button class="btn-ghost" onclick="closeModal('importModal')">Huỷ</button>
+      <button class="btn-primary" id="btnDoImport">Import</button>
+    </div>
+  </div>
+</div>
+
+<!-- Export Modal -->
+<div class="modal-overlay" id="exportModal">
+  <div class="modal">
+    <div class="modal-header-row">
+      <h2 class="modal-title">Export Profiles</h2>
+      <button class="modal-close" onclick="closeModal('exportModal')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="export-options">
+        <label class="export-option">
+          <input type="radio" name="exportFmt" value="name-proxy" checked>
+          <div class="export-option-body">
+            <strong>Tên + Proxy</strong>
+            <span>name|proxy (mặc định)</span>
+          </div>
+        </label>
+        <label class="export-option">
+          <input type="radio" name="exportFmt" value="name">
+          <div class="export-option-body">
+            <strong>Chỉ tên</strong>
+            <span>Danh sách tên profile</span>
+          </div>
+        </label>
+        <label class="export-option">
+          <input type="radio" name="exportFmt" value="proxy">
+          <div class="export-option-body">
+            <strong>Chỉ proxy</strong>
+            <span>Danh sách proxy</span>
+          </div>
+        </label>
+        <label class="export-option">
+          <input type="radio" name="exportFmt" value="full">
+          <div class="export-option-body">
+            <strong>Đầy đủ <span class="badge-vip">VIP</span></strong>
+            <span>name|proxy|userAgent</span>
+          </div>
+        </label>
+        <label class="export-option">
+          <input type="radio" name="exportFmt" value="json">
+          <div class="export-option-body">
+            <strong>JSON <span class="badge-vip">VIP</span></strong>
+            <span>Toàn bộ thông tin JSON</span>
+          </div>
+        </label>
+      </div>
+      <div class="form-group">
+        <textarea class="form-textarea" id="exportResult" rows="8" readonly placeholder="Kết quả sẽ hiện ở đây..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-ghost" onclick="closeModal('exportModal')">Đóng</button>
+      <button class="btn-secondary" id="btnCopyExport">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copy
+      </button>
+      <button class="btn-primary" id="btnDoExport">Export</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- Context Menu -->
+<div class="context-menu" id="contextMenu">
+  <button class="ctx-item" id="ctxOpen">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+    Mở Chrome
+  </button>
+  <button class="ctx-item" id="ctxEdit">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+    Chỉnh sửa
+  </button>
+  <button class="ctx-item" id="ctxDuplicate">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+    Nhân bản
+  </button>
+  <button class="ctx-item" id="ctxRename">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+    Đổi tên
+  </button>
+  
+  <div class="ctx-divider"></div>
+  
+  <button class="ctx-item" id="ctxExport">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    Export Profile
+  </button>
+  <button class="ctx-item" id="ctxImportCookie">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+    Import Cookie
+  </button>
+  <button class="ctx-item" id="ctxImportProxy">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg>
+    Import Proxy
+  </button>
+  <button class="ctx-item" id="ctxClearData">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M12 8v8M8 12h8"/></svg>
+    Dọn dẹp Cookie/Cache
+  </button>
+  
+  <div class="ctx-divider"></div>
+  
+  <button class="ctx-item" id="ctxBookmarks">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+    Bookmark Manager
+  </button>
+  <button class="ctx-item" id="ctxExtensions">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 12H3M12 3v18"/></svg>
+    Extension Manager
+  </button>
+  
+  <div class="ctx-divider"></div>
+  
+  <button class="ctx-item danger" id="ctxDelete">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+    Xoá
+  </button>
+</div>
+
+<script>
+if (typeof window.API === 'undefined') {
+  console.log('Mocking Electron API for browser preview');
+  
+  const getProfiles = () => JSON.parse(localStorage.getItem('v_shopeeboost_profiles') || '[]');
+  const saveProfiles = (list) => localStorage.setItem('v_shopeeboost_profiles', JSON.stringify(list));
+  const getBackups = () => JSON.parse(localStorage.getItem('v_shopeeboost_backups') || '[]');
+  const saveBackups = (list) => localStorage.setItem('v_shopeeboost_backups', JSON.stringify(list));
+  const getConfig = () => JSON.parse(localStorage.getItem('v_shopeeboost_config') || '{"theme":"dark-blue","minimizeToTray":false,"chromePath":"","chromeArgs":""}');
+  const saveConfig = (cfg) => localStorage.setItem('v_shopeeboost_config', JSON.stringify(cfg));
+  const getLogs = () => JSON.parse(localStorage.getItem('v_shopeeboost_logs') || '[]');
+  const saveLogs = (list) => localStorage.setItem('v_shopeeboost_logs', JSON.stringify(list));
+
+  const runningProfiles = new Set();
+  const logListeners = new Set();
+
+  function triggerLog(msg, type = 'info') {
+    const row = { message: msg, type, timestamp: new Date().toISOString() };
+    const logs = getLogs();
+    logs.push(row);
+    if (logs.length > 500) logs.shift();
+    saveLogs(logs);
+    logListeners.forEach(cb => cb(row));
+  }
+
+  window.API = {
+    winMin: () => console.log('winMin'),
+    winMax: () => console.log('winMax'),
+    winClose: () => console.log('winClose'),
+    readPage: async (name) => {
+      const response = await fetch(`pages/${encodeURIComponent(name)}.html`, { cache: 'no-store' });
+      if (!response.ok) throw new Error(`Không thể tải trang ${name}`);
+      return response.text();
+    },
+
+    profilesGet: async () => getProfiles(),
+    profilesCreate: async (p) => {
+      const list = getProfiles();
+      if (list.some(x => x.name === p.name)) return { ok: false, msg: 'Tên profile đã tồn tại' };
+      p.createdAt = new Date().toISOString();
+      p.openCount = 0;
+      list.push(p);
+      saveProfiles(list);
+      triggerLog(`Đã tạo profile: ${p.name}`, 'info');
+      return { ok: true };
+    },
+    profilesUpdate: async (name, p) => {
+      const list = getProfiles();
+      const idx = list.findIndex(x => x.name === name);
+      if (idx === -1) return { ok: false, msg: 'Profile không tồn tại' };
+      list[idx] = { ...list[idx], ...p };
+      saveProfiles(list);
+      triggerLog(`Đã cập nhật profile: ${p.name}`, 'info');
+      return { ok: true };
+    },
+    profilesRename: async (oldName, newName) => {
+      const list = getProfiles();
+      const idx = list.findIndex(x => x.name === oldName);
+      if (idx === -1) return { ok: false, msg: 'Profile không tồn tại' };
+      if (list.some(x => x.name === newName && x.name !== oldName)) return { ok: false, msg: 'Tên profile đã tồn tại' };
+      list[idx].name = newName;
+      saveProfiles(list);
+      triggerLog(`Đã đổi tên profile ${oldName} thành ${newName}`, 'info');
+      return { ok: true };
+    },
+    profilesDelete: async (name) => {
+      let list = getProfiles();
+      list = list.filter(x => x.name !== name);
+      saveProfiles(list);
+      runningProfiles.delete(name);
+      triggerLog(`Đã xóa profile: ${name}`, 'info');
+      return { ok: true };
+    },
+    profilesDeleteBulk: async (names) => {
+      let list = getProfiles();
+      list = list.filter(x => !names.includes(x.name));
+      saveProfiles(list);
+      names.forEach(n => runningProfiles.delete(n));
+      triggerLog(`Đã xóa hàng loạt ${names.length} profiles`, 'info');
+      return { ok: true, deleted: names.length };
+    },
+    profilesDuplicate: async (name) => {
+      const list = getProfiles();
+      const p = list.find(x => x.name === name);
+      if (!p) return { ok: false, msg: 'Profile không tồn tại' };
+      const newName = `${name}_copy`;
+      if (list.some(x => x.name === newName)) return { ok: false, msg: `Bản sao ${newName} đã tồn tại` };
+      const copy = { ...p, name: newName, createdAt: new Date().toISOString(), openCount: 0 };
+      list.push(copy);
+      saveProfiles(list);
+      triggerLog(`Đã nhân bản profile ${name} thành ${newName}`, 'info');
+      return { ok: true, newName };
+    },
+    profilesOpen: async (name) => {
+      const list = getProfiles();
+      const idx = list.findIndex(x => x.name === name);
+      if (idx === -1) return { ok: false, msg: 'Profile không tồn tại' };
+      list[idx].openCount = (list[idx].openCount || 0) + 1;
+      list[idx].lastOpened = new Date().toISOString();
+      saveProfiles(list);
+      runningProfiles.add(name);
+      triggerLog(`Đang mở profile: ${name}`, 'info');
+      setTimeout(() => triggerLog(`Profile ${name} đã được mở thành công`, 'success'), 500);
+      return { ok: true };
+    },
+    profilesOpenBulk: async (names) => {
+      const list = getProfiles();
+      names.forEach(name => {
+        const idx = list.findIndex(x => x.name === name);
+        if (idx !== -1) {
+          list[idx].openCount = (list[idx].openCount || 0) + 1;
+          list[idx].lastOpened = new Date().toISOString();
+          runningProfiles.add(name);
+          triggerLog(`Đang mở profile (hàng loạt): ${name}`, 'info');
+        }
+      });
+      saveProfiles(list);
+      return { ok: true, opened: names.length };
+    },
+    profilesImport: async (text) => {
+      const lines = text.split('\n').map(l => l.trim()).filter(Boolean);
+      const list = getProfiles();
+      let created = 0, skipped = 0, errors = 0;
+      lines.forEach(line => {
+        try {
+          let name = '', proxy = '';
+          if (line.includes('|')) {
+            const parts = line.split('|');
+            name = parts[0].trim();
+            proxy = parts.slice(1).join('|').trim();
+          } else if (line.includes(',')) {
+            const parts = line.split(',');
+            name = parts[0].trim();
+            proxy = parts.slice(1).join(',').trim();
+          } else {
+            name = line;
+          }
+          if (!name) { errors++; return; }
+          if (list.some(x => x.name === name)) { skipped++; return; }
+          list.push({
+            name, proxy,
+            createdAt: new Date().toISOString(),
+            openCount: 0
+          });
+          created++;
+        } catch(e) {
+          errors++;
+        }
+      });
+      saveProfiles(list);
+      triggerLog(`Đã import profiles. Thành công: ${created}, Bỏ qua: ${skipped}, Lỗi: ${errors}`, 'info');
+      return { ok: true, created, skipped, errors };
+    },
+    profilesExport: async (fmt) => {
+      const list = getProfiles();
+      let data = '';
+      if (fmt === 'name') {
+        data = list.map(p => p.name).join('\n');
+      } else if (fmt === 'proxy') {
+        data = list.map(p => p.proxy || '').filter(Boolean).join('\n');
+      } else if (fmt === 'full') {
+        data = list.map(p => `${p.name}|${p.proxy||''}|${p.userAgent||''}`).join('\n');
+      } else {
+        data = list.map(p => `${p.name}|${p.proxy||''}`).join('\n');
+      }
+      return { ok: true, count: list.length, data };
+    },
+    profilesClose: async (name) => {
+      runningProfiles.delete(name);
+      triggerLog(`Đã tắt profile: ${name}`, 'warning');
+      return { ok: true };
+    },
+    profilesCloseAll: async () => {
+      const count = runningProfiles.size;
+      runningProfiles.clear();
+      triggerLog(`Đã tắt toàn bộ ${count} profiles đang hoạt động`, 'warning');
+      return { ok: true, count };
+    },
+
+    backupCreate: async (name) => {
+      const list = getProfiles();
+      const backups = getBackups();
+      backups.push({
+        name,
+        count: list.length,
+        mtime: new Date().toISOString(),
+        size: JSON.stringify(list).length,
+        data: list
+      });
+      saveBackups(backups);
+      triggerLog(`Đã tạo bản sao lưu: ${name}`, 'info');
+      return { ok: true, name, count: list.length };
+    },
+    backupList: async () => getBackups(),
+    backupRestore: async (name) => {
+      const backups = getBackups();
+      const bk = backups.find(x => x.name === name);
+      if (!bk) return { ok: false, msg: 'Không tìm thấy bản sao lưu' };
+      saveProfiles(bk.data);
+      triggerLog(`Đã khôi phục dữ liệu từ bản sao lưu: ${name}`, 'info');
+      return { ok: true, restored: bk.data.length };
+    },
+    backupDelete: async (name) => {
+      let backups = getBackups();
+      backups = backups.filter(x => x.name !== name);
+      saveBackups(backups);
+      triggerLog(`Đã xóa bản sao lưu: ${name}`, 'info');
+      return { ok: true };
+    },
+
+    proxyFetch: async (d) => {
+      return { ok: true, proxy: '127.0.0.1:8080 (Mocked)' };
+    },
+    proxyCheck: async (p) => {
+      return { valid: true, ip: p.split(':')[0] || '127.0.0.1', port: p.split(':')[1] || '80', type: 'HTTP' };
+    },
+    proxyCheckFull: async (p) => {
+      return { ok: true, info: { ip: p.split(':')[0] || '127.0.0.1', port: p.split(':')[1] || '80', country: 'Vietnam', isp: 'Viettel', speed: '50 ms' } };
+    },
+
+    cfgGet: async () => getConfig(),
+    cfgSave: async (d) => {
+      saveConfig(d);
+      return { ok: true };
+    },
+    cfgBrowseChrome: async () => {
+      return { ok: true, path: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' };
+    },
+    cfgDetectChrome: async () => {
+      return { ok: true, path: 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' };
+    },
+    cfgOpenChromeDownload: () => {
+      window.open('https://google.com/chrome', '_blank');
+    },
+
+    logsGet: async () => getLogs(),
+    logsClear: async () => {
+      saveLogs([]);
+      return { ok: true };
+    },
+    logsOpenDir: () => console.log('logsOpenDir'),
+
+    openProfilesDir: () => console.log('openProfilesDir'),
+    openBackupsDir: () => console.log('openBackupsDir'),
+    getVersion: async () => '6.0.0',
+    getPlatform: async () => 'win32',
+    getRunning: async () => Array.from(runningProfiles),
+    openUrl: async (url) => { window.open(url, '_blank'); },
+    groupsGet: async () => {
+      try {
+        return JSON.parse(localStorage.getItem('mock_groups')) || ['Mặc định'];
+      } catch {
+        return ['Mặc định'];
+      }
+    },
+    groupsSave: async (gs) => {
+      localStorage.setItem('mock_groups', JSON.stringify(gs));
+      return { ok: true };
+    },
+    getLicenseInfo: async () => {
+      return { hwid: 'MOCK-HWID-1234-5678', key: 'MOCK-KEY-AAAA-BBBB', expiry: '2030-12-31', isValid: true, msg: 'Bản quyền hoạt động' };
+    },
+    logoutLicense: async () => {
+      alert('Mock Logout: Đăng xuất bản quyền thành công!');
+      location.reload();
+      return { ok: true };
+    },
+
+    onLog: (cb) => {
+      logListeners.add(cb);
+    },
+    offLog: () => {
+      logListeners.clear();
+    }
+  };
+}
+</script>
+
+<div id="theme-transition-overlay"></div>
+<script src="i18n.js"></script>
+<script src="pages/extension-manager.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

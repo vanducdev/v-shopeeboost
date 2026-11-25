@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg128" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ff6b35"/>
+      <stop offset="100%" style="stop-color:#ff8c42"/>
+    </linearGradient>
+    <filter id="glow128">
+      <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <rect width="128" height="128" rx="24" fill="url(#bg128)"/>
+  <!-- Cart icon -->
+  <path d="M24 32h12l16 40h56l16-32H48" stroke="white" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow128)"/>
+  <circle cx="44" cy="88" r="8" fill="white"/>
+  <circle cx="96" cy="88" r="8" fill="white"/>
+  <!-- L letter -->
+  <text x="64" y="82" text-anchor="middle" fill="rgba(255,255,255,0.15)" font-family="Arial Black" font-size="80" font-weight="bold">L</text>
+</svg>

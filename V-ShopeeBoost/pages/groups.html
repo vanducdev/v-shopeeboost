@@ -1,0 +1,333 @@
+<style>
+  .groups-page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .groups-page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .groups-page-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .groups-page-subtitle {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin: 3px 0 0 0;
+  }
+
+  /* 3 Modern Metric Stat Cards */
+  .groups-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    padding: 20px 24px 0 24px;
+    flex-shrink: 0;
+  }
+  .group-stat-box {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .group-stat-box:hover {
+    border-color: var(--border-hi);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  }
+  .group-stat-icon-wrap {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .group-stat-icon-wrap.blue {
+    background: rgba(99, 102, 241, 0.1);
+    color: #6366f1;
+  }
+  .group-stat-icon-wrap.green {
+    background: rgba(16, 185, 129, 0.1);
+    color: #10b981;
+  }
+  .group-stat-icon-wrap.purple {
+    background: rgba(168, 85, 247, 0.1);
+    color: #a855f7;
+  }
+  .group-stat-num {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .group-stat-text {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin-top: 3px;
+  }
+
+  /* Main Groups Content Layout */
+  .groups-main-grid {
+    display: grid;
+    grid-template-columns: 310px 1fr;
+    gap: 20px;
+    padding: 20px 24px;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Left Form Panel */
+  .group-create-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: fit-content;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+  .group-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .group-form-input {
+    width: 100%;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 9px 12px;
+    font-size: 12.5px;
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .group-form-input:focus {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+  .btn-create-group {
+    height: 40px;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.3);
+    transition: all 0.2s;
+  }
+  .btn-create-group:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px rgba(99, 102, 241, 0.45);
+  }
+  .btn-create-group:active {
+    transform: translateY(0);
+  }
+
+  /* Right Cards Container */
+  .groups-list-panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  }
+  .groups-items-grid {
+    flex: 1;
+    overflow-y: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    align-content: start;
+    padding-right: 4px;
+    margin-top: 14px;
+  }
+
+  /* Individual Group Card Modern Design */
+  .group-item-card {
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+  }
+  .group-item-card:hover {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  }
+  .group-badge-count {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: rgba(99, 102, 241, 0.08);
+    color: var(--accent);
+    font-family: var(--font-mono);
+  }
+  .group-btn-delete {
+    padding: 4px 9px;
+    font-size: 11px;
+    font-weight: 600;
+    border-radius: 6px;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    background: rgba(239, 68, 68, 0.06);
+    color: #ef4444;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .group-btn-delete:hover {
+    background: #ef4444;
+    color: #ffffff;
+    border-color: #ef4444;
+  }
+
+  /* ── Responsive Adaptations for Groups Page ── */
+  @media screen and (max-width: 1050px) {
+    .groups-stats-grid {
+      grid-template-columns: 1fr;
+      padding: 14px 16px 0;
+      gap: 10px;
+    }
+    .groups-main-grid {
+      grid-template-columns: 1fr;
+      padding: 14px 16px;
+      gap: 16px;
+    }
+  }
+
+  @media screen and (max-height: 740px) {
+    .groups-page-header {
+      padding: 12px 18px;
+    }
+    .groups-stats-grid {
+      padding: 12px 18px 0;
+      gap: 10px;
+    }
+    .groups-main-grid {
+      padding: 12px 18px;
+      gap: 14px;
+    }
+  }
+</style>
+
+<div class="groups-page-wrapper">
+  <!-- Page Header -->
+  <div class="groups-page-header">
+    <div>
+      <h1 class="groups-page-title">Quản lý Nhóm</h1>
+      <p class="groups-page-subtitle">Phân loại, gom nhóm và lọc nhanh các Chrome Profiles</p>
+    </div>
+  </div>
+
+  <!-- 3 Metric Stat Cards -->
+  <div class="groups-stats-grid">
+    <div class="group-stat-box">
+      <div class="group-stat-icon-wrap blue">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+      </div>
+      <div>
+        <div class="group-stat-num" id="groupStatTotalGroups">0</div>
+        <div class="group-stat-text">Tổng số nhóm</div>
+      </div>
+    </div>
+    <div class="group-stat-box">
+      <div class="group-stat-icon-wrap green">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <div>
+        <div class="group-stat-num" id="groupStatTotalProfiles">0</div>
+        <div class="group-stat-text">Profiles đã phân nhóm</div>
+      </div>
+    </div>
+    <div class="group-stat-box">
+      <div class="group-stat-icon-wrap purple">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+      </div>
+      <div>
+        <div class="group-stat-num" id="groupStatAvgSize">0</div>
+        <div class="group-stat-text">Trung bình profile / nhóm</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Layout: Create & List -->
+  <div class="groups-main-grid">
+    <!-- Left: Tạo nhóm mới -->
+    <div class="group-create-panel">
+      <div class="group-panel-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--accent);"><path d="M22 19a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h5l2 3h9a2 2 0 012 2z"/></svg>
+        <span>Tạo nhóm mới</span>
+      </div>
+      <div class="form-group" style="margin: 0;">
+        <label class="form-label" style="font-weight: 600; font-size: 11.5px; margin-bottom: 6px; display: block;">Tên nhóm <span class="required" style="color: #ef4444;">*</span></label>
+        <input type="text" class="group-form-input" id="newGroupNameInput" placeholder="Ví dụ: Shopee Ads, Tiktok, Facebook...">
+      </div>
+      <div class="form-group" style="margin: 0;">
+        <label class="form-label" style="font-weight: 600; font-size: 11.5px; margin-bottom: 6px; display: block;">Mô tả nhóm</label>
+        <textarea class="group-form-input" id="newGroupDescInput" placeholder="Mô tả công việc hoặc loại tài khoản..." style="resize: none; height: 80px;"></textarea>
+      </div>
+      <button class="btn-create-group" id="btnCreateGroup">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        <span>Tạo nhóm</span>
+      </button>
+    </div>
+
+    <!-- Right: Danh sách nhóm -->
+    <div class="groups-list-panel">
+      <div class="group-panel-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" style="color: var(--accent);"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        <span>Danh sách Nhóm</span>
+      </div>
+      <div class="groups-items-grid" id="groupsListContainer">
+        <!-- Render động qua JS -->
+      </div>
+    </div>
+  </div>
+</div>

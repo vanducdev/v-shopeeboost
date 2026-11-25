@@ -1,0 +1,740 @@
+<style>
+  /* Profiles Page Premium Styling Override */
+  .profiles-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px 24px;
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  /* Segmented Control for status selection */
+  .segmented-control {
+    display: inline-flex;
+    background: var(--bg-card2);
+    padding: 3px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    transition: all 0.25s;
+  }
+
+  .segment-btn {
+    border: none;
+    background: none;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    outline: none;
+  }
+
+  .segment-btn:hover {
+    color: var(--text-primary);
+  }
+
+  .segment-btn.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    box-shadow: var(--shadow-card);
+  }
+
+  .segment-badge {
+    font-size: 10px;
+    background: rgba(99, 102, 241, 0.08);
+    color: var(--accent);
+    padding: 1px 6px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-family: var(--font-mono);
+  }
+
+  .segment-btn.active .segment-badge {
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  /* Unified Table Card Design */
+  .table-card {
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 16px !important;
+    box-shadow: var(--shadow-card) !important;
+    display: flex;
+    flex-direction: column;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    -webkit-overflow-scrolling: touch;
+    transition: all 0.25s;
+    flex: 1;
+    min-height: 0;
+  }
+
+  .profiles-list-header {
+    display: flex;
+    align-items: center;
+    padding: 14px 18px !important;
+    background: var(--bg-base) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    color: var(--text-secondary) !important;
+    font-weight: 700;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    min-width: 960px;
+  }
+
+  /* Columns Layout Alignments */
+  .col-cb-avatar { width: 64px !important; flex-shrink: 0; display: flex; align-items: center; gap: 12px; }
+  .col-info { width: 240px; flex-shrink: 0; }
+  .col-fingerprints { width: 280px; flex-shrink: 0; }
+  .col-proxy { flex: 1; min-width: 200px; }
+  .col-stats { width: 140px; flex-shrink: 0; }
+  .col-actions { width: 220px !important; flex-shrink: 0; }
+
+  /* Profiles Container override */
+  #profilesGrid {
+    padding: 0 !important;
+    margin: 0 !important;
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  #profilesGrid.list-view {
+    display: flex;
+    flex-direction: column;
+    gap: 0 !important; /* Stacked layout */
+    min-width: 960px;
+  }
+
+  /* Row Styling Updates with High Specificity */
+  .profiles-container.list-view .profile-row {
+    background: var(--bg-card) !important;
+    border: none !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-left: 3px solid transparent !important;
+    padding: 12px 18px !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    gap: 0px !important; /* Managed by grid flex column widths */
+    margin-bottom: 0 !important;
+    color: var(--text-primary) !important;
+    transition: all 0.25s;
+  }
+
+  .profiles-container.list-view .profile-row:last-child {
+    border-bottom: none !important;
+  }
+
+  .profiles-container.list-view .profile-row:hover {
+    background: var(--bg-hover) !important;
+    transform: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
+
+  .profiles-container.list-view .profile-row.selected {
+    background: var(--bg-active) !important;
+    border-left-color: var(--accent) !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .profiles-container.list-view .profile-row.active-profile {
+    background: rgba(16, 185, 129, 0.03) !important;
+    border-left-color: #10b981 !important;
+    border-top: none !important;
+    border-right: none !important;
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  /* Custom Checkbox Design */
+  .profile-checkbox {
+    width: 15px; height: 15px;
+    border: 1.5px solid var(--border-md);
+    border-radius: 4px;
+    background: var(--bg-card);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .profile-checkbox:hover {
+    border-color: var(--accent);
+    background: var(--bg-hover);
+  }
+
+  .profile-checkbox.checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .profile-checkbox.checked::after {
+    content: '';
+    width: 7px; height: 4px;
+    border-left: 1.5px solid #fff;
+    border-bottom: 1.5px solid #fff;
+    transform: rotate(-45deg) translateY(-0.5px);
+    display: block;
+  }
+
+  /* OS and Fingerprint badges */
+  .os-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 14px; height: 14px;
+    opacity: 0.6;
+    margin-right: 4px;
+  }
+
+  .fingerprint-capsule {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2.5px 8px;
+    border-radius: 6px;
+    transition: all 0.25s;
+  }
+
+  .fingerprint-capsule.cpu {
+    background: rgba(59, 130, 246, 0.06);
+    border: 1px solid rgba(59, 130, 246, 0.15);
+    color: #2563eb;
+  }
+
+  .fingerprint-capsule.canvas {
+    background: rgba(16, 185, 129, 0.06);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    color: #059669;
+  }
+
+  .fingerprint-capsule.webrtc {
+    background: rgba(245, 158, 11, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    color: #d97706;
+  }
+
+  .proxy-badge {
+    font-size: 9px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(99, 102, 241, 0.06);
+    color: var(--accent);
+    border: 1px solid rgba(99, 102, 241, 0.12);
+    line-height: 1.1;
+    text-transform: uppercase;
+  }
+
+  .proxy-badge.socks5 {
+    background: rgba(139, 92, 246, 0.06);
+    color: #8b5cf6;
+    border: 1px solid rgba(139, 92, 246, 0.12);
+  }
+
+  .profile-group-badge {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 12px;
+    background: var(--bg-card2);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.25s;
+  }
+
+  /* Status Pills */
+  .status-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.2px;
+  }
+
+  .status-pill.running {
+    background: rgba(16, 185, 129, 0.08);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.15);
+  }
+
+  .status-pill.stopped {
+    background: rgba(100, 116, 139, 0.08);
+    color: #64748b;
+    border: 1px solid rgba(100, 116, 139, 0.15);
+  }
+
+  /* Inline actions and buttons */
+  .card-action-btn {
+    border-radius: 8px !important;
+    font-size: 11.5px !important;
+    font-weight: 600 !important;
+    padding: 6px 12px !important;
+    height: 30px !important;
+  }
+
+  .card-action-btn.primary {
+    background: var(--accent-grad) !important;
+    border: none !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.25) !important;
+  }
+
+  .card-action-btn.primary:hover {
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
+  }
+
+  .proxy-check-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    border-radius: 4px;
+    width: 20px; height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .proxy-check-btn:hover {
+    color: var(--accent);
+    background: rgba(99, 102, 241, 0.08);
+    transform: rotate(30deg);
+  }
+
+  /* Dark Theme Fingerprint capsule tweaks */
+  .dark-theme .fingerprint-capsule.cpu {
+    background: rgba(59, 130, 246, 0.15) !important;
+    color: #60a5fa !important;
+  }
+
+  .dark-theme .fingerprint-capsule.canvas {
+    background: rgba(16, 185, 129, 0.15) !important;
+    color: #34d399 !important;
+  }
+
+  .dark-theme .fingerprint-capsule.webrtc {
+    background: rgba(245, 158, 11, 0.15) !important;
+    color: #fbbf24 !important;
+  }
+
+  /* ── MODERN TOOLBAR & HEADER OVERRIDES ── */
+  .page-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+  }
+  .page-header .page-title {
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.4px;
+    color: var(--text-primary);
+    margin: 0;
+  }
+  .page-header .page-subtitle {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin: 3px 0 0 0;
+  }
+  .page-header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .view-toggle {
+    display: inline-flex;
+    background: var(--bg-card2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 3px;
+    gap: 3px;
+  }
+  .view-btn {
+    width: 32px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .view-btn:hover {
+    color: var(--text-primary);
+  }
+  .view-btn.active {
+    background: var(--bg-card);
+    color: var(--accent);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  }
+
+  .btn-toolbar-action {
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-toolbar-action:hover {
+    border-color: var(--accent);
+    color: var(--text-primary);
+    background: var(--bg-hover);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+  }
+  .btn-toolbar-action:active {
+    transform: translateY(0);
+  }
+
+  .btn-toolbar-stopall {
+    height: 36px;
+    padding: 0 14px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid rgba(239, 68, 68, 0.25);
+    background: rgba(239, 68, 68, 0.06);
+    color: #ef4444;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-toolbar-stopall:hover {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: #ef4444;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 10px rgba(239, 68, 68, 0.15);
+  }
+  .btn-toolbar-stopall:active {
+    transform: translateY(0);
+  }
+
+  .btn-toolbar-primary {
+    height: 36px;
+    padding: 0 16px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: #ffffff;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(99, 102, 241, 0.35);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .btn-toolbar-primary:hover {
+    filter: brightness(1.08);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 16px rgba(99, 102, 241, 0.45);
+  }
+  .btn-toolbar-primary:active {
+    transform: translateY(0);
+  }
+
+  /* ── SLEEK TOOLBAR CUSTOM SELECTS ── */
+  .profiles-toolbar .sort-select-wrap {
+    position: relative;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+  .profiles-toolbar .sort-select-wrap::after {
+    display: none !important; /* Hide native ghost caret */
+  }
+  .profiles-toolbar .custom-select-wrap {
+    min-width: 145px;
+    height: 36px;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    position: relative;
+    display: inline-block;
+  }
+  .profiles-toolbar .custom-select-trigger {
+    width: 100%;
+    height: 36px !important;
+    padding: 0 12px !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 10px !important;
+    color: var(--text-secondary) !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    outline: none !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+  .profiles-toolbar .custom-select-trigger span {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-family: inherit !important;
+  }
+  .profiles-toolbar .custom-select-trigger:hover {
+    border-color: var(--accent) !important;
+    color: var(--text-primary) !important;
+    background: var(--bg-hover) !important;
+  }
+  .profiles-toolbar .custom-select-wrap.active .custom-select-trigger {
+    border-color: var(--accent) !important;
+    color: var(--text-primary) !important;
+    background: var(--bg-card) !important;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12) !important;
+  }
+  .profiles-toolbar .custom-select-trigger svg {
+    color: var(--text-muted) !important;
+    width: 11px !important;
+    height: 11px !important;
+    flex-shrink: 0;
+    transition: transform 0.2s ease !important;
+  }
+  .profiles-toolbar .custom-select-wrap.active .custom-select-trigger svg {
+    transform: rotate(180deg) !important;
+    color: var(--accent) !important;
+  }
+  .profiles-toolbar .custom-select-dropdown {
+    top: calc(100% + 5px) !important;
+    background: var(--bg-card) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12) !important;
+    padding: 6px !important;
+    z-index: 1000 !important;
+  }
+  .profiles-toolbar .custom-select-option {
+    padding: 8px 12px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 8px !important;
+    color: var(--text-secondary) !important;
+    transition: all 0.12s ease !important;
+  }
+  .profiles-toolbar .custom-select-option:hover {
+    background: var(--bg-hover) !important;
+    color: var(--text-primary) !important;
+  }
+  .profiles-toolbar .custom-select-option.active {
+    background: rgba(99, 102, 241, 0.1) !important;
+    color: var(--accent) !important;
+    font-weight: 700 !important;
+  }
+
+  /* ── Responsive Adaptations for Profiles Page ── */
+  @media screen and (max-width: 1200px) {
+    .profiles-wrapper {
+      padding: 14px 16px;
+      gap: 12px;
+    }
+    .profiles-toolbar {
+      padding: 8px 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .toolbar-left, .toolbar-right {
+      flex-wrap: wrap;
+    }
+  }
+
+  @media screen and (max-height: 740px) {
+    .profiles-wrapper {
+      padding: 10px 14px;
+      gap: 8px;
+    }
+    .profiles-list-header {
+      padding: 10px 14px !important;
+    }
+    .profiles-container.list-view .profile-row {
+      padding: 8px 14px !important;
+    }
+    .card-action-btn, .btn-more-options {
+      height: 28px !important;
+    }
+  }
+</style>
+
+<div class="page-header">
+  <div class="page-header-left">
+    <h1 class="page-title">Hồ Sơ</h1>
+    <p class="page-subtitle">Quản lý và khởi chạy các Chrome profiles chống phát hiện</p>
+  </div>
+  <div class="page-header-right">
+    <div class="view-toggle">
+      <button class="view-btn" id="viewGrid" title="Dạng lưới">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </button>
+      <button class="view-btn active" id="viewList" title="Dạng danh sách">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+      </button>
+    </div>
+    <button class="btn-toolbar-action" id="btnImport" title="Nhập hồ sơ từ file">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      <span>Import</span>
+    </button>
+    <button class="btn-toolbar-action" id="btnExport" title="Xuất danh sách hồ sơ">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span>Export</span>
+    </button>
+    <button class="btn-toolbar-stopall" id="btnStopAll" title="Đóng toàn bộ Chrome đang chạy">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2.5" ry="2.5"></rect></svg>
+      <span>Tắt tất cả</span>
+    </button>
+    <button class="btn-toolbar-primary" id="btnNewProfile" title="Tạo hồ sơ trình duyệt mới">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <span>Tạo Hồ Sơ Mới</span>
+    </button>
+  </div>
+</div>
+
+<!-- Toolbar -->
+<div class="profiles-toolbar">
+  <div class="toolbar-left">
+    <!-- Premium Segmented Tab Picker -->
+    <div class="segmented-control" style="margin-left: 0;">
+      <button class="segment-btn filter-tab active" data-filter="all">
+        <span>Tất cả</span>
+        <span class="segment-badge" id="statTotal">0</span>
+      </button>
+      <button class="segment-btn filter-tab" data-filter="active">
+        <span>Đang mở</span>
+        <span class="segment-badge" id="statActive">0</span>
+      </button>
+      <button class="segment-btn filter-tab" data-filter="inactive">
+        <span>Đã tắt</span>
+        <span class="segment-badge" id="statInactive">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="toolbar-right">
+    <div class="bulk-actions" id="bulkActions" style="display:none">
+      <button class="btn-danger-sm" id="btnBulkDelete">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+        Xóa (<span id="selectedCount">0</span>)
+      </button>
+      <button class="btn-success-sm" id="btnBulkOpen">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+        Mở tất cả
+      </button>
+    </div>
+    <div class="sort-select-wrap" style="margin-right: 8px;">
+      <select class="sort-select" id="filterGroupSelect">
+        <option value="all">Nhóm: Tất cả</option>
+      </select>
+    </div>
+    <div class="sort-select-wrap">
+      <select class="sort-select" id="sortProfiles">
+        <option value="name">Sắp xếp: Tên A-Z</option>
+        <option value="created">Mới tạo</option>
+        <option value="lastOpened">Mở gần nhất</option>
+        <option value="openCount">Số lần mở</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- Unified Table Card Wrap (Aligns header and rows inside a single card) -->
+<div class="table-card" style="margin-top: 8px;">
+  <!-- Table Column Headers (For List View Alignment) -->
+  <div class="profiles-list-header" id="profilesListHeader" style="display: none;">
+    <div class="col-cb-avatar" style="width: 64px; display: flex; align-items: center; justify-content: flex-start; padding-left: 6px;">
+      <label class="checkbox-all">
+        <input type="checkbox" id="checkAll">
+        <span class="checkmark"></span>
+      </label>
+    </div>
+    <div class="col-info" style="text-align: left; font-weight: 700; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 8px;">Hồ Sơ & Nhóm</div>
+    <div class="col-fingerprints" style="text-align: left; font-weight: 700; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 8px;">Thiết Lập Vân Tay</div>
+    <div class="col-proxy" style="text-align: left; font-weight: 700; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 8px;">Proxy & Kết Nối</div>
+    <div class="col-stats" style="text-align: left; font-weight: 700; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 4px;">Thống Kê</div>
+    <div class="col-actions" style="text-align: right; font-weight: 700; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; padding-right: 4px;">Thao Tác</div>
+  </div>
+
+  <!-- Profiles Grid / List (Rows are appended here dynamically) -->
+  <div class="profiles-container" id="profilesGrid">
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" opacity="0.4">
+          <rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>
+        </svg>
+      </div>
+      <h3>Chưa có hồ sơ nào</h3>
+      <p>Tạo hồ sơ đầu tiên để bắt đầu</p>
+      <button class="btn-primary" onclick="loadView('create-profile')">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Tạo Hồ Sơ Mới
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="pagination-container" id="profilesPagination" style="display: flex; justify-content: center; align-items: center; gap: 6px; margin: 20px 0 10px 0;"></div>
+
+<!-- Floating Action Bar for Bulk operations -->
+<div class="floating-action-bar" id="floatingActionBar">
+  <div class="floating-bar-info">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: var(--accent);"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+    <span>Đã chọn <strong id="selectedCountFloat" style="color: var(--accent); font-size: 14px;">0</strong> hồ sơ</span>
+  </div>
+  <div class="floating-bar-actions">
+    <button class="btn-primary btn-gradient" id="btnBulkOpenFloat" style="height: 36px; padding: 0 16px; font-size: 12.5px; border-radius: 8px;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/></svg>
+      Mở các mục đã chọn
+    </button>
+    <button class="btn-secondary" id="btnBulkDeleteFloat" style="height: 36px; padding: 0 16px; font-size: 12.5px; border-radius: 8px; border-color: rgba(244,63,94,0.15); color: var(--red); background: rgba(244,63,94,0.03);">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
+      Xóa
+    </button>
+  </div>
+</div>

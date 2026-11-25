@@ -1,0 +1,447 @@
+<style>
+  .contact-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 24px;
+    height: 100%;
+    overflow-y: auto;
+    background: #F8FAFC;
+    font-family: var(--font);
+  }
+
+  /* Grid layout for two columns */
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1.35fr 1fr;
+    gap: 24px;
+    align-items: start;
+  }
+
+  @media (max-width: 900px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Premium Card Styles */
+  .contact-card-premium {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.01), 0 10px 20px rgba(0,0,0,0.015);
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contact-card-premium:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(99, 102, 241, 0.25);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.05);
+  }
+
+  /* Contact Row Item (Hotline, Zalo) */
+  .contact-item-row {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 78px;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .contact-item-row:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(99, 102, 241, 0.25);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.05);
+  }
+
+  /* Social network card */
+  .social-grid-card {
+    background: #FFFFFF;
+    border: 1px solid #E5E7EB;
+    border-radius: 16px;
+    padding: 16px 20px;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 120px;
+  }
+
+  .social-grid-card:hover {
+    transform: translateY(-2px) scale(1.01);
+    border-color: rgba(99, 102, 241, 0.25);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.05);
+  }
+
+  /* Utility outline buttons */
+  .btn-outline-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    height: 30px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 1px solid #E5E7EB;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s ease;
+  }
+
+  .btn-outline-action:hover {
+    background: #EEF2FF;
+    border-color: rgba(99, 102, 241, 0.3);
+    color: var(--accent);
+  }
+
+  .btn-outline-action.primary {
+    background: var(--accent-grad);
+    border: none;
+    color: white;
+  }
+  
+  .btn-outline-action.primary:hover {
+    opacity: 0.95;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.2);
+  }
+
+  /* Info badges */
+  .header-badge-outline {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    background: rgba(0,0,0,0.02);
+    border: 1px solid #E5E7EB;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+
+  /* Dark Theme Specific Adaptations for contact page */
+  .dark-theme .contact-wrapper {
+    background: var(--bg-deep);
+  }
+  .dark-theme .contact-card-premium,
+  .dark-theme .contact-item-row,
+  .dark-theme .social-grid-card {
+    background: var(--bg-card);
+    border-color: var(--border);
+  }
+  .dark-theme .header-badge-outline {
+    background: rgba(255, 255, 255, 0.03);
+    border-color: var(--border);
+  }
+  .dark-theme .social-grid-card div:last-child {
+    border-top-color: var(--border) !important;
+  }
+</style>
+
+<div class="contact-wrapper">
+  <!-- HEADER -->
+  <div style="display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border); padding-bottom: 18px; margin-bottom: 6px;">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <!-- Logo Container -->
+      <div style="background: var(--accent-grad); width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; box-shadow: 0 4px 12px rgba(99,102,241,0.2);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <h1 style="font-size: 20px; font-weight: 750; margin: 0; color: var(--text-primary); letter-spacing: -0.3px;">V-ShopeeBoost PRO MAX</h1>
+          <span class="header-badge-outline" style="color: #6366F1; background: rgba(99,102,241,0.06); border-color: rgba(99,102,241,0.25);">v6.0.0 Pro Max</span>
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 4px; align-items: center;">
+          <span class="header-badge-outline">Build 2026</span>
+          <span style="font-size: 10px; color: var(--text-muted);">•</span>
+          <span class="header-badge-outline">Chromium Engine</span>
+          <span style="font-size: 10px; color: var(--text-muted);">•</span>
+          <span class="header-badge-outline" style="color: #8B5CF6; background: #F5F3FF; border-color: rgba(139,92,246,0.15);">Enterprise License</span>
+        </div>
+      </div>
+    </div>
+    
+    <div style="display: flex; gap: 8px;">
+      <button class="btn-outline-action" onclick="checkAppUpdates()">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6m-7.49 1.51a9 9 0 1 1-2.12-.25L3 10"/></svg>
+        Kiểm tra cập nhật
+      </button>
+      <button class="btn-outline-action" onclick="API.openUrl('https://vmaxtech.vn')">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Website
+      </button>
+    </div>
+  </div>
+
+  <!-- MAIN CONTACT GRID -->
+  <div class="contact-grid">
+    <!-- COLUMN 1: About VMAX & Customer Support -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <!-- Software Info Card -->
+      <div class="contact-card-premium" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          Thông tin phần mềm
+        </div>
+        <div>
+          <div style="font-size: 17px; font-weight: 750; color: var(--text-primary);">V-ShopeeBoost PRO</div>
+          <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 2px;">Phát triển bởi: <strong style="color: var(--text-primary);">VMAX Software Solutions</strong></div>
+          <div style="font-size: 13px; color: #6366F1; font-weight: 600; margin-top: 6px;">"Giải pháp Automation & Anti Detect Browser chuyên nghiệp"</div>
+        </div>
+        <div style="font-size: 12.5px; color: var(--text-secondary); line-height: 1.5; border-top: 1px solid var(--border); padding-top: 10px; margin-top: 4px;">
+          V-ShopeeBoost PRO là nền tảng quản lý Profile Chrome, Fingerprint, Proxy và Automation dành cho người kinh doanh Shopee với hiệu suất cao, bảo mật tốt và trải nghiệm sử dụng hiện đại.
+        </div>
+      </div>
+
+      <!-- Customer Support Section -->
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 4px;">
+          Liên hệ hỗ trợ
+        </div>
+        
+        <!-- Card 1: Hotline -->
+        <div class="contact-item-row">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(99,102,241,0.06); color: #6366F1; display: flex; align-items: center; justify-content: center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Hotline</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--text-primary);">0359 261 551</div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 1px;">MR Đức</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-outline-action primary" onclick="API.openUrl('tel:0359261551')">
+              Gọi ngay
+            </button>
+            <button class="btn-outline-action" onclick="copyTextToClipboard('0359261551', 'Hotline')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Sao chép
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Zalo Kỹ Thuật -->
+        <div class="contact-item-row">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(99,102,241,0.06); color: #6366F1; display: flex; align-items: center; justify-content: center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Zalo Kỹ Thuật</div>
+              <div style="font-size: 14.5px; font-weight: 700; color: var(--text-primary);">0886 335 455</div>
+              <div style="font-size: 11px; color: var(--text-secondary); margin-top: 1px;">Kỹ Thuật VMAX</div>
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px;">
+            <button class="btn-outline-action primary" onclick="API.openUrl('https://zalo.me/0886335455')">
+              Mở Zalo
+            </button>
+            <button class="btn-outline-action" onclick="copyTextToClipboard('0886335455', 'Số Zalo Kỹ thuật')">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+              Sao chép
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: Mail/Trực tiếp -->
+        <div class="contact-item-row" style="height: auto; padding: 14px 20px;">
+          <div style="display: flex; align-items: center; gap: 14px;">
+            <div style="width: 40px; height: 40px; border-radius: 10px; background: rgba(99,102,241,0.06); color: #6366F1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 500;">Hỗ trợ khách hàng</div>
+              <div style="font-size: 12.5px; color: var(--text-secondary); margin-top: 2px; line-height: 1.4;">
+                Liên hệ trực tiếp qua Hotline hoặc Zalo để được hỗ trợ nhanh nhất.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Media Grid -->
+      <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; padding-left: 4px;">
+          Mạng xã hội
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+          <!-- Card: Website -->
+          <div class="social-grid-card">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); font-weight: 700; font-size: 13.5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                Website
+              </div>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">Trang chủ chính thức của VMAX Software</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+              <span style="font-size: 12px; font-weight: 600; color: #6366F1;">vmaxtech.vn</span>
+              <div style="display: flex; gap: 4px;">
+                <button class="btn-outline-action" onclick="API.openUrl('https://vmaxtech.vn')" style="width: 26px; height: 26px; padding: 0;" title="Mở liên kết">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </button>
+                <button class="btn-outline-action" onclick="copyTextToClipboard('https://vmaxtech.vn', 'Website Link')" style="width: 26px; height: 26px; padding: 0;" title="Sao chép">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: Facebook -->
+          <div class="social-grid-card">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); font-weight: 700; font-size: 13.5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                Facebook
+              </div>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">Tin tức và cập nhật mới nhất</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+              <span style="font-size: 12px; font-weight: 600; color: #6366F1;">VMAX Software</span>
+              <div style="display: flex; gap: 4px;">
+                <button class="btn-outline-action" onclick="API.openUrl('https://www.facebook.com/vmaxsoftware.vn/')" style="width: 26px; height: 26px; padding: 0;" title="Mở liên kết">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </button>
+                <button class="btn-outline-action" onclick="copyTextToClipboard('https://www.facebook.com/vmaxsoftware.vn/', 'Facebook Link')" style="width: 26px; height: 26px; padding: 0;" title="Sao chép">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: TikTok -->
+          <div class="social-grid-card">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); font-weight: 700; font-size: 13.5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><rect x="9" y="9" width="6" height="6"/></svg>
+                TikTok
+              </div>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">Video hướng dẫn và chia sẻ</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+              <span style="font-size: 12px; font-weight: 600; color: #6366F1;">@vmaxsoftware.vn</span>
+              <div style="display: flex; gap: 4px;">
+                <button class="btn-outline-action" onclick="API.openUrl('https://www.tiktok.com/@vmaxsoftware.vn')" style="width: 26px; height: 26px; padding: 0;" title="Mở liên kết">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </button>
+                <button class="btn-outline-action" onclick="copyTextToClipboard('https://www.tiktok.com/@vmaxsoftware.vn', 'TikTok Link')" style="width: 26px; height: 26px; padding: 0;" title="Sao chép">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card: YouTube -->
+          <div class="social-grid-card">
+            <div>
+              <div style="display: flex; align-items: center; gap: 8px; color: var(--text-primary); font-weight: 700; font-size: 13.5px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 7a2 2 0 0 0-2-2H3a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h18a2 2 0 0 0 2-2V7z"/><polygon points="10 11 10 15 14 13"/></svg>
+                YouTube
+              </div>
+              <div style="font-size: 11.5px; color: var(--text-muted); margin-top: 4px; line-height: 1.4;">Video hướng dẫn sử dụng phần mềm</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; border-top: 1px solid #F1F5F9; padding-top: 8px;">
+              <span style="font-size: 12px; font-weight: 600; color: #6366F1;">VMAX Digital</span>
+              <div style="display: flex; gap: 4px;">
+                <button class="btn-outline-action" onclick="API.openUrl('https://www.youtube.com/@VMAXDigitalSolutions')" style="width: 26px; height: 26px; padding: 0;" title="Mở liên kết">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                </button>
+                <button class="btn-outline-action" onclick="copyTextToClipboard('https://www.youtube.com/@VMAXDigitalSolutions', 'YouTube Link')" style="width: 26px; height: 26px; padding: 0;" title="Sao chép">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer area -->
+      <div style="border-top: 1px solid var(--border); padding-top: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: var(--text-muted); margin-bottom: 20px;">
+        <div>
+          <strong>VMAX Software Solutions</strong>
+          <span style="margin: 0 4px;">•</span>
+          <span>Automation Solutions</span>
+        </div>
+        <div>© 2026 All Rights Reserved.</div>
+      </div>
+    </div>
+
+    <!-- COLUMN 2: Account & License Management -->
+    <div style="display: flex; flex-direction: column; gap: 20px;">
+      <!-- Google Account Card -->
+      <div class="contact-card-premium" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 4px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Tài khoản liên kết
+        </div>
+        
+        <div style="display: flex; align-items: center; gap: 14px; background: rgba(0,0,0,0.015); border: 1px dashed var(--border); padding: 14px; border-radius: 12px;">
+          <img id="accAvatar" src="https://lh3.googleusercontent.com/a/default-user=s96-c" alt="Avatar" style="width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; flex-shrink: 0;">
+          <div style="flex: 1; min-width: 0;">
+            <div id="accName" style="font-size: 13.5px; font-weight: 750; color: var(--text-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Đang tải...</div>
+            <div id="accEmail" style="font-size: 12px; color: var(--text-secondary); margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">email@gmail.com</div>
+          </div>
+        </div>
+        
+        <button class="btn-outline-action" onclick="logoutUser()" style="width: 100%; height: 34px; color: var(--red); border-color: rgba(239,68,68,0.25); background: var(--red-dim); justify-content: center; font-weight: 600;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Đăng xuất tài khoản
+        </button>
+      </div>
+
+      <!-- License Card -->
+      <div class="contact-card-premium" style="display: flex; flex-direction: column; gap: 16px;">
+        <div style="display: flex; align-items: center; gap: 8px; color: var(--text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; border-bottom: 1px solid var(--border); padding-bottom: 10px; margin-bottom: 4px;">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Bản quyền ứng dụng
+        </div>
+        
+        <!-- HWID Group -->
+        <div class="form-group">
+          <label class="form-label" style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: block;">Mã thiết bị (HWID)</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="accHwid" class="form-input" readonly style="flex: 1; height: 34px; background: var(--bg-card2); border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; font-family: var(--font-mono); font-size: 11.5px; color: var(--text-secondary);" value="Đang tải...">
+            <button class="btn-outline-action" onclick="copyAccHWID()" id="btnCopyAccHwid" style="height: 34px;">Sao chép</button>
+          </div>
+        </div>
+
+        <!-- License Key Group -->
+        <div class="form-group" style="margin-top: 10px;">
+          <label class="form-label" style="font-size: 10.5px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; display: block;">Mã bản quyền (License Key)</label>
+          <input type="text" id="accKey" class="form-input" placeholder="Dán mã bản quyền vào đây..." style="width: 100%; height: 34px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 0 10px; font-size: 12px; color: var(--text-primary);">
+        </div>
+
+        <!-- Expiry status -->
+        <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.015); border: 1px dashed var(--border); padding: 10px 12px; border-radius: 8px; margin-top: 6px;">
+          <span style="font-size: 11.5px; color: var(--text-secondary);">Hạn sử dụng:</span>
+          <strong id="accExpiry" style="font-size: 12px; color: var(--green);">Đang tải...</strong>
+        </div>
+
+        <!-- Activation Button -->
+        <button class="btn-outline-action primary" onclick="activateAccLicense()" id="btnAccActivate" style="height: 36px; width: 100%; font-weight: 700; margin-top: 6px;">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          Kích hoạt bản quyền
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.checkAppUpdates = function() {
+    toast('Phần mềm đang ở phiên bản mới nhất v6.0.0 Pro Max!', 'success');
+  };
+
+  window.copyTextToClipboard = function(text, label) {
+    navigator.clipboard.writeText(text);
+    toast('Đã sao chép ' + label + ' vào bộ nhớ tạm!', 'success');
+  };
+</script>

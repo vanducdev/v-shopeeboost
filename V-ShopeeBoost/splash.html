@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+body {
+  width: 620px; height: 400px;
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Inter', -apple-system, sans-serif;
+  color: #1e293b;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(238, 77, 45, 0.15);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12), 0 5px 15px rgba(0, 0, 0, 0.04);
+}
+
+/* Background effects */
+.bg-mesh {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 10% 10%, rgba(238,77,45,0.07) 0%, transparent 45%),
+    radial-gradient(circle at 90% 90%, rgba(108,99,255,0.05) 0%, transparent 55%),
+    radial-gradient(circle at 50% 0%, rgba(238,77,45,0.03) 0%, transparent 35%),
+    radial-gradient(circle at 50% 100%, rgba(238,77,45,0.04) 0%, transparent 40%);
+  animation: meshMove 6s ease-in-out infinite alternate;
+}
+@keyframes meshMove { to { opacity: 0.8; } }
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(238,77,45,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(238,77,45,0.02) 1px, transparent 1px);
+  background-size: 32px 32px;
+  mask-image: radial-gradient(ellipse at center, black 50%, transparent 90%);
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: rgba(238,77,45,0.3);
+  border-radius: 50%;
+  animation: float 4s ease-in-out infinite;
+}
+.particle:nth-child(1) { left: 12%; top: 25%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 88%; top: 35%; animation-delay: 1s; }
+.particle:nth-child(3) { left: 22%; top: 75%; animation-delay: 2s; }
+.particle:nth-child(4) { left: 78%; top: 70%; animation-delay: 0.5s; }
+.particle:nth-child(5) { left: 50%; top: 15%; animation-delay: 1.5s; }
+@keyframes float {
+  0%,100% { transform: translateY(0) scale(1); opacity: 0.3; }
+  50% { transform: translateY(-8px) scale(1.4); opacity: 0.7; }
+}
+
+/* Corner accents */
+.corner {
+  position: absolute;
+  width: 40px; height: 40px;
+  border-color: rgba(238, 77, 45, 0.25);
+  border-style: solid;
+}
+.corner.tl { top:16px; left:16px; border-width:2px 0 0 2px; border-radius:6px 0 0 0; }
+.corner.tr { top:16px; right:16px; border-width:2px 2px 0 0; border-radius:0 6px 0 0; }
+.corner.bl { bottom:16px; left:16px; border-width:0 0 2px 2px; border-radius:0 0 0 6px; }
+.corner.br { bottom:16px; right:16px; border-width:0 2px 2px 0; border-radius:0 0 6px 0; }
+
+/* Content */
+.content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.logo-wrap {
+  position: relative;
+  margin-bottom: 22px;
+  animation: logoIn 0.8s cubic-bezier(0.34,1.56,0.64,1) forwards;
+}
+@keyframes logoIn {
+  0%  { opacity:0; transform:scale(0.3) rotate(-15deg); }
+  100%{ opacity:1; transform:scale(1) rotate(0); }
+}
+.logo {
+  width: 86px; height: 86px;
+  border-radius: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid rgba(238, 77, 45, 0.15);
+  box-shadow:
+    0 8px 24px rgba(238, 77, 45, 0.15),
+    0 2px 6px rgba(0,0,0,0.04);
+  overflow: hidden;
+}
+.logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 22px;
+  padding: 6px;
+}
+.logo-ring {
+  position: absolute;
+  inset: -8px;
+  border-radius: 30px;
+  border: 1px solid rgba(238, 77, 45, 0.25);
+  animation: ringPulse 2s ease infinite;
+}
+.logo-ring2 {
+  position: absolute;
+  inset: -16px;
+  border-radius: 38px;
+  border: 1px solid rgba(238, 77, 45, 0.12);
+  animation: ringPulse 2s 0.5s ease infinite;
+}
+.logo-ring3 {
+  position: absolute;
+  inset: -24px;
+  border-radius: 46px;
+  border: 1px solid rgba(238, 77, 45, 0.06);
+  animation: ringPulse 2s 1s ease infinite;
+}
+@keyframes ringPulse {
+  0%,100% { opacity:0.5; transform:scale(1); }
+  50%     { opacity:1; transform:scale(1.04); }
+}
+
+.brand {
+  text-align: center;
+  animation: fadeUp 0.6s 0.3s ease both;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(15px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+.brand-name {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+  color: #1e293b;
+}
+.brand-pro {
+  background: linear-gradient(135deg, #ee4d2d, #ff7a5a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+.brand-sub {
+  font-size: 11px;
+  color: #64748b;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.brand-version {
+  font-size: 11px;
+  color: #ee4d2d;
+  background: rgba(238, 77, 45, 0.08);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-family: monospace;
+  display: inline-block;
+}
+
+/* Features list */
+.features {
+  display: flex;
+  gap: 12px;
+  margin-top: 18px;
+  animation: fadeUp 0.6s 0.5s ease both;
+}
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #475569;
+  background: rgba(238, 77, 45, 0.04);
+  border: 1px solid rgba(238, 77, 45, 0.08);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.feature-icon {
+  width: 18px; height: 18px;
+  border-radius: 4px;
+  background: rgba(238, 77, 45, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.feature-icon svg {
+  width: 11px; height: 11px;
+  stroke: #ee4d2d;
+}
+
+/* Progress */
+.progress-wrap {
+  width: 280px;
+  margin-top: 24px;
+  animation: fadeUp 0.6s 0.6s ease both;
+}
+.progress-track {
+  height: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 99px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #ff8a65, #ee4d2d, #ff8a65);
+  background-size: 200%;
+  animation: fillProgress 3s 0.8s cubic-bezier(0.4,0,0.2,1) forwards,
+             shimmer 1.5s 0.8s linear infinite;
+  width: 0%;
+}
+@keyframes fillProgress { to { width: 100%; } }
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+.loading-text {
+  font-size: 11px;
+  color: #64748b;
+  text-align: center;
+  margin-top: 10px;
+  font-family: monospace;
+  letter-spacing: 0.5px;
+  animation: pulseText 1.5s ease-in-out infinite;
+  font-weight: 500;
+}
+@keyframes pulseText {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Dots */
+.dots {
+  display: flex;
+  gap: 6px;
+  margin-top: 18px;
+  animation: fadeUp 0.5s 0.8s ease both;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(238, 77, 45, 0.4);
+  animation: dotBounce 1.2s ease infinite;
+}
+.dot:nth-child(2) { animation-delay:0.2s; }
+.dot:nth-child(3) { animation-delay:0.4s; }
+.dot:nth-child(4) { animation-delay:0.6s; }
+@keyframes dotBounce {
+  0%,100% { transform:translateY(0); background:rgba(238, 77, 45, 0.4); }
+  50%     { transform:translateY(-6px); background:#ee4d2d; }
+}
+
+/* Footer */
+.splash-footer {
+  position: absolute;
+  bottom: 16px;
+  font-size: 10px;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  font-family: monospace;
+  font-weight: 500;
+}
+</style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="grid-overlay"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="content">
+    <div class="logo-wrap">
+      <div class="logo-ring3"></div>
+      <div class="logo-ring2"></div>
+      <div class="logo-ring"></div>
+      <div class="logo">
+        <img src="./image/vmaxsp-Photoroom.png" alt="V-ShopeeBoost">
+      </div>
+    </div>
+
+    <div class="brand">
+      <div class="brand-name">V-ShopeeBoost <span class="brand-pro">PRO MAX</span></div>
+      <div class="brand-sub">Professional Edition</div>
+      <div class="brand-version">v6.0.0 Pro Max</div>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <span>Multi-Profile</span>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/>
+          </svg>
+        </div>
+        <span>Proxy Support</span>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+        </div>
+        <span>Fingerprint</span>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <div class="progress-track">
+        <div class="progress-fill"></div>
+      </div>
+      <div class="loading-text" id="loadingText">Đang khởi động...</div>
+    </div>
+
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+
+  <div class="splash-footer">© 2025 Nguyễn Văn Đức | Zalo: 0359261551</div>
+
+  <script>
+    const msgs = [
+      'Đang khởi động...',
+      'Tải cấu hình hệ thống...',
+      'Kiểm tra Chrome profile...',
+      'Sẵn sàng sử dụng!'
+    ];
+    let i = 0;
+    const el = document.getElementById('loadingText');
+    const interval = setInterval(() => {
+      i++;
+      if (i < msgs.length) el.textContent = msgs[i];
+      else clearInterval(interval);
+    }, 700);
+  </script>
+</body>
+</html>

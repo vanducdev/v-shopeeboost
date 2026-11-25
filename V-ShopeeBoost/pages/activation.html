@@ -1,0 +1,1171 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>V-ShopeeBoost - Đăng nhập & Kích hoạt bản quyền</title>
+  <style>
+    :root {
+      --bg: #f1f5f9;
+      --panel: rgba(255, 255, 255, 0.7);
+      --border: rgba(99, 102, 241, 0.12);
+      --border-hover: rgba(99, 102, 241, 0.25);
+      --primary: #6366f1;
+      --primary-hover: #4f46e5;
+      --gradient: linear-gradient(135deg, #6366f1, #818cf8);
+      --text: #1e293b;
+      --text-muted: #64748b;
+      --green: #10b981;
+      --red: #f43f5e;
+      --font: 'Inter', -apple-system, sans-serif;
+      --wrapper-border: rgba(255, 255, 255, 0.5);
+    }
+
+    body.dark-theme {
+      --bg: #07080e;
+      --panel: rgba(15, 23, 42, 0.6);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.16);
+      --primary: #a855f7;
+      --primary-hover: #8b5cf6;
+      --gradient: linear-gradient(135deg, #6366f1, #a855f7);
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+      --wrapper-border: rgba(255, 255, 255, 0.08);
+      --phone-bg: #0c0e17;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      background: var(--bg);
+      font-family: var(--font);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    /* Background mesh */
+    .bg-mesh {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 15% 15%, rgba(108,99,255,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 50% at 85% 85%, rgba(167,139,250,0.05) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 50% 50%, rgba(108,99,255,0.03) 0%, transparent 50%);
+      z-index: 1;
+    }
+
+    .grid-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(108,99,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(108,99,255,0.02) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+      z-index: 1;
+    }
+
+    /* Split Screen Wrapper */
+    .login-wrapper {
+      display: flex;
+      width: 960px;
+      height: 580px;
+      background: var(--panel);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border: 1px solid var(--wrapper-border);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.06),
+        inset 0 1px 0 var(--wrapper-border);
+      z-index: 2;
+      position: relative;
+      animation: cardIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(40px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Left Side: Banner */
+    .login-banner {
+      flex: 1.15;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 40px;
+      overflow: hidden;
+      border-right: 1px solid var(--border);
+      background: linear-gradient(145deg, var(--bg-card, #ffffff), var(--bg-deep, #f3f6ff));
+      transition: background 0.3s, border-color 0.3s;
+    }
+
+    .banner-bg-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(#6c63ff 1px, transparent 1px);
+      background-size: 20px 20px;
+      opacity: 0.05;
+      z-index: 1;
+    }
+
+    .banner-img {
+      position: relative;
+      margin: auto;
+      max-width: 85%;
+      max-height: 70%;
+      object-fit: contain;
+      z-index: 2;
+      filter: drop-shadow(0 15px 30px rgba(108,99,255,0.18));
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .login-banner:hover .banner-img {
+      transform: translateY(-8px);
+    }
+
+    .banner-text {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    @keyframes slideUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .banner-text h2 {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 8px;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .banner-text p {
+      font-size: 13px;
+      color: #64748b;
+      line-height: 1.5;
+    }
+
+    /* Right Side: Phone Container & Frame */
+    .phone-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: transparent;
+    }
+
+    .phone-frame {
+      width: 360px;
+      height: 520px;
+      background: #0f172a;
+      border-radius: 44px;
+      padding: 10px;
+      box-shadow: 
+        0 25px 60px rgba(15, 23, 42, 0.15),
+        0 0 0 3px #1e293b,
+        0 0 0 4px #334155;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .phone-screen {
+      flex: 1;
+      background: var(--phone-bg, #ffffff);
+      border-radius: 36px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      padding: 12px 18px 18px 18px;
+    }
+
+    /* Notch / Dynamic Island */
+    .phone-notch {
+      position: absolute;
+      top: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 96px;
+      height: 20px;
+      background: #0f172a;
+      border-radius: 10px;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 10px;
+    }
+
+    .phone-notch-camera {
+      width: 6px;
+      height: 6px;
+      background: #1e293b;
+      border-radius: 50%;
+      box-shadow: inset 0 0 2px rgba(255,255,255,0.4);
+    }
+    
+    .phone-notch-sensor {
+      width: 4px;
+      height: 4px;
+      background: #090d16;
+      border-radius: 50%;
+    }
+
+    /* Phone Status Bar */
+    .phone-status-bar {
+      height: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 11px;
+      font-weight: 600;
+      color: #0f172a;
+      padding: 0 8px;
+      margin-bottom: 8px;
+      margin-top: 10px;
+      user-select: none;
+      z-index: 9;
+    }
+
+    .phone-status-bar .right-status {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    /* Home Indicator */
+    .phone-home-indicator {
+      position: absolute;
+      bottom: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 4px;
+      background: #cbd5e1;
+      border-radius: 2px;
+      z-index: 10;
+    }
+
+    /* Form Card inside Phone */
+    .card {
+      flex: 1;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .logo-container {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .logo-ring {
+      position: absolute;
+      inset: -5px;
+      border-radius: 18px;
+      border: 2px dashed rgba(108,99,255,0.25);
+      animation: spin 15s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+
+    .logo-img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      box-shadow: 0 6px 15px rgba(108,99,255,0.12);
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .title span {
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Input fields */
+    .form-group {
+      margin-bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+
+    .input {
+      width: 100%;
+      height: 38px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0 12px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 12.5px;
+      transition: all 0.2s;
+    }
+
+    .input:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(108,99,255,0.12);
+      background: var(--panel);
+    }
+
+    .input-hwid {
+      font-family: monospace;
+      font-size: 11.5px;
+      background: var(--border);
+      padding-right: 70px;
+      border-color: var(--border);
+      color: var(--text-muted);
+    }
+
+    .btn-copy {
+      position: absolute;
+      right: 6px;
+      height: 26px;
+      padding: 0 8px;
+      background: var(--border);
+      border: none;
+      border-radius: 5px;
+      color: var(--text);
+      font-size: 10.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-copy:hover {
+      background: var(--border-hover);
+      color: var(--text);
+    }
+
+    /* Google Button */
+    .btn-google {
+      width: 100%;
+      height: 40px;
+      background: var(--panel);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+      margin-top: 6px;
+    }
+
+    .btn-google:hover {
+      background: var(--border);
+      border-color: var(--border-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+    }
+
+    .btn-google img {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Submit Button */
+    .btn-submit {
+      width: 100%;
+      height: 38px;
+      background: var(--gradient);
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(108,99,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 6px;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(108,99,255,0.3);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      background: #cbd5e1;
+      color: #94a3b8;
+      box-shadow: none;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* User Profile section */
+    .user-profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      padding: 8px 10px;
+      border-radius: 10px;
+      margin-bottom: 12px;
+    }
+
+    .user-avatar {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+    }
+
+    .user-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .user-name {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #0f172a;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .user-email {
+      font-size: 11px;
+      color: var(--text-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .btn-logout {
+      background: transparent;
+      border: none;
+      color: var(--red);
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-logout:hover {
+      background: rgba(244, 63, 94, 0.05);
+    }
+
+    /* Alert boxes */
+    .alert {
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 11.5px;
+      line-height: 1.4;
+      display: none;
+      margin-bottom: 12px;
+      animation: alertIn 0.3s ease;
+    }
+
+    @keyframes alertIn {
+      from { opacity: 0; transform: translateY(-6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .alert-success {
+      background: rgba(16, 185, 129, 0.08);
+      border: 1px solid rgba(16, 185, 129, 0.2);
+      color: var(--green);
+    }
+
+    .alert-error {
+      background: rgba(244, 63, 94, 0.08);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      color: var(--red);
+    }
+
+    /* Footer contact */
+    .footer {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 10.5px;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .footer a {
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.2s;
+    }
+
+    .footer a:hover {
+      color: #a78bfa;
+      text-decoration: underline;
+    }
+
+    /* Windows top bar */
+    .title-bar {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40px;
+      background: transparent;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding-right: 12px;
+      -webkit-app-region: drag;
+      z-index: 10;
+    }
+
+    .win-btn {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #64748b;
+      transition: all 0.2s;
+      -webkit-app-region: no-drag;
+    }
+
+    .win-btn:hover {
+      background: rgba(0, 0, 0, 0.05);
+      color: #0f172a;
+    }
+
+    .win-btn.close-btn:hover {
+      background: var(--red);
+      color: #fff;
+    }
+
+    .spinner {
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+    }
+
+    .activation-language-control {
+      display: flex;
+      align-items: center;
+      height: 30px;
+      padding-left: 8px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .activation-language-flag {
+      display: block;
+      width: 22px;
+      height: 16px;
+      object-fit: cover;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+    }
+
+    .activation-language-select {
+      height: 28px;
+      max-width: 136px;
+      padding: 0 28px 0 7px;
+      color: var(--text);
+      background: transparent;
+      border: 0;
+      outline: none;
+      font: inherit;
+      font-size: 10.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .activation-language-control:hover,
+    .activation-language-control:focus-within {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.12);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="title-bar">
+    <div style="display: flex; align-items: center; gap: 8px; margin-right: 12px; -webkit-app-region: no-drag;">
+      <div class="activation-language-control">
+        <img id="activationLanguageFlag" class="activation-language-flag" src="../flag/languages/vn.svg" alt=""
+             aria-hidden="true" width="22" height="16">
+        <select id="activationLanguageSelect" class="activation-language-select" aria-label="Ngôn ngữ" data-i18n-skip>
+          <option value="vi">Tiếng Việt</option>
+          <option value="en">English</option>
+          <option value="th">ภาษาไทย</option>
+          <option value="id">Bahasa Indonesia</option>
+          <option value="ms">Bahasa Melayu</option>
+          <option value="fil">Filipino</option>
+          <option value="zh-CN">简体中文</option>
+          <option value="ja">日本語</option>
+          <option value="ko">한국어</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+      <!-- Theme Switch Button -->
+      <button id="btnToggleTheme" style="background: transparent; border: none; width: 28px; height: 28px; border-radius: 50%; cursor: pointer; color: var(--text); display: flex; align-items: center; justify-content: center; transition: all 0.2s; padding: 0; outline: none;">
+        <!-- Sun icon (Light mode) -->
+        <svg id="themeIconSun" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display: none;"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        <!-- Moon icon (Dark mode) -->
+        <svg id="themeIconMoon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+
+    <div class="win-btn close-btn" onclick="API.winClose()" title="Đóng">
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </div>
+  </div>
+
+  <div class="login-wrapper">
+    <!-- Left Side: Banner with transparent logo image -->
+    <div class="login-banner">
+      <div class="banner-bg-dots"></div>
+      <img src="../image/logodangnhap.png" alt="Vmax Logo" class="banner-img">
+      <div class="banner-text">
+        <h2>V-ShopeeBoost Pro</h2>
+        <p id="bannerDesc">Giải pháp tối ưu hóa quản lý và tăng trưởng Shopee hàng đầu Việt Nam.</p>
+      </div>
+    </div>
+
+    <!-- Right Side: Phone Container & Frame -->
+    <div class="phone-container">
+      <div class="phone-frame">
+        <!-- Phone Notch / Dynamic Island -->
+        <div class="phone-notch">
+          <div class="phone-notch-camera"></div>
+          <div class="phone-notch-sensor"></div>
+        </div>
+        
+        <div class="phone-screen">
+          <!-- Phone Status Bar -->
+          <div class="phone-status-bar">
+            <div class="left-status" id="phoneTime">--:--</div>
+            <div class="right-status">
+              <!-- Signal icon -->
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M2 22h20V2z" />
+              </svg>
+              <!-- Wifi icon -->
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 21l-12-18h24z" />
+              </svg>
+              <!-- Battery icon -->
+              <svg width="15" height="9" viewBox="0 0 24 14" fill="none" stroke="currentColor" stroke-width="2" style="margin-top: 1px;">
+                <rect x="1" y="1" width="18" height="12" rx="2" />
+                <rect x="2" y="3" width="11" height="8" fill="currentColor" stroke="none" />
+                <path d="M21 4v6" stroke-linecap="round" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Card Form inside Screen -->
+          <div class="card">
+            <div class="header">
+              <div class="logo-container">
+                <div class="logo-ring"></div>
+                <img class="logo-img" src="../image/logo-app-vmax.png" alt="Logo">
+              </div>
+              <div class="title">V-ShopeeBoost <span>PRO</span></div>
+              <div class="subtitle" id="subTitle">Hệ thống kích hoạt bản quyền phần mềm</div>
+            </div>
+
+            <!-- Alerts -->
+            <div id="alertBox" class="alert"></div>
+
+            <!-- STATE 1: GOOGLE LOGIN -->
+            <div id="loginState">
+              <div id="googleInfo" style="text-align: center; margin-bottom: 12px; font-size: 12px; color: var(--text-muted); line-height: 1.5;">
+                Vui lòng đăng nhập tài khoản Google để liên kết bản quyền phần mềm.
+              </div>
+              <button class="btn-google" onclick="loginWithGoogle()">
+                <img src="../image/google.png" alt="Google" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg'">
+                <span id="btnGoogleText">Đăng nhập với Google</span>
+              </button>
+              
+              <div style="margin-top: 12px; text-align: center;">
+                <a href="#" onclick="toggleManualInput()" id="manualBtn" style="color: var(--primary); font-size: 11px; text-decoration: none; font-weight: 500;">Gặp sự cố khi tự động kết nối? Nhập mã thủ công</a>
+              </div>
+              
+              <div id="manualTokenInputContainer" style="display: none; margin-top: 10px; flex-direction: column; gap: 6px;">
+                <label class="label" style="text-align: left;" id="manualLabel">Dán địa chỉ URL hoặc mã Access Token tại đây:</label>
+                <div class="input-wrapper">
+                  <input type="text" id="manualTokenInput" class="input" placeholder="Dán URL từ trình duyệt..." autocomplete="off">
+                </div>
+                <button class="btn-submit" onclick="submitManualToken()" id="manualBtnConfirm" style="height: 34px; font-size: 11.5px; margin-top: 4px;">Xác nhận đăng nhập</button>
+              </div>
+            </div>
+
+            <!-- STATE 2: LICENSE ACTIVATION -->
+            <div id="activationState" style="display: none;">
+              <div class="user-profile">
+                <img id="userAvatar" class="user-avatar" src="" alt="Avatar">
+                <div class="user-info">
+                  <span id="userName" class="user-name">Đang tải...</span>
+                  <span id="userEmail" class="user-email">email@gmail.com</span>
+                </div>
+                <button class="btn-logout" onclick="logout()" id="logoutBtn">Đăng xuất</button>
+              </div>
+
+              <div class="form-group">
+                <label class="label" id="hwidLabel">Mã thiết bị của bạn (HWID)</label>
+                <div class="input-wrapper">
+                  <input type="text" id="hwidInput" class="input input-hwid" readonly value="Đang tải...">
+                  <button class="btn-copy" onclick="copyHWID()" id="btnCopy">Sao chép</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="label" id="keyLabel">Nhập Mã Bản Quyền (License Key)</label>
+                <div class="input-wrapper">
+                  <input type="text" id="keyInput" class="input" placeholder="Dán mã bản quyền vào đây..." autocomplete="off">
+                </div>
+              </div>
+
+              <button id="submitBtn" class="btn-submit" onclick="activate()">
+                <div id="btnSpinner" class="spinner"></div>
+                <span id="btnText">Kích hoạt phần mềm</span>
+              </button>
+            </div>
+
+            <div class="footer">
+              <div id="footerText">Gửi mã HWID hoặc Email cho Admin để kích hoạt.</div>
+              <div>
+                <span id="supportLabel">Zalo Hỗ Trợ: </span>
+                <a href="#" onclick="API.openUrl('https://zalo.me/0359261551')">0359.261.551 (Nguyễn Văn Đức)</a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Home Indicator -->
+          <div class="phone-home-indicator"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../i18n.js"></script>
+  <script>
+    const loginState = document.getElementById('loginState');
+    const activationState = document.getElementById('activationState');
+    const userAvatar = document.getElementById('userAvatar');
+    const userName = document.getElementById('userName');
+    const userEmail = document.getElementById('userEmail');
+    const hwidInput = document.getElementById('hwidInput');
+    const keyInput = document.getElementById('keyInput');
+    const submitBtn = document.getElementById('submitBtn');
+    const btnSpinner = document.getElementById('btnSpinner');
+    const btnText = document.getElementById('btnText');
+    const alertBox = document.getElementById('alertBox');
+    const subTitle = document.getElementById('subTitle');
+
+    // --- LOGIC ĐỔI SÁNG TỐI ---
+    const body = document.body;
+    const btnToggleTheme = document.getElementById('btnToggleTheme');
+    const themeIconSun = document.getElementById('themeIconSun');
+    const themeIconMoon = document.getElementById('themeIconMoon');
+
+    function applyTheme(theme) {
+      if (theme.startsWith('dark')) {
+        body.classList.add('dark-theme');
+        themeIconSun.style.display = 'block';
+        themeIconMoon.style.display = 'none';
+      } else {
+        body.classList.remove('dark-theme');
+        themeIconSun.style.display = 'none';
+        themeIconMoon.style.display = 'block';
+      }
+    }
+
+    btnToggleTheme?.addEventListener('click', () => {
+      const isDark = body.classList.contains('dark-theme');
+      const newTheme = isDark ? 'light-clean' : 'dark-blue';
+      applyTheme(newTheme);
+      localStorage.setItem('app_theme', newTheme);
+    });
+
+    // --- LOGIC ĐA NGÔN NGỮ ---
+    const activationLanguageSelect = document.getElementById('activationLanguageSelect');
+    const activationLanguageFlag = document.getElementById('activationLanguageFlag');
+
+    const translations = {
+      vi: {
+        bannerDesc: "Giải pháp tối ưu hóa quản lý và tăng trưởng Shopee hàng đầu Việt Nam.",
+        subTitleLink: "Liên kết & kích hoạt bản quyền",
+        subTitleVerify: "Hệ thống xác thực tài khoản",
+        googleInfo: "Vui lòng đăng nhập tài khoản Google để liên kết bản quyền phần mềm.",
+        btnGoogle: "Đăng nhập với Google",
+        manualBtn: "Gặp sự cố khi tự động kết nối? Nhập mã thủ công",
+        manualLabel: "Dán địa chỉ URL hoặc mã Access Token tại đây:",
+        manualBtnConfirm: "Xác nhận đăng nhập",
+        logoutBtn: "Đăng xuất",
+        hwidLabel: "Mã thiết bị của bạn (HWID)",
+        keyLabel: "Nhập Mã Bản Quyền (License Key)",
+        activateBtn: "Kích hoạt phần mềm",
+        footerText: "Gửi mã HWID hoặc Email cho Admin để kích hoạt.",
+        supportText: "Zalo Hỗ Trợ: ",
+        placeholderKey: "Dán mã bản quyền vào đây...",
+        placeholderUrl: "Dán URL từ trình duyệt...",
+        btnCopy: "Sao chép",
+        copied: "Đã sao chép!"
+      },
+      en: {
+        bannerDesc: "The leading Shopee management and growth optimization solution in Vietnam.",
+        subTitleLink: "Link & activate license",
+        subTitleVerify: "Account verification system",
+        googleInfo: "Please log in with Google to link your software license.",
+        btnGoogle: "Log in with Google",
+        manualBtn: "Having trouble connecting automatically? Enter manually",
+        manualLabel: "Paste URL or Access Token here:",
+        manualBtnConfirm: "Confirm Login",
+        logoutBtn: "Log out",
+        hwidLabel: "Your Device ID (HWID)",
+        keyLabel: "Enter License Key",
+        activateBtn: "Activate Software",
+        footerText: "Send HWID or Email to Admin for activation.",
+        supportText: "Zalo Support: ",
+        placeholderKey: "Paste license key here...",
+        placeholderUrl: "Paste URL from browser...",
+        btnCopy: "Copy",
+        copied: "Copied!"
+      }
+    };
+
+    async function applyLang(lang) {
+      localStorage.setItem('app_lang', lang);
+      if (activationLanguageSelect) activationLanguageSelect.value = lang;
+      if (activationLanguageFlag && window.I18N) {
+        activationLanguageFlag.src = window.I18N.getFlagUrl(lang);
+      }
+      
+      const t = translations[lang] || translations.vi;
+      
+      // Cập nhật giao diện
+      const bannerDescEl = document.getElementById('bannerDesc');
+      if (bannerDescEl) bannerDescEl.textContent = t.bannerDesc;
+      
+      const googleInfoEl = document.getElementById('googleInfo');
+      if (googleInfoEl) googleInfoEl.textContent = t.googleInfo;
+      
+      const btnGoogleText = document.getElementById('btnGoogleText');
+      if (btnGoogleText) btnGoogleText.textContent = t.btnGoogle;
+      
+      const manualBtnEl = document.getElementById('manualBtn');
+      if (manualBtnEl) manualBtnEl.textContent = t.manualBtn;
+      
+      const manualLabelEl = document.getElementById('manualLabel');
+      if (manualLabelEl) manualLabelEl.textContent = t.manualLabel;
+      
+      const manualBtnConfirmEl = document.getElementById('manualBtnConfirm');
+      if (manualBtnConfirmEl) manualBtnConfirmEl.textContent = t.manualBtnConfirm;
+      
+      const logoutBtnEl = document.getElementById('logoutBtn');
+      if (logoutBtnEl) logoutBtnEl.textContent = t.logoutBtn;
+      
+      const hwidLabelEl = document.getElementById('hwidLabel');
+      if (hwidLabelEl) hwidLabelEl.textContent = t.hwidLabel;
+      
+      const keyLabelEl = document.getElementById('keyLabel');
+      if (keyLabelEl) keyLabelEl.textContent = t.keyLabel;
+      
+      const btnCopyEl = document.getElementById('btnCopy');
+      if (btnCopyEl && btnCopyEl.textContent !== 'Đã sao chép!' && btnCopyEl.textContent !== 'Copied!') {
+        btnCopyEl.textContent = t.btnCopy;
+      }
+      
+      const btnTextEl = document.getElementById('btnText');
+      if (btnTextEl && btnTextEl.textContent !== 'Đang xác thực...' && btnTextEl.textContent !== 'Validating...') {
+        btnTextEl.textContent = t.activateBtn;
+      }
+      
+      const footerTextEl = document.getElementById('footerText');
+      if (footerTextEl) footerTextEl.textContent = t.footerText;
+      
+      const supportLabelEl = document.getElementById('supportLabel');
+      if (supportLabelEl) supportLabelEl.textContent = t.supportText;
+      
+      const keyInputEl = document.getElementById('keyInput');
+      if (keyInputEl) keyInputEl.placeholder = t.placeholderKey;
+      
+      const manualInputEl = document.getElementById('manualTokenInput');
+      if (manualInputEl) manualInputEl.placeholder = t.placeholderUrl;
+
+      // Cập nhật lại Subtitle theo trạng thái hiện tại
+      const hasEmail = userEmail.textContent && userEmail.textContent !== 'email@gmail.com';
+      if (hasEmail) {
+        subTitle.textContent = t.subTitleLink;
+      } else {
+        subTitle.textContent = t.subTitleVerify;
+      }
+
+      if (window.I18N) {
+        await window.I18N.setLanguage(lang, { announce: false, persist: true });
+        window.I18N.translateDOM(document.body);
+      }
+    }
+
+    activationLanguageSelect?.addEventListener('change', event => {
+      void applyLang(event.target.value);
+    });
+
+    // --- TẢI THÔNG TIN BẢN QUYỀN ---
+    async function loadLicenseInfo() {
+      try {
+        const info = await window.API.getLicenseInfo();
+        hwidInput.value = info.hwid || 'Không lấy được HWID';
+        
+        const lang = localStorage.getItem('app_lang') || 'vi';
+        const t = translations[lang] || translations.vi;
+
+        if (info.email) {
+          loginState.style.display = 'none';
+          activationState.style.display = 'block';
+          
+          userAvatar.src = info.avatar || 'https://lh3.googleusercontent.com/a/default-user=s96-c';
+          userName.textContent = info.name;
+          userEmail.textContent = info.email;
+          subTitle.textContent = t.subTitleLink;
+          
+          if (info.key) {
+            keyInput.value = info.key;
+          }
+          if (info.msg) {
+            showStatus(info.msg, info.isValid);
+          }
+        } else {
+          loginState.style.display = 'block';
+          activationState.style.display = 'none';
+          subTitle.textContent = t.subTitleVerify;
+          if (info.msg && info.msg !== 'Chưa đăng nhập tài khoản') {
+            showStatus(info.msg, false);
+          }
+        }
+      } catch (err) {
+        showStatus('Lỗi kết nối hệ thống: ' + err.message, false);
+      }
+    }
+
+    function showStatus(msg, isSuccess) {
+      alertBox.textContent = msg;
+      alertBox.className = 'alert ' + (isSuccess ? 'alert-success' : 'alert-error');
+      alertBox.style.display = 'block';
+    }
+
+    function copyHWID() {
+      navigator.clipboard.writeText(hwidInput.value);
+      const btn = document.getElementById('btnCopy');
+      const lang = localStorage.getItem('app_lang') || 'vi';
+      const t = translations[lang] || translations.vi;
+      btn.textContent = t.copied;
+      setTimeout(() => btn.textContent = t.btnCopy, 1500);
+    }
+
+    async function loginWithGoogle() {
+      alertBox.style.display = 'none';
+      const lang = localStorage.getItem('app_lang') || 'vi';
+      const msg = lang === 'vi' ? 'Đang mở trình duyệt hệ thống... Vui lòng hoàn thành đăng nhập trên trình duyệt.' : 'Opening browser... Please log in on the browser window.';
+      showStatus(msg, true);
+      try {
+        const res = await window.API.loginGoogle();
+        if (!res.ok) {
+          showStatus(res.msg || (lang === 'vi' ? 'Đăng nhập Google thất bại' : 'Google login failed'), false);
+        }
+      } catch (err) {
+        showStatus('Lỗi: ' + err.message, false);
+      }
+    }
+
+    async function logout() {
+      try {
+        await window.API.logoutLicense();
+        loadLicenseInfo();
+      } catch (err) {
+        showStatus('Lỗi: ' + err.message, false);
+      }
+    }
+
+    async function activate() {
+      const key = keyInput.value.trim();
+      const lang = localStorage.getItem('app_lang') || 'vi';
+      if (!key) {
+        showStatus(lang === 'vi' ? 'Vui lòng nhập mã bản quyền!' : 'Please enter license key!', false);
+        return;
+      }
+
+      submitBtn.disabled = true;
+      btnSpinner.style.display = 'block';
+      btnText.textContent = lang === 'vi' ? 'Đang xác thực...' : 'Validating...';
+      alertBox.style.display = 'none';
+
+      try {
+        const res = await window.API.activateLicense(key);
+        if (res.ok) {
+          showStatus(res.msg || (lang === 'vi' ? 'Kích hoạt thành công!' : 'Activated successfully!'), true);
+        } else {
+          showStatus(res.msg || (lang === 'vi' ? 'Mã kích hoạt không đúng hoặc hết hạn!' : 'Invalid or expired key!'), false);
+          submitBtn.disabled = false;
+          btnSpinner.style.display = 'none';
+          btnText.textContent = lang === 'vi' ? 'Kích hoạt phần mềm' : 'Activate Software';
+        }
+      } catch (err) {
+        showStatus('Error: ' + err.message, false);
+        submitBtn.disabled = false;
+        btnSpinner.style.display = 'none';
+        btnText.textContent = lang === 'vi' ? 'Kích hoạt phần mềm' : 'Activate Software';
+      }
+    }
+
+    function toggleManualInput() {
+      const container = document.getElementById('manualTokenInputContainer');
+      container.style.display = container.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    async function submitManualToken() {
+      const tokenVal = document.getElementById('manualTokenInput').value.trim();
+      const lang = localStorage.getItem('app_lang') || 'vi';
+      if (!tokenVal) {
+        showStatus(lang === 'vi' ? 'Vui lòng dán URL hoặc mã Access Token!' : 'Please paste URL or Access Token!', false);
+        return;
+      }
+      
+      alertBox.style.display = 'none';
+      try {
+        const res = await window.API.loginManual(tokenVal);
+        if (res.ok) {
+          loadLicenseInfo();
+        } else {
+          showStatus(res.msg || 'Error', false);
+        }
+      } catch (err) {
+        showStatus('Lỗi: ' + err.message, false);
+      }
+    }
+
+    function updatePhoneTime() {
+      const phoneTimeEl = document.getElementById('phoneTime');
+      if (phoneTimeEl) {
+        const now = new Date();
+        const hrs = String(now.getHours()).padStart(2, '0');
+        const mins = String(now.getMinutes()).padStart(2, '0');
+        phoneTimeEl.textContent = `${hrs}:${mins}`;
+      }
+    }
+
+    if (window.API && window.API.onLoginSuccess) {
+      window.API.onLoginSuccess((user) => {
+        loadLicenseInfo();
+      });
+    }
+
+    window.onload = async () => {
+      // Khởi tạo theme & ngôn ngữ
+      const savedTheme = localStorage.getItem('app_theme') || 'light-clean';
+      applyTheme(savedTheme);
+      
+      const savedLang = localStorage.getItem('app_lang') || 'vi';
+      if (window.I18N) await window.I18N.init({ language: savedLang });
+      await applyLang(savedLang);
+
+      loadLicenseInfo();
+      updatePhoneTime();
+      setInterval(updatePhoneTime, 60000);
+    };
+  </script>
+</body>
+</html>

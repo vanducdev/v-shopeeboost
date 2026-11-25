@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chính Sách Bảo Mật — V-ShopeeBoost</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root {
+      --bg: #f9fafb; --surface: #ffffff; --surface2: #f3f4f6; --surface3: #e5e7eb;
+      --border: #e5e7eb; --border2: #d1d5db;
+      --text: #111827; --text-muted: #4b5563; --text-dim: #6b7280;
+      --orange: #111827; --orange-soft: #374151; --orange-glow: rgba(0,0,0,0.05); --orange-bg: #f3f4f6;
+      --blue: #4b5563; --blue-bg: rgba(0,0,0,0.05);
+      --green: #16a34a; --green-bg: rgba(22,163,74,0.10);
+      --red: #dc2626; --red-bg: rgba(220,38,38,0.10);
+      --grad: #111827;
+      --radius: 8px; --radius-sm: 6px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,sans-serif;font-size:15px;color:var(--text);background:var(--bg);line-height:1.7;-webkit-font-smoothing:antialiased}
+    .container{max-width:740px;margin:0 auto;padding:40px 24px}
+    .page-header{text-align:center;margin-bottom:40px;padding-bottom:24px;border-bottom:1px solid var(--border)}
+    .logo{width:48px;height:48px;border-radius:12px;margin-bottom:12px}
+    h1{font-size:28px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;margin-bottom:6px}
+    .subtitle{color:var(--text-muted);font-size:14px}
+    .last-updated{display:inline-block;margin-top:10px;background:rgba(238,77,45,0.1);color:var(--orange-soft);padding:4px 12px;border-radius:99px;font-size:12px}
+    h2{font-size:18px;font-weight:700;color:var(--text);margin:32px 0 12px;padding-left:12px;border-left:3px solid var(--orange)}
+    p{color:var(--text-muted);margin-bottom:14px}
+    ul{color:var(--text-muted);margin-left:20px;margin-bottom:14px}
+    ul li{margin-bottom:6px}
+    strong{color:var(--text)}
+    .highlight-box{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin:18px 0;border-left:4px solid var(--orange)}
+    .highlight-box p{margin:0;color:var(--text-muted);font-size:14px}
+    .footer{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:13px}
+    .footer a{color:var(--orange-soft);text-decoration:none}
+    a{color:var(--orange-soft);text-decoration:none}
+    a:hover{text-decoration:underline}
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <img src="../icons/icon48.png" alt="Logo" class="logo">
+    <h1>Chính Sách Bảo Mật</h1>
+    <div class="subtitle">V-ShopeeBoost Chrome Extension</div>
+    <div class="last-updated">Cập nhật: 24/06/2026</div>
+  </div>
+
+  <div class="highlight-box">
+    <p><strong>Cam kết bảo mật:</strong> V-ShopeeBoost KHÔNG thu thập, lưu trữ trên server, hoặc chia sẻ bất kỳ thông tin cá nhân nào của bạn. Mọi dữ liệu được lưu hoàn toàn trên thiết bị cục bộ của bạn.</p>
+  </div>
+
+  <h2>1. Thông tin chúng tôi xử lý</h2>
+  <p>Extension V-ShopeeBoost hoạt động hoàn toàn cục bộ trên trình duyệt của bạn. Chúng tôi xử lý các loại dữ liệu sau:</p>
+  <ul>
+    <li><strong>Cookie Shopee:</strong> Được đọc từ tab Shopee của bạn để hỗ trợ đăng nhập nhanh. Cookie được lưu cục bộ trong <code>chrome.storage.local</code></li>
+    <li><strong>Thông tin shop:</strong> Tên shop, domain, ghi chú do bạn nhập — lưu cục bộ</li>
+    <li><strong>Lịch sử đăng nhập:</strong> Thời gian và tên shop đã đăng nhập — lưu cục bộ</li>
+    <li><strong>Cài đặt:</strong> Tùy chỉnh giao diện và hành vi extension — lưu cục bộ</li>
+  </ul>
+
+  <h2>2. Cách chúng tôi sử dụng dữ liệu</h2>
+  <p>Dữ liệu được sử dụng độc quyền để:</p>
+  <ul>
+    <li>Cung cấp chức năng đăng nhập nhanh vào tài khoản Shopee</li>
+    <li>Lưu danh sách tài khoản shop để tái sử dụng</li>
+    <li>Hiển thị thống kê sử dụng trong popup</li>
+    <li>Cho phép backup và khôi phục dữ liệu</li>
+  </ul>
+
+  <h2>3. Chia sẻ dữ liệu</h2>
+  <p><strong>Chúng tôi KHÔNG chia sẻ dữ liệu của bạn</strong> với bất kỳ bên thứ ba nào. Extension không có backend server, không gửi HTTP request ra ngoài, và không tích hợp bất kỳ dịch vụ analytics nào.</p>
+
+  <h2>4. Quyền truy cập (Permissions)</h2>
+  <ul>
+    <li><strong>cookies:</strong> Đọc/ghi cookie trên các trang Shopee để thực hiện đăng nhập</li>
+    <li><strong>tabs:</strong> Đọc URL tab hiện tại để tự động điền domain; mở tab Shopee mới</li>
+    <li><strong>storage:</strong> Lưu trữ danh sách shop và cài đặt trên thiết bị của bạn</li>
+    <li><strong>activeTab:</strong> Truy cập tab đang active khi bạn nhấn nút "Lấy Cookie"</li>
+    <li><strong>scripting:</strong> Hiển thị thông báo toast trên trang Shopee sau khi đăng nhập</li>
+  </ul>
+
+  <h2>5. Bảo mật</h2>
+  <p>Mặc dù dữ liệu được lưu trong <code>chrome.storage.local</code> và chỉ extension này mới có thể truy cập, chúng tôi khuyến nghị:</p>
+  <ul>
+    <li>Không chia sẻ máy tính với người khác khi đang lưu cookie nhạy cảm</li>
+    <li>Thường xuyên sao lưu và xóa cookie không cần thiết</li>
+    <li>Chỉ cài extension từ Chrome Web Store chính thức</li>
+  </ul>
+
+  <h2>6. Trẻ em</h2>
+  <p>Extension này không được thiết kế cho trẻ em dưới 13 tuổi và chúng tôi không thu thập thông tin từ trẻ em.</p>
+
+  <h2>7. Thay đổi chính sách</h2>
+  <p>Mọi thay đổi chính sách bảo mật sẽ được cập nhật trên trang này với ngày cập nhật mới. Bạn nên kiểm tra định kỳ.</p>
+
+  <h2>8. Liên hệ</h2>
+  <p>Nếu bạn có câu hỏi về chính sách bảo mật, vui lòng liên hệ:</p>
+  <ul>
+    <li>Website: <a href="https://app.vmaxtech.vn/" target="_blank">app.vmaxtech.vn</a></li>
+    <li>Email: support@vmaxtech.vn</li>
+  </ul>
+
+  <div class="footer">
+    <p>© 2026 VMaxTech · <a href="terms.html">Điều khoản dịch vụ</a> · <a href="support.html">Hỗ trợ</a></p>
+  </div>
+</div>
+</body>
+</html>

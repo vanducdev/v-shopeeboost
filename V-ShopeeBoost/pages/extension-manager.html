@@ -1,0 +1,642 @@
+<!-- Styles matching V-ShopeeBoost design system with ext- prefix to avoid conflicts -->
+<style>
+  .ext-manager-layout {
+    display: flex;
+    gap: 16px;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+    padding: 0 20px 20px 20px;
+    box-sizing: border-box;
+  }
+
+  /* Left Panel: Profile Sidebar */
+  .ext-profile-sidebar {
+    width: 290px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    flex-shrink: 0;
+    box-shadow: var(--shadow-card);
+  }
+
+  .ext-sidebar-header {
+    background: var(--bg-card);
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: auto !important; /* Override global .sidebar-header height */
+  }
+
+  .ext-search-wrap {
+    position: relative;
+  }
+
+  .ext-search-wrap input {
+    width: 100%;
+    padding-left: 32px !important;
+    font-size: 12px;
+    height: 36px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-card2);
+    color: var(--text-primary);
+    transition: all 0.2s ease;
+  }
+
+  .ext-search-wrap input:focus {
+    background: var(--bg-card);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.12);
+  }
+
+  .ext-sidebar-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    padding: 2px 0;
+  }
+
+  /* Action buttons styled as sleek mini-pills */
+  .ext-action-badge {
+    background: rgba(99, 102, 241, 0.08);
+    color: var(--accent);
+    padding: 4px 9px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1px solid rgba(99, 102, 241, 0.15);
+  }
+  .ext-action-badge:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .ext-profile-list-scroll {
+    flex: 1;
+    overflow-y: auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .ext-profile-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+    border: 1px solid transparent;
+  }
+
+  .ext-profile-row:hover {
+    background: var(--bg-hover);
+    transform: translateX(2px);
+  }
+
+  .ext-profile-row.active {
+    background: rgba(99, 102, 241, 0.08);
+    border-color: rgba(99, 102, 241, 0.15);
+  }
+
+  .ext-profile-row span {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* Custom styled checkboxes */
+  .ext-checkbox-container {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+  }
+  .ext-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--border);
+    border-radius: 4px;
+    background: var(--bg-card);
+    transition: all 0.2s ease;
+  }
+  .ext-checkbox-container input:checked ~ .ext-checkmark {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .ext-checkmark::after {
+    content: '';
+    position: absolute;
+    display: none;
+    left: 4.5px;
+    top: 1.5px;
+    width: 4px;
+    height: 8px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .ext-checkbox-container input:checked ~ .ext-checkmark::after {
+    display: block;
+  }
+
+  /* Right Panel: Extensions Main */
+  .ext-main-panel {
+    flex: 1;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+  }
+
+  .ext-header-bar {
+    background: var(--bg-card);
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ext-toolbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .ext-toolbar-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  /* Beautiful Premium Buttons */
+  .ext-btn-primary {
+    background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
+    color: #fff !important;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 12.5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 3px 10px rgba(99, 102, 241, 0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ext-btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 14px rgba(99, 102, 241, 0.45);
+    filter: brightness(1.06);
+  }
+
+  .ext-btn-secondary {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 7px 13px;
+    font-weight: 600;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .ext-btn-secondary:hover {
+    background: var(--bg-hover);
+    border-color: var(--accent);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+  }
+
+  /* Table Style */
+  .ext-list-scroll {
+    flex: 1;
+    overflow-y: auto;
+    background: var(--bg-card);
+  }
+
+  .ext-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12.5px;
+  }
+
+  .ext-table th {
+    background: var(--bg-deep);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    text-align: left;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .ext-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: middle;
+    color: var(--text-primary);
+  }
+
+  .ext-table tr {
+    transition: background 0.15s ease;
+  }
+
+  .ext-table tr:hover {
+    background: var(--bg-hover);
+  }
+
+  .ext-icon-img {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+    object-fit: contain;
+    background: rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border);
+  }
+
+  .ext-badge-type {
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .ext-badge-type.webstore { background: rgba(16, 185, 129, 0.08); color: #10b981; border: 1px solid rgba(16, 185, 129, 0.15); }
+  .ext-badge-type.crx { background: rgba(59, 130, 246, 0.08); color: #3b82f6; border: 1px solid rgba(59, 130, 246, 0.15); }
+  .ext-badge-type.zip { background: rgba(245, 158, 11, 0.08); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.15); }
+
+  /* Details Drawer */
+  .ext-details-panel {
+    position: fixed;
+    top: 0;
+    right: -420px;
+    width: 400px;
+    height: 100vh;
+    background: var(--bg-card);
+    border-left: 1px solid var(--border);
+    box-shadow: -6px 0 24px rgba(0,0,0,0.15);
+    z-index: 1000;
+    transition: right 0.25s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .ext-details-panel.open {
+    right: 0;
+  }
+
+  .ext-details-body {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 12px;
+    padding-bottom: 20px;
+  }
+
+  .ext-details-label {
+    font-weight: 600;
+    color: var(--text-muted);
+    font-size: 10.5px;
+    text-transform: uppercase;
+  }
+
+  .ext-details-value {
+    background: var(--bg-deep);
+    padding: 8px 10px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    word-break: break-all;
+  }
+
+  /* Log Panel styled as dark terminal console */
+  .ext-log-panel {
+    background: #0f1015;
+    border-top: 1px solid var(--border);
+    padding: 10px 14px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: #a9b2c3;
+    max-height: 110px;
+    overflow-y: auto;
+    box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.2);
+  }
+
+  .log-row { display: flex; gap: 8px; margin-bottom: 3px; line-height: 1.4; }
+  .log-time { color: #5c6370; }
+  .log-success { color: #98c379; font-weight: 600; }
+  .log-error { color: #e06c75; font-weight: 600; }
+  .log-info { color: #61afef; }
+
+  /* Context Menu */
+  .context-menu {
+    position: fixed;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-radius: var(--radius-sm);
+    padding: 4px 0;
+    z-index: 2000;
+    display: none;
+    min-width: 160px;
+  }
+
+  .context-menu-item {
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .context-menu-item:hover {
+    background: var(--bg-hover);
+    color: var(--text-primary);
+  }
+
+  /* ── Responsive Adaptations for Extension Manager ── */
+  @media screen and (max-width: 1050px) {
+    .ext-profile-sidebar {
+      width: 240px;
+    }
+    .ext-manager-layout {
+      gap: 12px;
+      padding: 0 14px 16px;
+    }
+  }
+
+  @media screen and (max-height: 740px) {
+    .page-header {
+      margin-bottom: 8px !important;
+    }
+    .ext-manager-layout {
+      padding: 0 14px 14px;
+      gap: 10px;
+    }
+    .ext-sidebar-header {
+      padding: 10px 12px;
+      gap: 8px;
+    }
+  }
+</style>
+
+<!-- Main Page Header matching app design -->
+<div class="page-header" style="margin-bottom: 16px;">
+  <div class="page-header-left">
+    <h1 class="page-title">Extension Manager</h1>
+    <p class="page-subtitle">Quản lý và cài đặt Extension Chrome cho các Profile</p>
+  </div>
+</div>
+
+<!-- Layout Wrapper -->
+<div class="ext-manager-layout">
+
+  <!-- LEFT: Profile list panel -->
+  <div class="ext-profile-sidebar">
+    <div class="ext-sidebar-header">
+      <div class="ext-search-wrap">
+        <input type="text" class="form-input" id="searchProfileInput" placeholder="Tìm kiếm profile...">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 10px; top: 10px; color: var(--text-muted);">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <div class="ext-sidebar-actions">
+        <div style="display: flex; gap: 4px;">
+          <span id="btnSelectAllProfiles" class="ext-action-badge">Chọn tất cả</span>
+          <span id="btnInvertProfiles" class="ext-action-badge">Đảo chọn</span>
+        </div>
+        <div id="selectedProfilesCount" style="font-weight: 600; font-size: 11px; color: var(--accent);">0 đã chọn</div>
+      </div>
+    </div>
+    <div class="ext-profile-list-scroll" id="profileListContainer">
+      <!-- Dynamic profile items -->
+    </div>
+  </div>
+
+  <!-- RIGHT: Extensions Main Panel -->
+  <div class="ext-main-panel">
+    
+    <!-- Extensions Header Toolbar -->
+    <div class="ext-header-bar">
+      <!-- Row 1: Actions -->
+      <div class="ext-toolbar-row">
+        <div class="ext-toolbar-group">
+          <button class="ext-btn-primary" id="btnInstallStore">
+            + Tải từ Web Store
+          </button>
+          <button class="ext-btn-secondary" id="btnImportCRX">Import CRX</button>
+          <button class="ext-btn-secondary" id="btnImportZIP">Import ZIP</button>
+          <button class="ext-btn-secondary" id="btnImportJSON">Import List JSON</button>
+        </div>
+        
+        <div class="ext-toolbar-group">
+          <button class="ext-btn-secondary" id="btnBulkEnable" style="color: var(--green); border-color: rgba(34,197,94,0.15); background: rgba(34,197,94,0.02);">Bật tất cả</button>
+          <button class="ext-btn-secondary" id="btnBulkDisable" style="color: var(--red); border-color: rgba(239,68,68,0.15); background: rgba(239,68,68,0.02);">Tắt tất cả</button>
+          <button class="ext-btn-secondary" id="btnSyncExtensions">Đồng bộ Sync</button>
+          <button class="ext-btn-secondary" id="btnRefreshExtensions">Tải lại</button>
+        </div>
+      </div>
+
+      <!-- Row 2: Search/Filter -->
+      <div class="ext-toolbar-row">
+        <div class="ext-search-wrap" style="flex: 1; max-width: 320px;">
+          <input type="text" class="form-input" id="searchExtInput" placeholder="Tìm kiếm tiện ích...">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="position: absolute; left: 10px; top: 10px; color: var(--text-muted);">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+        
+        <div style="display: flex; gap: 8px;">
+          <select class="form-select" id="filterExtStatus" style="width: 140px; padding: 4px 10px; font-size: 12px; height: 32px;">
+            <option value="all">Tất cả trạng thái</option>
+            <option value="enabled">Đang bật</option>
+            <option value="disabled">Đang tắt</option>
+          </select>
+          
+          <select class="form-select" id="filterExtSource" style="width: 140px; padding: 4px 10px; font-size: 12px; height: 32px;">
+            <option value="all">Tất cả nguồn</option>
+            <option value="webstore">Chrome Web Store</option>
+            <option value="crx">File CRX</option>
+            <option value="zip">Thư mục ZIP</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table content -->
+    <div class="ext-list-scroll">
+      <table class="ext-table" id="extensionsTable">
+        <thead>
+          <tr>
+            <th style="width: 40px;">
+              <label class="ext-checkbox-container" style="margin: 0; cursor: pointer;">
+                <input type="checkbox" id="checkAllExts" style="display: none;">
+                <span class="ext-checkmark"></span>
+              </label>
+            </th>
+            <th style="width: 40px;"></th>
+            <th style="width: auto;">Tên Extension</th>
+            <th style="width: 90px;">Phiên bản</th>
+            <th style="width: 150px; max-width: 150px;">ID Tiện ích</th>
+            <th style="width: 100px;">Nguồn</th>
+            <th style="width: 90px;">Dung lượng</th>
+            <th style="width: 100px;">Trạng thái</th>
+            <th style="text-align: right; width: 90px;">Hành động</th>
+          </tr>
+        </thead>
+        <tbody id="extensionsTableBody">
+          <tr>
+            <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 60px;">
+              <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color: var(--text-muted); opacity: 0.6;">
+                  <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+                <div style="font-size: 13px; font-weight: 500; color: var(--text-secondary);">Chọn một Profile ở danh sách bên trái</div>
+                <div style="font-size: 11.5px; color: var(--text-muted);">Xem và quản lý các tiện ích mở rộng tương ứng</div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+
+
+  </div>
+
+</div>
+
+<!-- Context Menu -->
+<div class="context-menu" id="extContextMenu">
+  <div class="context-menu-item" data-action="toggle">Bật / Tắt</div>
+  <div class="context-menu-item" data-action="open-folder">Mở thư mục chứa</div>
+  <div class="context-menu-item" data-action="open-store">Mở Chrome Web Store</div>
+  <div class="context-menu-item" data-action="copy-id">Copy ID</div>
+  <div class="context-menu-item" data-action="copy-name">Copy tên</div>
+  <div class="context-menu-item" data-action="delete" style="color: var(--red);">Xóa khỏi Profile</div>
+</div>
+
+<!-- Details Drawer -->
+<div class="ext-details-panel" id="extDetailsDrawer">
+  <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:12px; margin-bottom:16px;">
+    <h3 style="margin:0; font-size:14px; font-weight:700; color:var(--text-primary);">Chi tiết Extension</h3>
+    <button class="ext-btn-secondary" id="btnCloseDetailsDrawer" style="padding:4px 8px; font-size:11px;">Đóng</button>
+  </div>
+  
+  <div class="ext-details-body">
+    <div style="display:flex; align-items:center; gap:12px; margin-bottom:8px;">
+      <img id="detailIcon" class="ext-icon-img" src="" alt="Icon" style="width: 36px; height: 36px;">
+      <div>
+        <div id="detailName" style="font-weight:700; font-size:13px; color:var(--text-primary);">-</div>
+        <div id="detailVersion" style="font-size:11.5px; color:var(--text-muted);">Phiên bản: -</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="ext-details-label">ID Extension</div>
+      <div class="ext-details-value" id="detailId" style="font-family:var(--font-mono); font-size:11px;">-</div>
+    </div>
+    <div>
+      <div class="ext-details-label">Mô tả</div>
+      <div class="ext-details-value" id="detailDesc" style="line-height:1.4;">-</div>
+    </div>
+    <div>
+      <div class="ext-details-label">Quyền truy cập (Permissions)</div>
+      <div class="ext-details-value" id="detailPermissions">-</div>
+    </div>
+    <div>
+      <div class="ext-details-label">Background Scripts</div>
+      <div class="ext-details-value" id="detailBackground" style="font-family:var(--font-mono); font-size:11px;">-</div>
+    </div>
+    <div>
+      <div class="ext-details-label">Content Scripts</div>
+      <div class="ext-details-value" id="detailContentScripts" style="font-family:var(--font-mono); font-size:11px;">-</div>
+    </div>
+    <div>
+      <div class="ext-details-label">Thư mục cài đặt</div>
+      <div class="ext-details-value" id="detailFolder" style="font-family:var(--font-mono); font-size:11px;">-</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: 10px;">
+      <button class="ext-btn-secondary" id="btnDetailOpenFolder" style="flex:1; font-size:12px;">Mở thư mục</button>
+      <button class="ext-btn-secondary" id="btnDetailOpenStore" style="flex:1; font-size:12px;">Xem trên Store</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Install Store URL / ID input -->
+<div class="modal-overlay" id="installStoreModal" style="display:none;">
+  <div class="modal modal-md">
+    <div class="modal-header-row">
+      <h2 class="modal-title">Cài đặt tiện ích từ Web Store</h2>
+      <button class="modal-close" onclick="closeModal('installStoreModal')">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" style="display:flex; flex-direction:column; gap:12px;">
+      <div class="form-group">
+        <label class="form-label">Nhập Link Web Store hoặc Extension ID</label>
+        <input type="text" class="form-input" id="storeUrlOrIdInput" placeholder="Ví dụ: https://chromewebstore.google.com/detail/... hoặc cjpalhdlnbpafiamejdnhcphjbkeiame">
+        <div class="form-hint">Hệ thống sẽ tải gói cài đặt từ Google Web Store và tự động cài vào các Profile được chọn.</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="ext-btn-secondary" onclick="closeModal('installStoreModal')">Hủy</button>
+      <button class="ext-btn-primary" id="btnConfirmInstallStore">Bắt đầu cài đặt</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Progress Overlay for Bulk Action -->
+<div class="modal-overlay" id="bulkProgressModal" style="display:none; z-index: 3000;">
+  <div class="modal modal-sm" style="text-align: center; padding: 24px;">
+    <h3 id="progressTitle" style="margin-top: 0; font-size: 14px; font-weight: 700;">Đang xử lý...</h3>
+    <div style="margin: 16px 0; background: var(--bg-deep); height: 8px; border-radius: 99px; overflow: hidden; position: relative; border: 1px solid var(--border);">
+      <div id="progressBarFill" style="background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%); width: 0%; height: 100%; transition: width 0.15s ease-out; border-radius: 99px;"></div>
+    </div>
+    <div id="progressText" style="font-size: 12px; color: var(--text-secondary); font-weight: 600;">0 / 0 Profiles</div>
+  </div>
+</div>

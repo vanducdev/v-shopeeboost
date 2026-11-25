@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Changelog — V-ShopeeBoost</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+        :root {
+      --bg: #f9fafb; --surface: #ffffff; --surface2: #f3f4f6; --surface3: #e5e7eb;
+      --border: #e5e7eb; --border2: #d1d5db;
+      --text: #111827; --text-muted: #4b5563; --text-dim: #6b7280;
+      --orange: #111827; --orange-soft: #374151; --orange-glow: rgba(0,0,0,0.05); --orange-bg: #f3f4f6;
+      --blue: #4b5563; --blue-bg: rgba(0,0,0,0.05);
+      --green: #16a34a; --green-bg: rgba(22,163,74,0.10);
+      --red: #dc2626; --red-bg: rgba(220,38,38,0.10);
+      --grad: #111827;
+      --radius: 8px; --radius-sm: 6px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    .container{max-width:720px;margin:0 auto;padding:40px 24px}
+    .page-header{text-align:center;margin-bottom:48px}
+    .logo{width:52px;height:52px;border-radius:14px;margin-bottom:14px;box-shadow:0 0 20px var(--orange-glow)}
+    h1{font-size:30px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;margin-bottom:8px}
+    .subtitle{color:var(--text-muted);font-size:15px}
+    /* TIMELINE */
+    .timeline{position:relative;padding-left:28px}
+    .timeline::before{content:'';position:absolute;left:7px;top:8px;bottom:0;width:2px;background:linear-gradient(to bottom,var(--orange),rgba(59,130,246,0.3))}
+    .version-block{position:relative;margin-bottom:36px}
+    .version-dot{position:absolute;left:-25px;top:4px;width:14px;height:14px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px var(--orange-glow);border:2px solid var(--bg)}
+    .version-dot.latest{width:16px;height:16px;left:-26px;background:var(--orange-soft);box-shadow:0 0 16px var(--orange-glow),0 0 0 4px var(--orange-bg)}
+    .version-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+    .version-num{font-size:18px;font-weight:700;color:var(--text);font-family:'JetBrains Mono',monospace}
+    .version-badge{font-size:10px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:99px;letter-spacing:0.5px}
+    .badge-latest{background:var(--orange-bg);color:var(--orange-soft);border:1px solid rgba(238,77,45,0.25)}
+    .badge-stable{background:var(--green-bg);color:var(--green);border:1px solid rgba(34,197,94,0.2)}
+    .badge-legacy{background:rgba(100,116,139,0.15);color:var(--text-muted);border:1px solid var(--border2)}
+    .version-date{font-size:12px;color:var(--text-muted);font-family:'JetBrains Mono',monospace;margin-left:auto}
+    .change-list{display:flex;flex-direction:column;gap:8px}
+    .change-item{display:flex;gap:10px;align-items:flex-start}
+    .change-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;letter-spacing:0.4px;white-space:nowrap;flex-shrink:0;margin-top:1px}
+    .tag-new{background:var(--green-bg);color:var(--green)}
+    .tag-fix{background:rgba(239,68,68,0.1);color:#f87171}
+    .tag-improve{background:var(--blue-bg);color:#93c5fd}
+    .tag-security{background:rgba(168,85,247,0.1);color:#c4b5fd}
+    .change-text{font-size:13px;color:var(--text-muted);line-height:1.5}
+    .footer{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:13px}
+    .footer a{color:var(--orange-soft);text-decoration:none}
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <img src="../icons/icon48.png" alt="Logo" class="logo">
+    <h1>Changelog</h1>
+    <div class="subtitle">Lịch sử cập nhật V-ShopeeBoost</div>
+  </div>
+
+  <div class="timeline">
+
+    <!-- v4.1.0 -->
+    <div class="version-block">
+      <div class="version-dot latest"></div>
+      <div class="version-header">
+        <span class="version-num">v4.1.0</span>
+        <span class="version-badge badge-latest">Latest</span>
+        <span class="version-date">13/07/2026</span>
+      </div>
+      <div class="change-list">
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Thêm tính năng lấy mã SPC_F từ tab Shopee active ở cả form Đăng nhập và tab Công cụ</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Tự động sao chép mã SPC_F vào bộ nhớ tạm (clipboard) khi lấy thành công</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Tối ưu hóa khả năng quét cookie: tự động thử nghiệm lấy qua URL, domain chính và domain phụ để đạt tỉ lệ thành công 100%</span></div>
+      </div>
+    </div>
+
+    <!-- v4.0.0 -->
+    <div class="version-block">
+      <div class="version-dot"></div>
+      <div class="version-header">
+        <span class="version-num">v4.0.0</span>
+        <span class="version-badge badge-stable">Stable</span>
+        <span class="version-date">24/06/2026</span>
+      </div>
+      <div class="change-list">
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Bộ icon PNG mới chuyên nghiệp (16/32/48/128/256/512px) — 3D gradient logo</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Tab Cài đặt với toggle switches — domain mặc định, tự động mở tab, thông báo</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Options Page nâng cao với thống kê dung lượng lưu trữ, quản lý dữ liệu đầy đủ</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Trang Privacy Policy, Terms of Service, Support và Changelog</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Version checker trong Settings tab</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Nút "+ Thêm shop" trên tab danh sách shop</span></div>
+        <div class="change-item"><span class="change-tag tag-fix">FIX</span><span class="change-text">Lỗi icon .ico không hợp lệ — đã chuyển sang PNG theo yêu cầu Chrome Web Store</span></div>
+        <div class="change-item"><span class="change-tag tag-fix">FIX</span><span class="change-text">Bug data model không nhất quán giữa loginStats.count và loginStats.totalLogins</span></div>
+        <div class="change-item"><span class="change-tag tag-fix">FIX</span><span class="change-text">setUninstallURL không dùng callback (không hỗ trợ trong MV3)</span></div>
+        <div class="change-item"><span class="change-tag tag-fix">FIX</span><span class="change-text">clearCookies URL construction lỗi — sửa path resolution</span></div>
+        <div class="change-item"><span class="change-tag tag-fix">FIX</span><span class="change-text">getStorage return value không nhất quán giữa popup.js và background.js</span></div>
+        <div class="change-item"><span class="change-tag tag-fix">FIX</span><span class="change-text">Log prefix sai ([LushSPcare] → [V-ShopeeBoost]) — đã chuẩn hóa toàn bộ</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Giao diện popup toàn diện — dark premium, gradient branding, spring animations</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Content script: double-injection guard, debounced MutationObserver</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Performance: loại bỏ unlimitedStorage, code dư thừa, tối ưu Promise.all</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Manifest: thêm homepage_url, options_page, bỏ type:module không cần thiết</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Data migration tự động từ format v3.x sang v4.x</span></div>
+        <div class="change-item"><span class="change-tag tag-security">SECURITY</span><span class="change-text">Xóa unlimitedStorage permission — giảm attack surface</span></div>
+        <div class="change-item"><span class="change-tag tag-security">SECURITY</span><span class="change-text">Bỏ Google Fonts external khỏi inline CSS — tránh CSP issues</span></div>
+      </div>
+    </div>
+
+    <!-- v3.5 -->
+    <div class="version-block">
+      <div class="version-dot"></div>
+      <div class="version-header">
+        <span class="version-num">v3.5.0</span>
+        <span class="version-badge badge-legacy">Legacy</span>
+        <span class="version-date">2025</span>
+      </div>
+      <div class="change-list">
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Giao diện dark mode cơ bản với tab navigation</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Hỗ trợ backup/restore dữ liệu JSON</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Tìm kiếm shop trong danh sách</span></div>
+        <div class="change-item"><span class="change-tag tag-improve">IMPROVE</span><span class="change-text">Cải thiện hiệu suất load danh sách shop</span></div>
+      </div>
+    </div>
+
+    <!-- v3.0 -->
+    <div class="version-block">
+      <div class="version-dot"></div>
+      <div class="version-header">
+        <span class="version-num">v3.0.0</span>
+        <span class="version-badge badge-legacy">Legacy</span>
+        <span class="version-date">2024</span>
+      </div>
+      <div class="change-list">
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Nâng cấp lên Manifest V3</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Service Worker thay thế background page</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Hỗ trợ 8 thị trường Shopee khu vực Đông Nam Á</span></div>
+        <div class="change-item"><span class="change-tag tag-new">NEW</span><span class="change-text">Multi-account management với quick login</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <p>© 2026 VMaxTech · <a href="support.html">Hỗ trợ</a> · <a href="privacy.html">Chính sách bảo mật</a></p>
+  </div>
+</div>
+</body>
+</html>

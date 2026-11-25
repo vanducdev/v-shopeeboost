@@ -1,0 +1,97 @@
+{
+  "version": 1,
+  "defaultLanguage": "vi",
+  "fallbackLanguage": "en",
+  "languages": [
+    {
+      "code": "vi",
+      "locale": "vi-VN",
+      "name": "Vietnamese",
+      "nativeName": "Tiếng Việt",
+      "file": "Vietnamese.json",
+      "flag": "🇻🇳",
+      "direction": "ltr"
+    },
+    {
+      "code": "en",
+      "locale": "en-US",
+      "name": "English",
+      "nativeName": "English",
+      "file": "English.json",
+      "flag": "🇺🇸",
+      "direction": "ltr"
+    },
+    {
+      "code": "th",
+      "locale": "th-TH",
+      "name": "Thai",
+      "nativeName": "ภาษาไทย",
+      "file": "Thai.json",
+      "flag": "🇹🇭",
+      "direction": "ltr"
+    },
+    {
+      "code": "id",
+      "locale": "id-ID",
+      "name": "Indonesian",
+      "nativeName": "Bahasa Indonesia",
+      "file": "Indonesian.json",
+      "flag": "🇮🇩",
+      "direction": "ltr"
+    },
+    {
+      "code": "ms",
+      "locale": "ms-MY",
+      "name": "Malay",
+      "nativeName": "Bahasa Melayu",
+      "file": "Malay.json",
+      "flag": "🇲🇾",
+      "direction": "ltr"
+    },
+    {
+      "code": "fil",
+      "locale": "fil-PH",
+      "name": "Filipino",
+      "nativeName": "Filipino",
+      "file": "Filipino.json",
+      "flag": "🇵🇭",
+      "direction": "ltr"
+    },
+    {
+      "code": "zh-CN",
+      "locale": "zh-CN",
+      "name": "Chinese Simplified",
+      "nativeName": "简体中文",
+      "file": "Chinese-Simplified.json",
+      "flag": "🇨🇳",
+      "direction": "ltr"
+    },
+    {
+      "code": "ja",
+      "locale": "ja-JP",
+      "name": "Japanese",
+      "nativeName": "日本語",
+      "file": "Japanese.json",
+      "flag": "🇯🇵",
+      "direction": "ltr"
+    },
+    {
+      "code": "ko",
+      "locale": "ko-KR",
+      "name": "Korean",
+      "nativeName": "한국어",
+      "file": "Korean.json",
+      "flag": "🇰🇷",
+      "direction": "ltr"
+    },
+    {
+      "code": "es",
+      "locale": "es-ES",
+      "name": "Spanish",
+      "nativeName": "Español",
+      "file": "Spanish.json",
+      "flag": "🇪🇸",
+      "direction": "ltr"
+    }
+  ]
+}

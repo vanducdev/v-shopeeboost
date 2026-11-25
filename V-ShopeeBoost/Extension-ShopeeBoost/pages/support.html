@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hỗ Trợ — V-ShopeeBoost</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        :root {
+      --bg: #f9fafb; --surface: #ffffff; --surface2: #f3f4f6; --surface3: #e5e7eb;
+      --border: #e5e7eb; --border2: #d1d5db;
+      --text: #111827; --text-muted: #4b5563; --text-dim: #6b7280;
+      --orange: #111827; --orange-soft: #374151; --orange-glow: rgba(0,0,0,0.05); --orange-bg: #f3f4f6;
+      --blue: #4b5563; --blue-bg: rgba(0,0,0,0.05);
+      --green: #16a34a; --green-bg: rgba(22,163,74,0.10);
+      --red: #dc2626; --red-bg: rgba(220,38,38,0.10);
+      --grad: #111827;
+      --radius: 8px; --radius-sm: 6px;
+    }
+    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Inter',-apple-system,sans-serif;font-size:14px;color:var(--text);background:var(--bg);-webkit-font-smoothing:antialiased}
+    .container{max-width:800px;margin:0 auto;padding:40px 24px}
+    .page-header{text-align:center;margin-bottom:40px}
+    .logo{width:52px;height:52px;border-radius:14px;margin-bottom:14px;box-shadow:0 0 20px var(--orange-glow)}
+    h1{font-size:30px;font-weight:700;background:var(--grad);-webkit-background-clip:text;background-clip:text;margin-bottom:8px}
+    .subtitle{color:var(--text-muted);font-size:15px}
+    .section-title{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.9px;color:var(--text-muted);margin:32px 0 12px}
+    /* QUICK START */
+    .steps{display:flex;flex-direction:column;gap:12px;margin-bottom:32px}
+    .step{display:flex;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px}
+    .step-num{width:32px;height:32px;background:var(--orange-bg);border:1px solid rgba(238,77,45,0.25);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--orange-soft);font-size:14px;flex-shrink:0}
+    .step-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+    .step-desc{font-size:13px;color:var(--text-muted);line-height:1.5}
+    /* FAQ */
+    .faq-list{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+    .faq-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+    .faq-q{padding:14px 16px;font-size:14px;font-weight:600;color:var(--text);cursor:pointer;display:flex;justify-content:space-between;align-items:center;user-select:none}
+    .faq-q:hover{background:var(--surface2)}
+    .faq-q .arrow{transition:transform 0.2s;color:var(--text-muted);font-size:12px}
+    .faq-item.open .arrow{transform:rotate(90deg)}
+    .faq-a{display:none;padding:0 16px 14px;color:var(--text-muted);font-size:13px;line-height:1.6}
+    .faq-item.open .faq-a{display:block}
+    /* CONTACT CARDS */
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
+    .contact-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:20px;text-align:center;text-decoration:none;transition:all 0.2s;display:block}
+    .contact-card:hover{border-color:var(--border2);transform:translateY(-2px)}
+    .contact-icon{font-size:28px;margin-bottom:10px}
+    .contact-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+    .contact-desc{font-size:12px;color:var(--text-muted)}
+    /* FEATURES */
+    .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:32px}
+    .feature-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;gap:10px}
+    .feature-icon{font-size:20px;flex-shrink:0}
+    .feature-title{font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px}
+    .feature-desc{font-size:12px;color:var(--text-muted);line-height:1.4}
+    .footer{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:13px}
+    .footer a{color:var(--orange-soft);text-decoration:none}
+    a{color:var(--orange-soft)}
+    code{background:var(--surface2);border:1px solid var(--border2);padding:1px 6px;border-radius:4px;font-size:12px;font-family:monospace;color:var(--text)}
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="page-header">
+    <img src="../icons/icon48.png" alt="Logo" class="logo">
+    <h1>Trang Hỗ Trợ</h1>
+    <div class="subtitle">V-ShopeeBoost — Quản Lý Tài Khoản Shopee Chuyên Nghiệp</div>
+  </div>
+
+  <!-- QUICK START -->
+  <div class="section-title">Hướng Dẫn Nhanh</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div>
+        <div class="step-title">Mở tab Shopee</div>
+        <div class="step-desc">Đăng nhập vào Shopee bình thường. Điều hướng đến <code>shopee.vn</code> hoặc bất kỳ market Shopee nào bạn muốn quản lý.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div>
+        <div class="step-title">Lấy Cookie tự động</div>
+        <div class="step-desc">Click icon V-ShopeeBoost trên thanh toolbar → Nhấn <strong>"⬇ Lấy Cookie"</strong>. Extension sẽ tự động điền SPC_F và toàn bộ cookie từ tab đang mở.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div>
+        <div class="step-title">Lưu shop</div>
+        <div class="step-desc">Nhập tên shop vào ô "Tên shop", sau đó nhấn <strong>"Lưu shop"</strong> để lưu vào danh sách. Lần sau bạn chỉ cần 1 click để đăng nhập lại.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div>
+        <div class="step-title">Đăng nhập nhanh</div>
+        <div class="step-desc">Tab <strong>"Shop"</strong> → Nhấn nút <strong>▶</strong> bên cạnh shop muốn đăng nhập. Extension sẽ tự động set cookie và mở tab Shopee.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURES -->
+  <div class="section-title">Tính Năng</div>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon"></div><div><div class="feature-title">Cookie Manager</div><div class="feature-desc">Quản lý cookie Shopee một cách trực quan, an toàn</div></div></div>
+    <div class="feature-card"><div class="feature-icon"></div><div><div class="feature-title">Multi-Account</div><div class="feature-desc">Lưu không giới hạn tài khoản shop, tìm kiếm nhanh</div></div></div>
+    <div class="feature-card"><div class="feature-icon"></div><div><div class="feature-title">1-Click Login</div><div class="feature-desc">Đăng nhập tức thì không cần nhập lại thông tin</div></div></div>
+    <div class="feature-card"><div class="feature-icon"></div><div><div class="feature-title">Backup & Restore</div><div class="feature-desc">Xuất/nhập dữ liệu JSON, chuyển giữa máy tính</div></div></div>
+    <div class="feature-card"><div class="feature-icon"></div><div><div class="feature-title">Đa thị trường</div><div class="feature-desc">VN, SG, MY, ID, PH, TW, TH — 8 markets Shopee</div></div></div>
+    <div class="feature-card"><div class="feature-icon"></div><div><div class="feature-title">Lịch sử</div><div class="feature-desc">Theo dõi lịch sử đăng nhập theo thời gian thực</div></div></div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-title">Câu Hỏi Thường Gặp</div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Tại sao "Lấy Cookie" không hoạt động? <span class="arrow">▶</span></div>
+      <div class="faq-a">Đảm bảo bạn đang có tab Shopee đang active (không phải tab khác). Tab phải đang load xong trang Shopee. Nếu vẫn lỗi, thử refresh trang Shopee và thử lại.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Cookie bị mất sau khi đóng trình duyệt? <span class="arrow">▶</span></div>
+      <div class="faq-a">Danh sách shop được lưu bền vững trong <code>chrome.storage.local</code>. Tuy nhiên, session cookie của Shopee có thể hết hạn. Hãy lấy cookie mới khi cần. Sử dụng tính năng Backup để đảm bảo an toàn dữ liệu.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Làm sao để chuyển dữ liệu sang máy tính khác? <span class="arrow">▶</span></div>
+      <div class="faq-a">Tab Công cụ → "Sao lưu dữ liệu" → Copy file JSON sang máy mới → "Khôi phục" → Chọn file JSON.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Extension có lưu cookie lên server không? <span class="arrow">▶</span></div>
+      <div class="faq-a">Hoàn toàn KHÔNG. Mọi dữ liệu chỉ lưu cục bộ trên máy bạn trong <code>chrome.storage.local</code>. Extension không có backend server và không gửi request ra ngoài.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Tại sao đăng nhập thành công nhưng Shopee vẫn yêu cầu xác minh? <span class="arrow">▶</span></div>
+      <div class="faq-a">Shopee có hệ thống chống gian lận. Nếu bạn đăng nhập từ IP hoặc thiết bị khác với lần trước, Shopee có thể yêu cầu xác minh thêm. Đây là hành vi bình thường của Shopee.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">Tôi có thể nhập cookie ở định dạng nào? <span class="arrow">▶</span></div>
+      <div class="faq-a">Extension hỗ trợ 2 định dạng: (1) JSON array từ DevTools Network: <code>[{"name":"SPC_F","value":"..."}]</code>, (2) Chuỗi cookie thông thường: <code>SPC_F=abc; SPC_CDS=def</code></div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-title">Liên Hệ Hỗ Trợ</div>
+  <div class="contact-grid">
+    <a class="contact-card" href="https://app.vmaxtech.vn/" target="_blank">
+      <div class="contact-icon"></div>
+      <div class="contact-title">Website VMaxTech</div>
+      <div class="contact-desc">Tài liệu & cập nhật mới nhất</div>
+    </a>
+    <a class="contact-card" href="mailto:support@vmaxtech.vn">
+      <div class="contact-icon"></div>
+      <div class="contact-title">Email Hỗ Trợ</div>
+      <div class="contact-desc">support@vmaxtech.vn</div>
+    </a>
+  </div>
+
+  <div class="footer">
+    <p>© 2026 VMaxTech · <a href="privacy.html">Chính sách bảo mật</a> · <a href="terms.html">Điều khoản</a> · <a href="changelog.html">Changelog</a></p>
+  </div>
+</div>
+<script>
+function toggleFaq(el) {
+  const item = el.closest('.faq-item');
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>

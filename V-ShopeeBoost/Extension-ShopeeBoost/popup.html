@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V-ShopeeBoost — Quản Lý Tài Khoản Shopee</title>
+  <style>
+    /* ── GOOGLE FONTS SELF-HOSTED FALLBACK ── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    /* ── DESIGN TOKENS ── */
+        :root {
+      --bg:          #f9fafb;
+      --surface:     #ffffff;
+      --surface2:    #f3f4f6;
+      --surface3:    #e5e7eb;
+      --surface4:    #d1d5db;
+      --border:      #e5e7eb;
+      --border2:     #d1d5db;
+      --border3:     #9ca3af;
+      --text:        #111827;
+      --text-muted:  #4b5563;
+      --text-dim:    #6b7280;
+      --orange:      #111827;
+      --orange-soft: #374151;
+      --orange-glow: rgba(0,0,0,0.05);
+      --orange-bg:   #f3f4f6;
+      --blue:        #4b5563;
+      --blue-glow:   rgba(0,0,0,0.05);
+      --blue-bg:     #f3f4f6;
+      --grad:        #111827;
+      --grad-soft:   #f3f4f6;
+      --green:       #16a34a;
+      --green-bg:    rgba(22,163,74,0.1);
+      --red:         #dc2626;
+      --red-bg:      rgba(220,38,38,0.1);
+      --yellow:      #d97706;
+      --radius:      8px;
+      --radius-sm:   6px;
+      --radius-xs:   4px;
+      --shadow:      0 1px 3px rgba(0,0,0,0.1);
+      --shadow-lg:   0 4px 6px rgba(0,0,0,0.1);
+      --ease:        ease-out;
+    }
+
+    /* ── RESET ── */
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      width: 640px;
+      min-height: 540px;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--surface4); border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--border3); }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 1px;
+      background: var(--grad);
+      opacity: 0.6;
+    }
+    .header-logo {
+      width: 32px; height: 32px;
+      border-radius: 9px;
+      object-fit: contain;
+      flex-shrink: 0;
+      box-shadow: 0 0 12px var(--orange-glow);
+    }
+    .header-brand {
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.2px;
+      background: linear-gradient(90deg, var(--orange) 0%, var(--orange-soft) 50%, var(--blue) 100%);
+      -webkit-background-clip: text;
+      
+      background-clip: text;
+    }
+    .header-ver {
+      font-size: 10px;
+      color: var(--text-muted);
+      background: var(--surface3);
+      border: 1px solid var(--border2);
+      padding: 2px 8px;
+      border-radius: 99px;
+      font-family: 'JetBrains Mono', monospace;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .header-ver:hover { border-color: var(--orange); color: var(--orange-soft); }
+    .header-ver.has-update {
+      border-color: var(--orange);
+      color: var(--orange-soft);
+      animation: pulse-update 2s infinite;
+    }
+    @keyframes pulse-update {
+      0%,100% { box-shadow: 0 0 0 0 var(--orange-glow); }
+      50% { box-shadow: 0 0 0 4px var(--orange-glow); }
+    }
+    .header-spacer { flex: 1; }
+    .header-status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      color: var(--text-muted);
+    }
+    .status-dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: all 0.4s var(--ease);
+      flex-shrink: 0;
+    }
+    .status-dot.active {
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+      animation: dot-pulse 2.5s infinite;
+    }
+    @keyframes dot-pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.8); }
+    }
+
+    /* ── TABS ── */
+    .tabs {
+      display: flex;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 12px;
+      gap: 2px;
+    }
+    .tab-btn {
+      padding: 9px 13px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+      font-family: inherit;
+      position: relative;
+    }
+    .tab-btn:hover { color: var(--text-dim); }
+    .tab-btn.active {
+      color: var(--orange-soft);
+      border-bottom-color: var(--orange-soft);
+    }
+
+    /* ── CONTENT ── */
+    .content {
+      padding: 14px 16px;
+      min-height: 432px;
+    }
+    .tab-panel { display: none; animation: fadeIn 0.18s ease; }
+    .tab-panel.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    /* ── STATS CARDS ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .stat-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; height: 2px;
+      background: var(--grad);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .stat-card:hover::before { opacity: 0.5; }
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.7px;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+    .stat-value {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      line-height: 1;
+    }
+    .stat-sub { font-size: 10px; color: var(--text-muted); margin-top: 3px; }
+
+    /* ── ALERT / INFO BOX ── */
+    .alert {
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      font-size: 12px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+    .alert-info {
+      background: var(--blue-bg);
+      color: #93c5fd;
+      border: 1px solid rgba(59,130,246,0.2);
+    }
+
+    /* ── FORM CARD ── */
+    .form-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px;
+      margin-bottom: 14px;
+      transition: border-color 0.2s;
+    }
+    .form-card:focus-within { border-color: var(--border2); }
+    .form-card-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.9px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .form-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 9px;
+    }
+    .form-label {
+      width: 72px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-dim);
+      flex-shrink: 0;
+    }
+    .form-input-wrap { flex: 1; display: flex; align-items: center; gap: 8px; }
+    .form-input {
+      flex: 1;
+      height: 33px;
+      padding: 0 11px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 12px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .form-input:focus {
+      border-color: var(--orange-soft);
+      box-shadow: 0 0 0 3px var(--orange-bg);
+    }
+    .form-input::placeholder { color: var(--text-muted); }
+    select.form-input { cursor: pointer; }
+    select.form-input option { background: var(--surface2); }
+    .checkbox-label {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--text-muted);
+      cursor: pointer; white-space: nowrap; user-select: none;
+    }
+    .checkbox-label input { accent-color: var(--orange-soft); }
+
+    /* ── BUTTONS ── */
+    .btn-row {
+      display: flex; gap: 7px; justify-content: flex-end;
+      margin-top: 12px; padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .btn {
+      height: 33px;
+      padding: 0 13px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      color: var(--text-dim);
+      font-size: 12px; font-weight: 500;
+      cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      transition: all 0.15s ease;
+      font-family: inherit;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--surface3); color: var(--text); border-color: var(--border3); }
+    .btn:active { transform: scale(0.97); }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-soft) 100%);
+      color: #fff; border: none;
+      box-shadow: 0 2px 12px var(--orange-glow);
+    }
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #d44428 0%, #ea6c0a 100%);
+      box-shadow: 0 4px 20px rgba(238,77,45,0.35);
+    }
+    .btn-danger { background: var(--red-bg); color: var(--red); border-color: rgba(239,68,68,0.25); }
+    .btn-danger:hover { background: rgba(239,68,68,0.18); }
+    .btn-sm { height: 28px; font-size: 11px; padding: 0 10px; }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 11px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 7px;
+    }
+    .count-badge {
+      background: var(--surface3);
+      color: var(--text-muted);
+      font-size: 10px; padding: 2px 8px;
+      border-radius: 99px; border: 1px solid var(--border2);
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap { position: relative; margin-bottom: 10px; }
+    .search-input {
+      width: 100%; height: 33px;
+      padding: 0 11px 0 34px;
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      border-radius: var(--radius-sm);
+      color: var(--text); font-size: 12px; font-family: inherit;
+      outline: none; transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--orange-soft);
+      box-shadow: 0 0 0 3px var(--orange-bg);
+    }
+    .search-input::placeholder { color: var(--text-muted); }
+    .search-icon {
+      position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+      font-size: 13px; color: var(--text-muted); pointer-events: none;
+    }
+
+    /* ── ACCOUNTS LIST ── */
+    .accounts-list {
+      display: flex; flex-direction: column; gap: 6px;
+      max-height: 292px; overflow-y: auto; padding-right: 2px;
+    }
+    .account-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 9px 12px;
+      display: flex; align-items: center; justify-content: space-between;
+      transition: all 0.18s ease; cursor: pointer;
+    }
+    .account-item:hover { border-color: var(--border2); background: var(--surface2); }
+    .account-left { display: flex; align-items: center; gap: 10px; }
+    .account-avatar {
+      width: 32px; height: 32px;
+      background: var(--grad-soft);
+      border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700;
+      flex-shrink: 0;
+      border: 1px solid var(--border2);
+      color: var(--orange-soft);
+    }
+    .account-name { font-size: 12.5px; font-weight: 600; color: var(--text); }
+    .account-meta { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+    .account-actions { display: flex; gap: 5px; }
+    .icon-btn {
+      width: 27px; height: 27px;
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border2);
+      background: var(--surface2);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; color: var(--text-muted);
+      transition: all 0.15s ease;
+    }
+    .icon-btn:hover { background: var(--surface3); color: var(--text); }
+    .icon-btn.login-btn {
+      color: var(--green);
+      border-color: rgba(34,197,94,0.3);
+      background: rgba(34,197,94,0.08);
+    }
+    .icon-btn.login-btn:hover { background: rgba(34,197,94,0.16); }
+    .icon-btn.del-btn {
+      color: var(--red);
+      border-color: rgba(239,68,68,0.25);
+      background: var(--red-bg);
+    }
+    .icon-btn.del-btn:hover { background: rgba(239,68,68,0.18); }
+
+    /* ── EMPTY STATE ── */
+    .empty-state {
+      text-align: center; padding: 32px 0;
+      color: var(--text-muted); font-size: 12px;
+    }
+    .empty-icon { font-size: 36px; margin-bottom: 10px; opacity: 0.35; }
+    .empty-title { font-weight: 600; margin-bottom: 4px; }
+
+    /* ── STATUS BAR ── */
+    .status-bar {
+      margin-top: 10px; padding: 8px 11px;
+      border-radius: var(--radius-sm); font-size: 12px; font-weight: 500;
+      display: none; align-items: center; gap: 7px;
+      animation: slideDown 0.2s ease;
+    }
+    @keyframes slideDown { from { opacity:0; transform: translateY(-4px); } to { opacity:1; transform:none; } }
+    .status-bar.show { display: flex; }
+    .status-bar.success { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,197,94,0.2); }
+    .status-bar.error { background: var(--red-bg); color: var(--red); border: 1px solid rgba(239,68,68,0.2); }
+    .status-bar.info { background: var(--blue-bg); color: #93c5fd; border: 1px solid rgba(59,130,246,0.2); }
+
+    /* ── HISTORY ── */
+    .history-list { display: flex; flex-direction: column; gap: 6px; max-height: 360px; overflow-y: auto; }
+    .history-item {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 9px 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .history-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--orange-soft); flex-shrink: 0;
+      box-shadow: 0 0 6px var(--orange-glow);
+    }
+    .history-info { flex: 1; min-width: 0; }
+    .history-shop {
+      font-size: 12px; font-weight: 600; color: var(--text);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .history-time { font-size: 10.5px; color: var(--text-muted); margin-top: 1px; }
+    .history-badge {
+      font-size: 10px; color: var(--orange-soft);
+      background: var(--orange-bg);
+      padding: 2px 8px; border-radius: 99px;
+      font-family: 'JetBrains Mono', monospace; white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ── TOOL GRID ── */
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .tool-btn {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 13px 14px;
+      cursor: pointer; display: flex; align-items: center; gap: 10px;
+      transition: all 0.18s ease; text-align: left; width: 100%;
+      font-family: inherit;
+    }
+    .tool-btn:hover { border-color: var(--border2); background: var(--surface2); transform: translateY(-1px); }
+    .tool-btn:active { transform: translateY(0); }
+    .tool-btn.danger:hover { border-color: rgba(239,68,68,0.3); background: var(--red-bg); }
+    .tool-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; flex-shrink: 0;
+    }
+    .tool-title { font-size: 12.5px; font-weight: 600; color: var(--text); }
+    .tool-desc { font-size: 10.5px; color: var(--text-muted); margin-top: 2px; }
+
+    /* ── SETTINGS ── */
+    .settings-group {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: var(--radius); margin-bottom: 12px; overflow: hidden;
+    }
+    .settings-group-title {
+      padding: 10px 14px; font-size: 10.5px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); border-bottom: 1px solid var(--border);
+      background: var(--surface2);
+    }
+    .settings-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 11px 14px; border-bottom: 1px solid var(--border);
+      gap: 12px;
+    }
+    .settings-item:last-child { border-bottom: none; }
+    .settings-item-left { flex: 1; }
+    .settings-item-label { font-size: 12.5px; font-weight: 500; color: var(--text); }
+    .settings-item-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+    /* Toggle Switch */
+    .toggle { position: relative; width: 38px; height: 21px; flex-shrink: 0; }
+    .toggle input { opacity: 0; width: 0; height: 0; }
+    .toggle-slider {
+      position: absolute; inset: 0;
+      background: var(--surface3);
+      border-radius: 99px;
+      border: 1px solid var(--border2);
+      cursor: pointer;
+      transition: all 0.25s var(--ease);
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 15px; height: 15px;
+      left: 2px; top: 2px;
+      background: #fff;
+      border-radius: 50%;
+      transition: transform 0.25s var(--ease);
+      box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+    }
+    .toggle input:checked + .toggle-slider {
+      background: var(--orange-soft);
+      border-color: var(--orange-soft);
+      box-shadow: 0 0 8px var(--orange-glow);
+    }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(17px); }
+
+    /* ── TOAST ── */
+    .toast-container {
+      position: fixed; bottom: 44px; right: 14px;
+      z-index: 10000; display: flex; flex-direction: column; gap: 6px;
+    }
+    .toast {
+      background: var(--surface2);
+      border: 1px solid var(--border2);
+      color: var(--text); padding: 9px 14px;
+      border-radius: var(--radius-sm); font-size: 12px;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: 8px;
+      animation: toastIn 0.25s var(--ease) both;
+      max-width: 250px;
+      backdrop-filter: blur(8px);
+    }
+    @keyframes toastIn {
+      from { opacity:0; transform: translateX(16px) scale(0.95); }
+      to { opacity:1; transform: none; }
+    }
+    .toast.success { border-left: 3px solid var(--green); }
+    .toast.error { border-left: 3px solid var(--red); }
+    .toast.warning { border-left: 3px solid var(--yellow); }
+    .toast.info { border-left: 3px solid var(--blue); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.72); z-index: 9999;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.show { display: flex; }
+    .modal {
+      background: var(--surface); width: 460px;
+      border-radius: 14px; border: 1px solid var(--border2);
+      box-shadow: var(--shadow-lg);
+      animation: modalPop 0.22s var(--ease) both;
+      overflow: hidden;
+    }
+    @keyframes modalPop {
+      from { transform: scale(0.92) translateY(8px); opacity: 0; }
+      to { transform: none; opacity: 1; }
+    }
+    .modal-header {
+      padding: 14px 16px; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 13px; font-weight: 600;
+    }
+    .modal-close {
+      width: 25px; height: 25px;
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: 7px; cursor: pointer; color: var(--text-muted);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; transition: all 0.15s;
+    }
+    .modal-close:hover { color: var(--text); background: var(--surface3); }
+    .modal-body { padding: 14px 16px; }
+    .modal-footer {
+      padding: 12px 16px; border-top: 1px solid var(--border);
+      display: flex; justify-content: flex-end; gap: 8px;
+    }
+    .textarea-modal {
+      width: 100%; height: 140px; padding: 10px; resize: vertical;
+      background: var(--surface2); border: 1px solid var(--border2);
+      border-radius: var(--radius-sm); color: var(--text);
+      font-family: 'JetBrains Mono', monospace; font-size: 11px; outline: none;
+      transition: border-color 0.2s;
+    }
+    .textarea-modal:focus { border-color: var(--orange-soft); }
+
+    /* ── FOOTER ── */
+    .footer {
+      padding: 8px 16px;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 10.5px; color: var(--text-muted);
+      gap: 8px;
+    }
+    .footer-links { display: flex; gap: 10px; }
+    .footer a {
+      color: var(--text-muted); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer a:hover { color: var(--orange-soft); }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <img src="icons/icon48.png" alt="V-ShopeeBoost" class="header-logo" onerror="this.src='icons/icon32.png'">
+    <span class="header-brand">V-ShopeeBoost</span>
+    <span class="header-ver" id="headerVer" title="Phiên bản hiện tại">v4.0.0</span>
+    <div class="header-spacer"></div>
+    <div class="header-status">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusLabel">Chưa đăng nhập</span>
+    </div>
+  </header>
+
+  <!-- TABS -->
+  <nav class="tabs">
+    <button class="tab-btn active" data-tab="main">Đăng nhập</button>
+    <button class="tab-btn" data-tab="accounts">Shop</button>
+    <button class="tab-btn" data-tab="history">Lịch sử</button>
+    <button class="tab-btn" data-tab="tools">Công cụ</button>
+    <button class="tab-btn" data-tab="settings">Cài đặt</button>
+  </nav>
+
+  <div class="content">
+
+    <!-- TAB: ĐĂNG NHẬP -->
+    <div class="tab-panel active" id="tab-main">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">Tổng shop</div>
+          <div class="stat-value" id="stat-shops">0</div>
+          <div class="stat-sub">đã lưu</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Đăng nhập</div>
+          <div class="stat-value" id="stat-logins">0</div>
+          <div class="stat-sub">lần tổng cộng</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Lần cuối</div>
+          <div class="stat-value" id="stat-last" style="font-size:11px;padding-top:5px;line-height:1.4">—</div>
+          <div class="stat-sub" id="stat-last-shop"></div>
+        </div>
+      </div>
+
+      <div class="alert alert-info">
+        Mở tab Shopee rồi nhấn <strong>"Lấy Cookie"</strong> để tự động điền thông tin
+      </div>
+
+      <div class="form-card">
+        <div class="form-card-title">Thông tin đăng nhập</div>
+
+        <div class="form-row">
+          <label class="form-label" for="domainSelect">Miền</label>
+          <div class="form-input-wrap">
+            <select class="form-input" id="domainSelect" style="max-width:160px">
+              <option value="shopee.vn">shopee.vn</option>
+              <option value="shopee.sg">shopee.sg</option>
+              <option value="shopee.my">shopee.my</option>
+              <option value="shopee.co.id">shopee.co.id</option>
+              <option value="shopee.ph">shopee.ph</option>
+              <option value="shopee.tw">shopee.tw</option>
+              <option value="shopee.co.th">shopee.co.th</option>
+            </select>
+            <input type="text" class="form-input" id="shopName" placeholder="Tên shop / Ghi chú...">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="spcfToken">SPC_F</label>
+          <div class="form-input-wrap">
+            <input type="text" class="form-input" id="spcfToken" placeholder="Token SPC_F...">
+            <button class="btn btn-sm" id="btnCopySpcfInput" title="Sao chép SPC_F" type="button">Sao chép</button>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkSpcfChange" checked>
+              <span>Áp dụng</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <label class="form-label" for="cookiesInput">Cookies</label>
+          <div class="form-input-wrap">
+            <input type="text" class="form-input" id="cookiesInput" placeholder='[{"domain":".shopee.vn",...}]'>
+            <label class="checkbox-label">
+              <input type="checkbox" id="chkCookiesChange" checked>
+              <span>Áp dụng</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn" id="btnGetCookie">Lấy Cookie</button>
+          <button class="btn" id="btnClearForm">Xóa</button>
+          <button class="btn" id="btnSaveAccount">Lưu shop</button>
+          <button class="btn btn-primary" id="btnLoginNow">Đăng nhập ngay</button>
+        </div>
+
+        <div class="status-bar" id="loginStatus"></div>
+      </div>
+    </div>
+
+    <!-- TAB: DANH SÁCH SHOP -->
+    <div class="tab-panel" id="tab-accounts">
+      <div class="section-header">
+        <div class="section-title">
+          Danh sách shop
+          <span class="count-badge" id="shopCountBadge">0 shop</span>
+        </div>
+        <button class="btn btn-sm btn-primary" id="btnQuickAdd">Thêm shop</button>
+      </div>
+      <div class="search-wrap">
+        <span class="search-icon"></span>
+        <input type="text" class="search-input" id="searchShop" placeholder="Tìm kiếm theo tên shop, domain...">
+      </div>
+      <div class="accounts-list" id="accountList">
+        <div class="empty-state">
+          <div class="empty-icon"></div>
+          <div class="empty-title">Chưa có shop nào</div>
+          <div>Đăng nhập và lưu shop đầu tiên của bạn</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: LỊCH SỬ -->
+    <div class="tab-panel" id="tab-history">
+      <div class="section-header">
+        <div class="section-title">Lịch sử đăng nhập</div>
+        <button class="btn btn-sm btn-danger" id="btnClearHistory">Xóa lịch sử</button>
+      </div>
+      <div class="history-list" id="historyList">
+        <div class="empty-state">
+          <div class="empty-icon"></div>
+          <div class="empty-title">Chưa có lịch sử</div>
+          <div>Lịch sử sẽ xuất hiện sau khi đăng nhập</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: CÔNG CỤ -->
+    <div class="tab-panel" id="tab-tools">
+      <div class="tool-grid">
+        <button class="tool-btn" id="btnBackup">
+          <div class="tool-icon" style="background:rgba(59,130,246,0.15)"></div>
+          <div>
+            <div class="tool-title">Sao lưu dữ liệu</div>
+            <div class="tool-desc">Xuất file JSON backup</div>
+          </div>
+        </button>
+        <button class="tool-btn" id="btnRestore">
+          <div class="tool-icon" style="background:rgba(34,197,94,0.15)"></div>
+          <div>
+            <div class="tool-title">Khôi phục</div>
+            <div class="tool-desc">Nhập file JSON backup</div>
+          </div>
+        </button>
+        <button class="tool-btn" id="btnImportJSON">
+          <div class="tool-icon" style="background:rgba(168,85,247,0.15)"></div>
+          <div>
+            <div class="tool-title">Nhập JSON</div>
+            <div class="tool-desc">Dán dữ liệu JSON vào</div>
+          </div>
+        </button>
+        <button class="tool-btn" id="btnExport">
+          <div class="tool-icon" style="background:rgba(245,158,11,0.15)"></div>
+          <div>
+            <div class="tool-title">Xuất danh sách</div>
+            <div class="tool-desc">Xuất tất cả tài khoản</div>
+          </div>
+        </button>
+        <button class="tool-btn" id="btnOpenShopee">
+          <div class="tool-icon" style="background:rgba(238,77,45,0.15)"></div>
+          <div>
+            <div class="tool-title">Mở Shopee VN</div>
+            <div class="tool-desc">Mở tab shopee.vn</div>
+          </div>
+        </button>
+        <button class="tool-btn" id="btnCopySpcfTool">
+          <div class="tool-icon" style="background:rgba(249,115,22,0.15)">🔑</div>
+          <div>
+            <div class="tool-title">Lấy mã SPC_F</div>
+            <div class="tool-desc">Sao chép SPC_F từ tab active</div>
+          </div>
+        </button>
+        <button class="tool-btn danger" id="btnClearAll">
+          <div class="tool-icon" style="background:rgba(239,68,68,0.15)"></div>
+          <div>
+            <div class="tool-title">Xóa tất cả shop</div>
+            <div class="tool-desc">Không thể hoàn tác!</div>
+          </div>
+        </button>
+      </div>
+    </div>
+
+    <!-- TAB: CÀI ĐẶT -->
+    <div class="tab-panel" id="tab-settings">
+      <div class="settings-group">
+        <div class="settings-group-title">Mặc định</div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-item-label">Domain mặc định</div>
+            <div class="settings-item-desc">Shopee market mặc định khi mở popup</div>
+          </div>
+          <select class="form-input" id="setDefaultDomain" style="width:140px">
+            <option value="shopee.vn">shopee.vn</option>
+            <option value="shopee.sg">shopee.sg</option>
+            <option value="shopee.my">shopee.my</option>
+            <option value="shopee.co.id">shopee.co.id</option>
+            <option value="shopee.ph">shopee.ph</option>
+            <option value="shopee.tw">shopee.tw</option>
+            <option value="shopee.co.th">shopee.co.th</option>
+          </select>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-item-label">Tự động mở tab Shopee</div>
+            <div class="settings-item-desc">Mở tab sau khi đăng nhập thành công</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="setAutoOpenTab" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-group-title">Thông báo</div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-item-label">Thông báo trên trang Shopee</div>
+            <div class="settings-item-desc">Hiện toast khi áp dụng cookie thành công</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="setShowNotifs" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="settings-group">
+        <div class="settings-group-title">Thông tin</div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-item-label">Phiên bản</div>
+            <div class="settings-item-desc" id="settingsVersion">V-ShopeeBoost v4.0.0</div>
+          </div>
+          <button class="btn btn-sm" id="btnCheckUpdate">Kiểm tra cập nhật</button>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-item-label">Tài liệu & Hỗ trợ</div>
+            <div class="settings-item-desc">Hướng dẫn sử dụng & báo lỗi</div>
+          </div>
+          <button class="btn btn-sm" id="btnOpenSupport">Mở trang hỗ trợ</button>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-item-label">Options nâng cao</div>
+            <div class="settings-item-desc">Trang cài đặt đầy đủ</div>
+          </div>
+          <button class="btn btn-sm" id="btnOpenOptions">Mở Options</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>V-ShopeeBoost by <a href="https://app.vmaxtech.vn/" target="_blank">VMaxTech</a></span>
+    <div class="footer-links">
+      <a href="pages/privacy.html" target="_blank">Chính sách</a>
+      <a href="pages/terms.html" target="_blank">Điều khoản</a>
+      <a href="pages/support.html" target="_blank">Hỗ trợ</a>
+      <a href="pages/changelog.html" target="_blank">Changelog</a>
+    </div>
+  </footer>
+
+  <!-- MODAL: IMPORT JSON -->
+  <div class="modal-overlay" id="importModal">
+    <div class="modal">
+      <div class="modal-header">
+        <span>Nhập tài khoản từ JSON</span>
+        <button class="modal-close" id="btnCloseModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="font-size:11.5px;color:var(--text-muted);margin-bottom:10px">
+          Dán mảng JSON tài khoản hoặc file backup vào đây:
+        </div>
+        <textarea class="textarea-modal" id="importData"
+          placeholder='[{"shopName":"shop1","spcfToken":"...","cookies":"...","domain":"shopee.vn"}]'>
+        </textarea>
+      </div>
+      <div class="modal-footer">
+        <button class="btn" id="btnCancelImport">Hủy</button>
+        <button class="btn btn-primary" id="btnConfirmImport">Nhập dữ liệu</button>
+      </div>
+    </div>
+  </div>
+
+  <input type="file" id="fileImport" accept=".json" style="display:none">
+  <div class="toast-container" id="toastContainer"></div>
+  <script src="popup.js"></script>
+</body>
+</html>
